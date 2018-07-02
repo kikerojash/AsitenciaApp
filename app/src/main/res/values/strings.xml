@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">AsistenciaApp</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="usuario_incompleto">Usuario Incompleto</string>
+    <string name="clave_incompleto">Clave Incompleto</string>
+    <string name="campos_incompleto">Campos Incompleto</string>
+</resources>
+
