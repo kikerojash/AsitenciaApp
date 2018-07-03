@@ -73,7 +73,7 @@ public class TestActivity extends AppCompatActivity implements ITableViewListene
 
         for (int i = 0; i < 10; i++) {
             List<AsistenciaCeldas> celdas = new ArrayList<>();
-            for (int j=0;j<3;j++){
+           for (int j=0;j<3;j++){
                 Asistencia asistencia = new Asistencia();
                 asistencia.setaBoolean(false);
                 //asistencia.setTipoAsistencia(TipoAsistencia.MotivoAsistencia.TIPO_ASISTENCIA_PRESENTE.name()+"");
@@ -141,6 +141,11 @@ public class TestActivity extends AppCompatActivity implements ITableViewListene
 
         }
     }
+
+    /*@Override
+    public void onCellLongPressed(@NonNull RecyclerView.ViewHolder cellView, int column, int row) {
+
+    }*/
 
     @Override
     public void onColumnHeaderClicked(@NonNull RecyclerView.ViewHolder p_jColumnHeaderView, int p_nXPosition) {

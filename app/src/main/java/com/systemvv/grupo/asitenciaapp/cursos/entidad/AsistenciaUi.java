@@ -1,11 +1,13 @@
 package com.systemvv.grupo.asitenciaapp.cursos.entidad;
 
 import com.systemvv.grupo.asitenciaapp.asistencia.tablaAdapter.estructura.AsistenciaCelda;
+import com.systemvv.grupo.asitenciaapp.asistencia.tablaAdapter.estructura.AsistenciaCeldasHolderUi;
 
 import org.parceler.Parcel;
 
 @Parcel
 public class AsistenciaUi extends AsistenciaCelda {
+
     public enum TipoAsistencia{ASISTENCIA_PRESENTE,ASISTENCIA_TARDE,ASISTENCIA_FALTO}
     private String tipoAsistencia;
     private int justificacion;

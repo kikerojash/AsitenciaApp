@@ -15,16 +15,9 @@ import com.evrencoskun.tableview.listener.ITableViewListener;
 import com.systemvv.grupo.asitenciaapp.R;
 import com.systemvv.grupo.asitenciaapp.asistencia.tablaAdapter.AsistenciaAdapter;
 import com.systemvv.grupo.asitenciaapp.asistencia.tablaAdapter.estructura.AsistenciaCelda;
-import com.systemvv.grupo.asitenciaapp.asistencia.tablaAdapter.estructura.AsistenciaCeldasHolderUi;
 import com.systemvv.grupo.asitenciaapp.asistencia.tablaAdapter.estructura.AsistenciaColumnaCabecera;
 import com.systemvv.grupo.asitenciaapp.asistencia.tablaAdapter.estructura.AsistenciaFilaCabecera;
-import com.systemvv.grupo.asitenciaapp.asistencia.tablaAdapter.holder.CeldasAsistenciaFaltoHolder;
 import com.systemvv.grupo.asitenciaapp.asistencia.tablaAdapter.holder.CeldasAsistenciaHolder;
-import com.systemvv.grupo.asitenciaapp.asistencia.tablaAdapter.holder.CeldasAsistenciaPuntualHolder;
-import com.systemvv.grupo.asitenciaapp.asistencia.tablaAdapter.holder.CeldassAsistenciaTardeHolder;
-import com.systemvv.grupo.asitenciaapp.asistencia.tablaAdapter.holder.CeldassAsistenciaTardeJustificadoHolder;
-import com.systemvv.grupo.asitenciaapp.asistencia.tablaAdapter.holder.abstracto.CeldasViewHolder;
-import com.systemvv.grupo.asitenciaapp.asistencia.tablaAdapter.listener.AsitenciaCeldasListener;
 import com.systemvv.grupo.asitenciaapp.base.UseCaseHandler;
 import com.systemvv.grupo.asitenciaapp.base.UseCaseThreadPoolScheduler;
 import com.systemvv.grupo.asitenciaapp.base.activity.BaseActivity;
@@ -50,8 +43,8 @@ public class AsistenciaActivity extends BaseActivity<AsistenciaView, AsistenciaP
     TextView textViewGradoSeccion;
     @BindView(R.id.txNombreProfe)
     TextView textViewNombreProfe;
-    @BindView(R.id.fondoCurso)
-    ImageView imageViewFondo;
+   /* @BindView(R.id.fondoCurso)
+    ImageView imageViewFondo;*/
     @BindView(R.id.content_container)
     TableView table;
     private AsistenciaAdapter adapter;
@@ -104,19 +97,20 @@ public class AsistenciaActivity extends BaseActivity<AsistenciaView, AsistenciaP
         textViewNombreInstituto.setText(cursoUi.getInstitutoUi().getNombre());
         textViewNombreCuro.setText(cursoUi.getNombre());
         textViewGradoSeccion.setText("Grado : " + cursoUi.getGradoSelected() + " Sección : " + cursoUi.getSeccionSelected());
-        Glide.with(this).load(cursoUi.getFoto()).into(imageViewFondo);
+        //Glide.with(this).load(cursoUi.getFoto()).into(imageViewFondo);
     }
 
     @Override
     public void mostrarListaTablas(List<AsistenciaColumnaCabecera> columnaCabeceraList, List<AsistenciaFilaCabecera> filaCabeceraList, List<List<AsistenciaCelda>> bodyList) {
-        adapter = new AsistenciaAdapter(getActivity());
+        adapter = new AsistenciaAdapter(this);
         table.setAdapter(adapter);
         table.setTableViewListener(this);
         table.setIgnoreSelectionColors(false);
         table.setHasFixedWidth(false);
-        adapter.setAllItems(columnaCabeceraList, filaCabeceraList, bodyList);
+        adapter.setAllItems(filaCabeceraList,columnaCabeceraList , bodyList);
         table.setIgnoreSelectionColors(true);
     }
+
 
     @Override
     public void actualizarCeldas(AsistenciaUi asistenciaUi) {
@@ -125,44 +119,30 @@ public class AsistenciaActivity extends BaseActivity<AsistenciaView, AsistenciaP
 
 
     @Override
-    public void onCellClicked(@NonNull RecyclerView.ViewHolder holder, int p_nXPosition, int p_nYPosition) {
+    public void onCellClicked(@NonNull RecyclerView.ViewHolder holder, int column, int row) {
 
         if (holder instanceof CeldasAsistenciaHolder) {
             CeldasAsistenciaHolder celdasAsistenciaHolder = (CeldasAsistenciaHolder) holder;
+
             AsistenciaUi asistenciaUi = celdasAsistenciaHolder.obtenerAsistenciaUi();
+
+            Log.d(TAG, "onClickAsistenciaCelda" + asistenciaUi.getTipasistencia());
             if (asistenciaUi == null) return;
-            //  CeldasAsistenciaHolder celdasHolderUi = asistenciaUi.getCeldasViewHolder();
-
-            onClickAsistenciaCelda(celdasAsistenciaHolder.obtenerAsistenciaUi());
 
 
-           /* if(celdasHolderUi!=null){
-                celdasHolderUi.deselecionColor();
-                celdasAsistenciaHolder.selectColor();
-                presenter.onDesSelectAsistencia(asistenciaUi);
-                Log.d(TAG,"if");
+            if (asistenciaUi.isPintar()){
+                asistenciaUi.setPintar(false);
+               // celdasAsistenciaHolder.validarCamposColor(asistenciaUi);
             }else {
-                celdasAsistenciaHolder.selectColor();
-                presenter.onSelectAsistencia(asistenciaUi);
-                Log.d(TAG,"else");
-            }*/
-            //  onClickAsistenciaCelda(celdasAsistenciaHolder.obtenerAsistenciaUi());
-
+                asistenciaUi.setPintar(true);
+               // celdasAsistenciaHolder.validarCamposColor(asistenciaUi);
+            }
+            adapter.notifyDataSetChanged();
         }
-        /*if (holder instanceof CeldasAsistenciaFaltoHolder) {
-            CeldasAsistenciaFaltoHolder celdasAsistenciaFaltoHolder = (CeldasAsistenciaFaltoHolder) holder;
-            onClickAsistenciaFalto(celdasAsistenciaFaltoHolder.obtenerAsistenciaUi());
-        } else if (holder instanceof CeldasAsistenciaPuntualHolder) {
-            CeldasAsistenciaPuntualHolder celdasAsistenciaPuntualHolder = (CeldasAsistenciaPuntualHolder) holder;
-            onClickAsistenciaPuntual(celdasAsistenciaPuntualHolder.obtenerAsistenciaUi());
-        } else if (holder instanceof CeldassAsistenciaTardeHolder) {
-            CeldassAsistenciaTardeHolder celdassAsistenciaTardeHolder = (CeldassAsistenciaTardeHolder) holder;
-            onClickAsistenciaTarde(celdassAsistenciaTardeHolder.obtenerAsistenciaUi());
-        } else if (holder instanceof CeldassAsistenciaTardeJustificadoHolder) {
-            CeldassAsistenciaTardeJustificadoHolder celdassAsistenciaTardeJustificadoHolder = (CeldassAsistenciaTardeJustificadoHolder) holder;
-            onClickAsistenciaTardeJustificado(celdassAsistenciaTardeJustificadoHolder.obtenerAsistenciaUi());
-        }*/
+
+
     }
+
 
 
     private void onClickAsistenciaTardeJustificado(AsistenciaUi asistenciaUi) {

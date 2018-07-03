@@ -62,7 +62,8 @@ public class LoginActivity extends BaseActivity<LoginView, LoginPresenter> imple
     protected void setContentView() {
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
-        editTextUsuario.setText("@gmail.com");
+        editTextUsuario.setText("juanperez@gmail.com");
+        editTextClave.setText("123");
 
     }
 

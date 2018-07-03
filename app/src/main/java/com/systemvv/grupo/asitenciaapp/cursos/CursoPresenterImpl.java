@@ -78,12 +78,18 @@ public class CursoPresenterImpl extends BaseActivityPresenterImpl<CursoView> imp
         asistenciaPuntual.setPintar(false);
         asistenciaPuntual.setTipoAsistencia("Puntual");
 
-        AlumnosUi alumnoJuanManuel = new AlumnosUi(1, "Juan Manuel", "Perez Soza", "asd", asistenciaPuntual);
-        AlumnosUi alumnoRonald = new AlumnosUi(2, "Jorgue Fernando", "Rodriguez Soza", "asd", asistenciaPuntual);
-        AlumnosUi alumnoAlexManuel = new AlumnosUi(3, "Ronald Manuel", "Chambilla Rojas", "asd", asistenciaPuntual);
-        AlumnosUi alumnoAndyManuel = new AlumnosUi(4, "Alex Rodolfo", "Aguilar Vera", "asd", asistenciaPuntual);
-        AlumnosUi alumnoArturitManuel = new AlumnosUi(5, "Andy Manuel", "Vega Soza", "asd", asistenciaPuntual);
-        AlumnosUi alumnoJuanM = new AlumnosUi(6, "Arturito Manuel", "Perez Chancl", "asd", asistenciaPuntual);
+        AlumnosUi alumnoJuanManuel = new AlumnosUi(1, "Juan Manuel", "Perez Soza", "http://ilumina2photo.es/wp-content/uploads/2016/02/sesion-fotos-infantil-ni%C3%B1os-reportaje-fotografia-ni%C3%B1o-ni%C3%B1a-fotografo-barcelona-campo-monte-bosque-aire-libre.jpg", asistenciaPuntual);
+        asistenciaPuntual.setAlumnosUi(alumnoJuanManuel);
+        AlumnosUi alumnoRonald = new AlumnosUi(2, "Lizbeth Eliza", "Rodriguez Soza", "http://ilumina2photo.es/wp-content/uploads/2016/02/fotografo-infantil-barcelona-reportaje-ni%C3%B1os-sesion-fotos-001.jpg", asistenciaPuntual);
+        asistenciaPuntual.setAlumnosUi(alumnoRonald);
+        AlumnosUi alumnoAlexManuel = new AlumnosUi(3, "Maria Fernanda ", "Chambilla Rojas", "http://ilumina2photo.es/wp-content/uploads/2018/06/sesion-fotos-infantil-ni%C3%B1os-ni%C3%B1as-reportaje-fotografico-aire-libre-exterior-barcelona-fotografias-naturales-bonitas-ilumina2photo-3.jpg", asistenciaPuntual);
+        asistenciaPuntual.setAlumnosUi(alumnoAlexManuel);
+        AlumnosUi alumnoAndyManuel = new AlumnosUi(4, "Alex Rodolfo", "Aguilar Vera", "http://ilumina2photo.es/wp-content/uploads/2016/02/sesion-fotos-ni%C3%B1os-playa-barcelona-infantil-reportaje-fotografia-costa-ni%C3%B1o-ni%C3%B1a-aire-libre.jpg", asistenciaPuntual);
+        asistenciaPuntual.setAlumnosUi(alumnoAndyManuel);
+        AlumnosUi alumnoArturitManuel = new AlumnosUi(5, "Andy Manuel", "Vega Soza", "http://ilumina2photo.es/wp-content/uploads/2016/03/fotografos-barcelona-reportaje-fotos-infantil-cumplea%C3%B1os-sesion-fotografica-familiar-exterior-pareja-fotografo-familia.jpg", asistenciaPuntual);
+        asistenciaPuntual.setAlumnosUi(alumnoArturitManuel);
+        AlumnosUi alumnoJuanM = new AlumnosUi(6, "Arturito Manuel", "Perez Chancl", "http://ilumina2photo.es/wp-content/uploads/2016/02/fotografo-infantil-barcelona-reportaje-fotos-ni%C3%B1os-campo-sesion-fotografica-estudio-profesional-008.jpg", asistenciaPuntual);
+        asistenciaPuntual.setAlumnosUi(alumnoJuanM);
 
         alumnosUiList.add(alumnoJuanManuel);
         alumnosUiList.add(alumnoRonald);
@@ -113,8 +119,8 @@ public class CursoPresenterImpl extends BaseActivityPresenterImpl<CursoView> imp
         asistenciaTarde.setTipoAsistencia("Tarde");
         asistenciaTarde.setPintar(false);
 
-        AlumnosUi alumnoPedroJuan = new AlumnosUi(7, "Pedro Manuel", "Perez Soza", "asd", asistenciaTarde);
-        AlumnosUi alumnoJuanMa = new AlumnosUi(8, "Juan Manuel", "Perez Soza", "asd", asistenciaTarde);
+        AlumnosUi alumnoPedroJuan = new AlumnosUi(7, "Estefany Valentina", "Perez Soza", "http://ilumina2photo.es/wp-content/uploads/2016/02/fotografo-infantil-barcelona-reportaje-fotos-ni%C3%B1os-fotografia-ni%C3%B1a-ni%C3%B1o-aire-libre-estudio-profesional.jpg", asistenciaTarde);
+        AlumnosUi alumnoJuanMa = new AlumnosUi(8, "Juan Manuel", "Perez Soza", "http://ilumina2photo.es/wp-content/uploads/2016/02/sesion-fotos-ni%C3%B1os-playa-barcelona-infantil-reportaje-fotografia-costa-ni%C3%B1o-ni%C3%B1a-aire-libre-2.jpg", asistenciaTarde);
         alumnosUiList.add(alumnoPedroJuan);
         alumnosUiList.add(alumnoJuanMa);
         // alumnosUiList.add(new AlumnosUi(7, "Pedro Manuel", "Perez Soza", "asd", asistenciaTarde));
@@ -138,7 +144,7 @@ public class CursoPresenterImpl extends BaseActivityPresenterImpl<CursoView> imp
         asistenciaTardeJustificado.setTipoAsistencia("Justificado");
         asistenciaTardeJustificado.setPintar(false);
 
-        AlumnosUi alumnoRobertol = new AlumnosUi(9, "Roberto Manuel", "Perez Soza", "asd", asistenciaTardeJustificado);
+        AlumnosUi alumnoRobertol = new AlumnosUi(9, "Roberto Manuel", "Perez Soza", "http://ilumina2photo.es/wp-content/uploads/2016/02/fotografo-infantil-barcelona-reportaje-fotos-ni%C3%B1os-campo-sesion-fotografica-estudio-profesional-008.jpg", asistenciaTardeJustificado);
         alumnosUiList.add(alumnoRobertol);
         //alumnosUiList.add(new AlumnosUi(9, "Juan Manuel", "Perez Soza", "asd", asistenciaTardeJustificado));
 
@@ -169,7 +175,7 @@ public class CursoPresenterImpl extends BaseActivityPresenterImpl<CursoView> imp
 
        // motivosAsistenciaFaltoUi.setTipoMotivo(MotivosAsistenciaUi.TIPO_ASISTENCIA_FALTO);
 
-        AlumnosUi alumnoUltimo = new AlumnosUi(10, "Juan Manuel", "Perez Soza", "asd", asistenciaFalto);
+        AlumnosUi alumnoUltimo = new AlumnosUi(10, "Juan Manuel", "Perez Soza", "http://ilumina2photo.es/wp-content/uploads/2016/02/sesion-fotos-ni%C3%B1os-playa-barcelona-infantil-reportaje-fotografia-costa-ni%C3%B1o-ni%C3%B1a-aire-libre-2.jpg", asistenciaFalto);
         alumnosUiList.add(alumnoUltimo);
 
         asistenciaFalto.setMotivosAsistenciaUi(motivosAsistenciaFaltoUi);

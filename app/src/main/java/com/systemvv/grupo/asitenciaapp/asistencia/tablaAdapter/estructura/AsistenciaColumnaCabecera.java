@@ -1,4 +1,4 @@
 package com.systemvv.grupo.asitenciaapp.asistencia.tablaAdapter.estructura;
 
-public abstract class AsistenciaColumnaCabecera extends AsistenciaCelda {
+public abstract class AsistenciaColumnaCabecera   {
 }

@@ -30,7 +30,8 @@ import com.systemvv.grupo.asitenciaapp.cursos.entidad.AlumnosUi;
 import com.systemvv.grupo.asitenciaapp.cursos.entidad.AsistenciaUi;
 import com.systemvv.grupo.asitenciaapp.cursos.entidad.MotivosAsistenciaUi;
 
-public class AsistenciaAdapter extends AbstractTableAdapter<AsistenciaColumnaCabecera, AsistenciaFilaCabecera, AsistenciaCelda> {
+//public class AsistenciaAdapter extends AbstractTableAdapter<AsistenciaColumnaCabecera, AsistenciaFilaCabecera, AsistenciaCelda> {
+public class AsistenciaAdapter extends AbstractTableAdapter<AsistenciaFilaCabecera,AsistenciaColumnaCabecera, AsistenciaCelda> {
 
     public static final String TAG = AsistenciaAdapter.class.getSimpleName();
     public static final int COLUMNA_ALUMNOS = 1;
@@ -57,8 +58,9 @@ public class AsistenciaAdapter extends AbstractTableAdapter<AsistenciaColumnaCab
     @Override
     public int getColumnHeaderItemViewType(int position) {
         /*Cabecera Columnas*/
-        AsistenciaCelda filaCabecera = m_jColumnHeaderItems.get(position);
-        // if (filaCabecera == null) return 0;
+       // AsistenciaCelda filaCabecera = m_jColumnHeaderItems.get(position);
+       AsistenciaFilaCabecera filaCabecera = m_jColumnHeaderItems.get(position);
+        if (filaCabecera == null) return 0;
         if (filaCabecera instanceof MotivosAsistenciaUi) {
             MotivosAsistenciaUi motivosAsistenciaUi = (MotivosAsistenciaUi) filaCabecera;
             if (motivosAsistenciaUi.getTipoMotivo() == MotivosAsistenciaUi.TIPO_ASISTENCIA_PUNTUAL) {
@@ -77,11 +79,12 @@ public class AsistenciaAdapter extends AbstractTableAdapter<AsistenciaColumnaCab
     @Override
     public int getRowHeaderItemViewType(int position) {
         /*Celdas del lado Izquierdo*/
-        AsistenciaCelda filasLadiIzquierdoCabeceras = m_jRowHeaderItems.get(position);
+        //AsistenciaCelda filasLadiIzquierdoCabeceras = m_jRowHeaderItems.get(position);
+        AsistenciaColumnaCabecera filasLadiIzquierdoCabeceras= m_jRowHeaderItems.get(position);
         //if (filasLadiIzquierdoCabeceras == null) return 0;
-        if (filasLadiIzquierdoCabeceras instanceof AlumnosUi) {
+        /*if (filasLadiIzquierdoCabeceras instanceof AlumnosUi) {
             return COLUMNA_ALUMNOS;
-        }
+        }*/
         return 0;
     }
 
@@ -113,33 +116,38 @@ public class AsistenciaAdapter extends AbstractTableAdapter<AsistenciaColumnaCab
     }
 
     @Override
-    public RecyclerView.ViewHolder onCreateCellViewHolder(ViewGroup parent, int viewType) {
-        RecyclerView.ViewHolder viewHolder = null;
-        LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        switch (viewType) {
-            case TIPOS_ASISTENCIAS:
-                View vistaAsistenciaPuntual = layoutInflater.inflate(R.layout.tabla_celdas_asistencia_puntuales, parent, false);
-                viewHolder = new CeldasAsistenciaHolder(vistaAsistenciaPuntual);
-                break;
-           /* case MENSAJE_PUNTUAL:
-                View vistaAsistenciaPuntual = layoutInflater.inflate(R.layout.tabla_celdas_asistencia_puntuales, parent, false);
-                viewHolder = new CeldasAsistenciaPuntualHolder(vistaAsistenciaPuntual);
-                break;
-            case MENSAJE_TARDE:
-                View vistaSelectorValores = layoutInflater.inflate(R.layout.tabla_celdas_asistencia_tarde, parent, false);
-                viewHolder = new CeldassAsistenciaTardeHolder(vistaSelectorValores);
-                break;
-            case MENSAJE_TARDE_JUSTIFICADO:
-                View vistaSelectorIconos = layoutInflater.inflate(R.layout.tabla_celdas_asistencia_tarde_justificado, parent, false);
-                viewHolder = new CeldassAsistenciaTardeJustificadoHolder(vistaSelectorIconos);
-                break;
-            case MENSAJE_FALTO:
-                View vistaValorTipoNota = layoutInflater.inflate(R.layout.tabla_celdas_asistencia_falto, parent, false);
-                viewHolder = new CeldasAsistenciaFaltoHolder(vistaValorTipoNota);
-                break;*/
-        }
-        return viewHolder;
+    public AbstractViewHolder onCreateCellViewHolder(ViewGroup parent, int viewType) {
+        return null;
     }
+
+//    @Override
+//    public RecyclerView.ViewHolder onCreateCellViewHolder(ViewGroup parent, int viewType) {
+//        RecyclerView.ViewHolder viewHolder = null;
+//        LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
+//        switch (viewType) {
+//            case TIPOS_ASISTENCIAS:
+//                View vistaAsistenciaPuntual = layoutInflater.inflate(R.layout.tabla_celdas_asistencia_puntuales, parent, false);
+//                viewHolder = new CeldasAsistenciaHolder(vistaAsistenciaPuntual);
+//                break;
+//           /* case MENSAJE_PUNTUAL:
+//                View vistaAsistenciaPuntual = layoutInflater.inflate(R.layout.tabla_celdas_asistencia_puntuales, parent, false);
+//                viewHolder = new CeldasAsistenciaPuntualHolder(vistaAsistenciaPuntual);
+//                break;
+//            case MENSAJE_TARDE:
+//                View vistaSelectorValores = layoutInflater.inflate(R.layout.tabla_celdas_asistencia_tarde, parent, false);
+//                viewHolder = new CeldassAsistenciaTardeHolder(vistaSelectorValores);
+//                break;
+//            case MENSAJE_TARDE_JUSTIFICADO:
+//                View vistaSelectorIconos = layoutInflater.inflate(R.layout.tabla_celdas_asistencia_tarde_justificado, parent, false);
+//                viewHolder = new CeldassAsistenciaTardeJustificadoHolder(vistaSelectorIconos);
+//                break;
+//            case MENSAJE_FALTO:
+//                View vistaValorTipoNota = layoutInflater.inflate(R.layout.tabla_celdas_asistencia_falto, parent, false);
+//                viewHolder = new CeldasAsistenciaFaltoHolder(vistaValorTipoNota);
+//                break;*/
+//        }
+//        return viewHolder;
+//    }
 
     @Override
     public void onBindCellViewHolder(AbstractViewHolder holder, Object p_jValue, int p_nXPosition, int p_nYPosition) {
@@ -169,33 +177,38 @@ public class AsistenciaAdapter extends AbstractTableAdapter<AsistenciaColumnaCab
     }
 
     @Override
-    public RecyclerView.ViewHolder onCreateColumnHeaderViewHolder(ViewGroup parent, int viewType) {
-        RecyclerView.ViewHolder viewHolder = null;
-        LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        switch (viewType) {
-            case MotivosAsistenciaUi.TIPO_ASISTENCIA_PUNTUAL:
-                View vistaAsistenciaPuntual = layoutInflater.inflate(R.layout.tabla_columna_asistencia_puntual, parent, false);
-                viewHolder = new ColumnaAsistenciaPuntualHolder(vistaAsistenciaPuntual);
-                break;
-            case MotivosAsistenciaUi.TIPO_ASISTENCIA_TARDE:
-                View vistaAsistenciaTarde = layoutInflater.inflate(R.layout.tabla_columna_asistencia_tarde, parent, false);
-                viewHolder = new ColumnaAsistenciaTardeHolder(vistaAsistenciaTarde);
-                break;
-            case MotivosAsistenciaUi.TIPO_ASISTENCIA_TARDE_JUSTIFICADO:
-                View vistaAsistenciaTardeJustificado = layoutInflater.inflate(R.layout.tabla_columna_asistencia_tarde_justificado, parent, false);
-                viewHolder = new ColumnaAsistenciaTardeJustificadoHolder(vistaAsistenciaTardeJustificado);
-                break;
-            case MotivosAsistenciaUi.TIPO_ASISTENCIA_FALTO:
-                View vistaAsistenciaFalto = layoutInflater.inflate(R.layout.tabla_columna_asistencia_falto, parent, false);
-                viewHolder = new ColumnaAsistenciaFaltoHolder(vistaAsistenciaFalto);
-                break;
-            /*default:
-                View vistaRubroNormal = layoutInflater.inflate(R.layout.tabla_columna_rubro_normal, parent, false);
-                viewHolder = new ColumnaRubroNormalHolder(vistaRubroNormal);
-                break;*/
-        }
-        return viewHolder;
+    public AbstractViewHolder onCreateColumnHeaderViewHolder(ViewGroup parent, int viewType) {
+        return null;
     }
+
+//    @Override
+//    public RecyclerView.ViewHolder onCreateColumnHeaderViewHolder(ViewGroup parent, int viewType) {
+//        RecyclerView.ViewHolder viewHolder = null;
+//        LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
+//        switch (viewType) {
+//            case MotivosAsistenciaUi.TIPO_ASISTENCIA_PUNTUAL:
+//                View vistaAsistenciaPuntual = layoutInflater.inflate(R.layout.tabla_columna_asistencia_puntual, parent, false);
+//                viewHolder = new ColumnaAsistenciaPuntualHolder(vistaAsistenciaPuntual);
+//                break;
+//            case MotivosAsistenciaUi.TIPO_ASISTENCIA_TARDE:
+//                View vistaAsistenciaTarde = layoutInflater.inflate(R.layout.tabla_columna_asistencia_tarde, parent, false);
+//                viewHolder = new ColumnaAsistenciaTardeHolder(vistaAsistenciaTarde);
+//                break;
+//            case MotivosAsistenciaUi.TIPO_ASISTENCIA_TARDE_JUSTIFICADO:
+//                View vistaAsistenciaTardeJustificado = layoutInflater.inflate(R.layout.tabla_columna_asistencia_tarde_justificado, parent, false);
+//                viewHolder = new ColumnaAsistenciaTardeJustificadoHolder(vistaAsistenciaTardeJustificado);
+//                break;
+//            case MotivosAsistenciaUi.TIPO_ASISTENCIA_FALTO:
+//                View vistaAsistenciaFalto = layoutInflater.inflate(R.layout.tabla_columna_asistencia_falto, parent, false);
+//                viewHolder = new ColumnaAsistenciaFaltoHolder(vistaAsistenciaFalto);
+//                break;
+//            /*default:
+//                View vistaRubroNormal = layoutInflater.inflate(R.layout.tabla_columna_rubro_normal, parent, false);
+//                viewHolder = new ColumnaRubroNormalHolder(vistaRubroNormal);
+//                break;*/
+//        }
+//        return viewHolder;
+//    }
 
     @Override
     public void onBindColumnHeaderViewHolder(AbstractViewHolder holder, Object p_jValue, int p_nXPosition) {
@@ -219,29 +232,34 @@ public class AsistenciaAdapter extends AbstractTableAdapter<AsistenciaColumnaCab
     }
 
     @Override
-    public RecyclerView.ViewHolder onCreateRowHeaderViewHolder(ViewGroup parent, int viewType) {
-        RecyclerView.ViewHolder viewHolder = null;
-        LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        switch (viewType) {
-            case COLUMNA_ALUMNOS:
-                View vistaAlumnos = layoutInflater.inflate(R.layout.tabla_filas_alumnos, parent, false);
-                viewHolder = new FilasAsistenciaAlumnosHolder(vistaAlumnos);
-                break;
-            default:
-                View vistaRubrosNormal2 = layoutInflater.inflate(R.layout.tabla_filas_alumnos, parent, false);
-                viewHolder = new FilasAsistenciaAlumnosHolder(vistaRubrosNormal2);
-                break;
-        }
-        return viewHolder;
+    public AbstractViewHolder onCreateRowHeaderViewHolder(ViewGroup parent, int viewType) {
+        return null;
     }
+
+//    @Override
+//    public RecyclerView.ViewHolder onCreateRowHeaderViewHolder(ViewGroup parent, int viewType) {
+//      /*  RecyclerView.ViewHolder viewHolder = null;
+//        LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
+//        switch (viewType) {
+//            case COLUMNA_ALUMNOS:
+//                View vistaAlumnos = layoutInflater.inflate(R.layout.tabla_filas_alumnos, parent, false);
+//                viewHolder = new FilasAsistenciaAlumnosHolder(vistaAlumnos);
+//                break;
+//            default:
+//                View vistaRubrosNormal2 = layoutInflater.inflate(R.layout.tabla_filas_alumnos, parent, false);
+//                viewHolder = new FilasAsistenciaAlumnosHolder(vistaRubrosNormal2);
+//                break;
+//        }*/
+//        return null;
+//    }
 
     @Override
     public void onBindRowHeaderViewHolder(AbstractViewHolder holder, Object p_jValue, int p_nYPosition) {
-        if (holder instanceof FilasAsistenciaAlumnosHolder && p_jValue instanceof AlumnosUi) {
+       /* if (holder instanceof FilasAsistenciaAlumnosHolder && p_jValue instanceof AlumnosUi) {
             FilasAsistenciaAlumnosHolder filasAsistenciaAlumnosHolder = (FilasAsistenciaAlumnosHolder) holder;
             AlumnosUi alumnosUi = (AlumnosUi) p_jValue;
             filasAsistenciaAlumnosHolder.bind(alumnosUi);
-        }
+        }*/
     }
 
     @Override

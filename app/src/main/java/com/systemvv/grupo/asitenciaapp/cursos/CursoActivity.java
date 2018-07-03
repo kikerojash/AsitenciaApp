@@ -5,9 +5,13 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.widget.ProgressBar;
+
 import com.systemvv.grupo.asitenciaapp.R;
 import com.systemvv.grupo.asitenciaapp.asistencia.AsistenciaActivity;
+import com.systemvv.grupo.asitenciaapp.asistenciaM.ControlAsistenciaActivity;
 import com.systemvv.grupo.asitenciaapp.base.UseCaseHandler;
 import com.systemvv.grupo.asitenciaapp.base.UseCaseThreadPoolScheduler;
 import com.systemvv.grupo.asitenciaapp.base.activity.BaseActivity;
@@ -19,10 +23,11 @@ import org.parceler.Parcels;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class CursoActivity extends BaseActivity<CursoView, CursoPresenter> implements CursoView,CursoListener {
+public class CursoActivity extends BaseActivity<CursoView, CursoPresenter> implements CursoView, CursoListener {
 
     public static final String TAG = CursoActivity.class.getSimpleName();
     @BindView(R.id.progressBar)
@@ -30,6 +35,8 @@ public class CursoActivity extends BaseActivity<CursoView, CursoPresenter> imple
     @BindView(R.id.recicladorCursos)
     RecyclerView reciclador;
     CursoAdapter adapter;
+    @BindView(R.id.toolbar)
+    android.support.v7.widget.Toolbar toolbar;
 
 
     @Override
@@ -61,11 +68,12 @@ public class CursoActivity extends BaseActivity<CursoView, CursoPresenter> imple
     protected void setContentView() {
         setContentView(R.layout.activity_curso);
         ButterKnife.bind(this);
+        setSupportActionBar(toolbar);
         initVistas();
     }
 
     private void initVistas() {
-        adapter = new CursoAdapter(new ArrayList<CursoUi>(),this);
+        adapter = new CursoAdapter(new ArrayList<CursoUi>(), this);
         reciclador.setLayoutManager(new LinearLayoutManager(this));
         reciclador.setHasFixedSize(true);
         reciclador.setAdapter(adapter);
@@ -83,10 +91,16 @@ public class CursoActivity extends BaseActivity<CursoView, CursoPresenter> imple
 
     @Override
     public void onClickCursoItem(CursoUi cursoUi) {
-        Intent intent = new Intent(getActivity(), AsistenciaActivity.class);
+        Intent intent = new Intent(getActivity(), ControlAsistenciaActivity.class);
         Bundle bundle = new Bundle();
         bundle.putParcelable("cursoUi", Parcels.wrap(cursoUi));
         intent.putExtras(bundle);
         startActivity(intent);
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        return super.onCreateOptionsMenu(menu);
+    }
+
 }

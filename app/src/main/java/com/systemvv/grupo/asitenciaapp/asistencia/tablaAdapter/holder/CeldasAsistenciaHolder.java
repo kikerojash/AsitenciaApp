@@ -82,6 +82,7 @@ public class CeldasAsistenciaHolder extends CeldasViewHolder<AsistenciaUi> {
     }
 
 
+
     public void deselecionColor() {
         disSelectColor();
        // asistenciaUi.setSelecionCeldas(null);

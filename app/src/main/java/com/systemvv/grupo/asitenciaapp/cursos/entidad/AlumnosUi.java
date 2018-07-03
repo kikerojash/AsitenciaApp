@@ -1,10 +1,14 @@
 package com.systemvv.grupo.asitenciaapp.cursos.entidad;
 
-import com.systemvv.grupo.asitenciaapp.asistencia.tablaAdapter.estructura.AsistenciaColumnaCabecera;
+
+
+import com.systemvv.grupo.asitenciaapp.asistenciaM.adapter.estructura.AsistenciaColumna;
+
 import org.parceler.Parcel;
 
 @Parcel
-public class AlumnosUi extends AsistenciaColumnaCabecera {
+//public class AlumnosUi extends AsistenciaColumnaCabecera {
+public class AlumnosUi extends AsistenciaColumna {
     private int conteo;
     private String nombre;
     private String apellido;
