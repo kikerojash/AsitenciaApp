@@ -1,4 +1,4 @@
 package com.systemvv.grupo.asitenciaapp.asistenciaM.adapter.estructura;
 
-public abstract class AsistenciaColumna {
+public class ColumnaCabeceraAsistencia extends CeldasAsistencia {
 }

@@ -1,19 +1,13 @@
 package com.systemvv.grupo.asitenciaapp.asistenciaM.adapter.holder;
 
-import android.support.constraint.ConstraintLayout;
-import android.util.Log;
-import android.view.View;
-import android.widget.TextView;
-
-import com.systemvv.grupo.asitenciaapp.R;
-import com.systemvv.grupo.asitenciaapp.asistenciaM.adapter.holder.abstracto.FilasViewHolder;
-import com.systemvv.grupo.asitenciaapp.asistenciaM.entidad.TipoAsistencia;
 
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class AsistenciaFilasHolder extends FilasViewHolder<TipoAsistencia> {
+public class AsistenciaFilasHolder {
+
+      /*  extends FilasViewHolder<TipoAsistencia> {
     public static final String TAG = AsistenciaFilasHolder.class.getSimpleName();
 
     @BindView(R.id.txtTitle)
@@ -47,5 +41,5 @@ public class AsistenciaFilasHolder extends FilasViewHolder<TipoAsistencia> {
         }
 
         // textViewTitulo.setText(cell.getMotivoAsistencia().name()+"");
-    }
+    }*/
 }

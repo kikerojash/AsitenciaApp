@@ -2,7 +2,6 @@ package com.systemvv.grupo.asitenciaapp.asistenciaM;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -16,14 +15,20 @@ import com.evrencoskun.tableview.listener.ITableViewListener;
 import com.systemvv.grupo.asitenciaapp.R;
 
 import com.systemvv.grupo.asitenciaapp.asistenciaM.adapter.AdapterTest;
-import com.systemvv.grupo.asitenciaapp.asistenciaM.adapter.estructura.AsistenciaCeldas;
-import com.systemvv.grupo.asitenciaapp.asistenciaM.adapter.estructura.AsistenciaColumna;
-import com.systemvv.grupo.asitenciaapp.asistenciaM.adapter.estructura.AsistenciaFilas;
-import com.systemvv.grupo.asitenciaapp.asistenciaM.adapter.holder.AsistenciaCeldasHolder;
-import com.systemvv.grupo.asitenciaapp.asistenciaM.entidad.Asistencia;
+import com.systemvv.grupo.asitenciaapp.asistenciaM.adapter.AsistenciaAdapter;
+import com.systemvv.grupo.asitenciaapp.asistenciaM.adapter.estructura.CeldasAsistencia;
+import com.systemvv.grupo.asitenciaapp.asistenciaM.adapter.estructura.ColumnaCabeceraAsistencia;
+import com.systemvv.grupo.asitenciaapp.asistenciaM.adapter.estructura.FilaCabeceraAsistencia;
+
+import com.systemvv.grupo.asitenciaapp.asistenciaM.adapter.holder.celdas.CeldasAsistenciaAlumnoFaltoHolder;
+import com.systemvv.grupo.asitenciaapp.asistenciaM.adapter.holder.celdas.CeldasAsistenciaAlumnoJustificadoHolder;
+import com.systemvv.grupo.asitenciaapp.asistenciaM.adapter.holder.celdas.CeldasAsistenciaAlumnoPuntualHolder;
+import com.systemvv.grupo.asitenciaapp.asistenciaM.adapter.holder.celdas.CeldasAsistenciaAlumnoTardeHolder;
+import com.systemvv.grupo.asitenciaapp.asistenciaM.adapter.holder.columnas.ColumnaTipoPresenteHolder;
 import com.systemvv.grupo.asitenciaapp.base.UseCaseHandler;
 import com.systemvv.grupo.asitenciaapp.base.UseCaseThreadPoolScheduler;
 import com.systemvv.grupo.asitenciaapp.base.activity.BaseActivity;
+import com.systemvv.grupo.asitenciaapp.cursos.entidad.AsistenciaUi;
 import com.systemvv.grupo.asitenciaapp.cursos.entidad.CursoUi;
 
 import java.util.List;
@@ -55,7 +60,7 @@ public class ControlAsistenciaActivity extends BaseActivity<ControlAsistenciaVie
     CollapsingToolbarLayout collapsingToolbarLayout;*/
     @BindView(R.id.profile_image)
     CircleImageView circleImageView;
-    private AdapterTest adapter;
+    private AsistenciaAdapter adapter;
 
     @Override
     protected String getTag() {
@@ -95,7 +100,7 @@ public class ControlAsistenciaActivity extends BaseActivity<ControlAsistenciaVie
 
     @Override
     public void mostrarInformacionBasica(CursoUi cursoUi) {
-        String imageDocente="https://get.pxhere.com/photo/blackboard-university-speech-lecturer-lecture-teacher-teaching-physics-professor-orator-birger-kollmeier-public-speaking-698271.jpg";
+        String imageDocente = "https://get.pxhere.com/photo/blackboard-university-speech-lecturer-lecture-teacher-teaching-physics-professor-orator-birger-kollmeier-public-speaking-698271.jpg";
         Glide.with(this).load(imageDocente).into(circleImageView);
         textViewNombreInstituto.setText(cursoUi.getInstitutoUi().getNombre());
         textViewNombreCuro.setText(cursoUi.getNombre());
@@ -105,13 +110,14 @@ public class ControlAsistenciaActivity extends BaseActivity<ControlAsistenciaVie
     }
 
     @Override
-    public void mostrarListaTablas(List<AsistenciaColumna> columnHeaderList, List<AsistenciaFilas> rowHeaderList, List<List<AsistenciaCeldas>> cellsList) {
-        adapter.setAllItems(rowHeaderList, columnHeaderList, cellsList);
-        //adapter.setAllItems(rowHeaderList, columnHeaderList, getListaCeldas());
+    public void mostrarListaTablas(List<ColumnaCabeceraAsistencia> columnHeaderList, List<FilaCabeceraAsistencia> rowHeaderList, List<List<CeldasAsistencia>> cellsList) {
+        adapter.setAllItems(columnHeaderList, rowHeaderList, cellsList);
     }
+    //adapter.setAllItems(rowHeaderList, columnHeaderList, cellsList);
+    //adapter.setAllItems(rowHeaderList, columnHeaderList, getListaCeldas());
 
     private void initAdapter() {
-        adapter = new AdapterTest(this);
+        adapter = new AsistenciaAdapter(this);
         table.setAdapter(adapter);
         table.setIgnoreSelectionColors(false);
         table.setHasFixedWidth(false);
@@ -122,38 +128,59 @@ public class ControlAsistenciaActivity extends BaseActivity<ControlAsistenciaVie
     }
 
     @Override
-    public void onCellClicked(@NonNull RecyclerView.ViewHolder holder, int p_nXPosition, int p_nYPosition) {
-        if (holder instanceof AsistenciaCeldasHolder) {
-            AsistenciaCeldasHolder celdasAsistenciaHolder = (AsistenciaCeldasHolder) holder;
-            Asistencia asistenciaUi = celdasAsistenciaHolder.obtenerAsistenciaUi();
-            Log.d(TAG, "asistenciaUi : " + asistenciaUi.getNombreAsistencia() + " / bollean " + asistenciaUi.isaBoolean());
-            if (asistenciaUi == null) return;
-            if (asistenciaUi.isaBoolean()) {
-                asistenciaUi.setaBoolean(false);
-            } else {
-                asistenciaUi.setaBoolean(true);
-            }
-            adapter.notifyDataSetChanged();
+    public void onCellClicked(@NonNull RecyclerView.ViewHolder holder, int column, int row) {
+        adapter.notifyDataSetChanged();
+        if (holder instanceof CeldasAsistenciaAlumnoPuntualHolder ||
+                holder instanceof CeldasAsistenciaAlumnoTardeHolder ||
+                holder instanceof CeldasAsistenciaAlumnoJustificadoHolder ||
+                holder instanceof CeldasAsistenciaAlumnoFaltoHolder) {
 
+            List<CeldasAsistencia> celdasList = adapter.getCellRowItems(row);
+            AsistenciaUi asistenciaUi = (AsistenciaUi) table.getAdapter().getCellItem(column, row);
+            for (int i = 0; i < celdasList.size(); i++) {
+                AsistenciaUi asistencia = (AsistenciaUi) celdasList.get(i);
+                if (asistencia.isPintar()) {
+                    remplazarItem(asistencia, asistenciaUi);
+                    return;
+                }
+            }
+            asistenciaUi.setPintar(true);
         }
+        adapter.notifyDataSetChanged();
     }
 
-   /* @Override
+    private void remplazarItem(AsistenciaUi asistenciaAnterior, AsistenciaUi asistenciaNueva) {
+        asistenciaAnterior.setPintar(false);
+        asistenciaNueva.setPintar(true);
+        adapter.notifyDataSetChanged();
+    }
+
+    @Override
     public void onCellLongPressed(@NonNull RecyclerView.ViewHolder holder, int column, int row) {
         // Do What you want
-        if (holder instanceof AsistenciaCeldasHolder) {
+       /* if (holder instanceof AsistenciaCeldasHolder) {
             AsistenciaCeldasHolder celdasAsistenciaHolder = (AsistenciaCeldasHolder) holder;
             Asistencia asistenciaUi = celdasAsistenciaHolder.obtenerAsistenciaUi();
             Log.d(TAG, "asistenciaUi : " + asistenciaUi.getNombreAsistencia() + " / bollean " + asistenciaUi.isaBoolean());
 
-        }
-    }*/
-
+        }*/
+    }
 
 
     @Override
-    public void onColumnHeaderClicked(@NonNull RecyclerView.ViewHolder p_jColumnHeaderView, int p_nXPosition) {
+    public void onColumnHeaderClicked(@NonNull RecyclerView.ViewHolder holder, int p_nXPosition) {
+        if (holder instanceof ColumnaTipoPresenteHolder) {
+            List<CeldasAsistencia> celdasColumnaList = adapter.getCellColumnItems(p_nXPosition);
 
+            Log.d(TAG,"celdasList : " +celdasColumnaList.size());
+
+
+            for (CeldasAsistencia celdasAsistencia : celdasColumnaList){
+                AsistenciaUi asistencia = (AsistenciaUi) celdasAsistencia;
+                asistencia.setPintar(true);
+            }
+        }
+        adapter.notifyDataSetChanged();
     }
 
     @Override

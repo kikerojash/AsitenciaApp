@@ -1,28 +1,11 @@
 package com.systemvv.grupo.asitenciaapp.asistenciaM.adapter;
 
-import android.content.Context;
-import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
 import com.evrencoskun.tableview.adapter.AbstractTableAdapter;
-import com.evrencoskun.tableview.adapter.recyclerview.holder.AbstractViewHolder;
-import com.systemvv.grupo.asitenciaapp.R;
-import com.systemvv.grupo.asitenciaapp.asistenciaM.adapter.estructura.AsistenciaCeldas;
-import com.systemvv.grupo.asitenciaapp.asistenciaM.adapter.estructura.AsistenciaColumna;
-import com.systemvv.grupo.asitenciaapp.asistenciaM.adapter.estructura.AsistenciaFilas;
-import com.systemvv.grupo.asitenciaapp.asistenciaM.adapter.holder.AsistenciaAlumnosHolder;
-import com.systemvv.grupo.asitenciaapp.asistenciaM.adapter.holder.AsistenciaCeldasHolder;
-import com.systemvv.grupo.asitenciaapp.asistenciaM.adapter.holder.AsistenciaFilasHolder;
-import com.systemvv.grupo.asitenciaapp.asistenciaM.entidad.Asistencia;
-import com.systemvv.grupo.asitenciaapp.asistenciaM.entidad.TipoAsistencia;
-import com.systemvv.grupo.asitenciaapp.cursos.entidad.AlumnosUi;
 
-public class AdapterTest extends AbstractTableAdapter<AsistenciaFilas, AsistenciaColumna, AsistenciaCeldas> {
+public class AdapterTest {
 
 
-    private final int ROW_SELECTOR_TIPO_ASISTENCIAS = 1;
+    /*private final int ROW_SELECTOR_TIPO_ASISTENCIAS = 1;
     private final int COLUMN_ALUMNO = 10;
     private final int ASISTENCIA_CELDAS = 100;
 
@@ -63,20 +46,6 @@ public class AdapterTest extends AbstractTableAdapter<AsistenciaFilas, Asistenci
         }
         return 0;
     }
-
-   /* @Override
-    public AbstractViewHolder onCreateCellViewHolder(ViewGroup parent, int viewType) {
-        RecyclerView.ViewHolder viewHolder = null;
-        LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        switch (viewType) {
-            case ASISTENCIA_CELDAS:
-                View vistaAsistenciaPuntual = layoutInflater.inflate(R.layout.tabla_celdas_asistencia_puntuales, parent, false);
-                viewHolder = new AsistenciaCeldasHolder(vistaAsistenciaPuntual);
-                break;
-        }
-        return null;
-       /// return null;
-    }*/
 
     @Override
     public RecyclerView.ViewHolder onCreateCellViewHolder(ViewGroup parent, int viewType) {
@@ -148,5 +117,5 @@ public class AdapterTest extends AbstractTableAdapter<AsistenciaFilas, Asistenci
     @Override
     public View onCreateCornerView() {
         return LayoutInflater.from(m_jContext).inflate(R.layout.tabla_vista_disenio_esquina_alumnos, null, false);
-    }
+    }*/
 }

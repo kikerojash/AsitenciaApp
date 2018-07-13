@@ -1,18 +1,8 @@
 package com.systemvv.grupo.asitenciaapp.asistenciaM.adapter.holder;
 
-import android.support.constraint.ConstraintLayout;
-import android.view.View;
-import android.widget.TextView;
 
-import com.systemvv.grupo.asitenciaapp.R;
-import com.systemvv.grupo.asitenciaapp.asistenciaM.adapter.holder.abstracto.CeldasViewHolder;
-import com.systemvv.grupo.asitenciaapp.asistenciaM.entidad.Asistencia;
-
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-
-public class AsistenciaCeldasHolder extends CeldasViewHolder<Asistencia> {
+public class AsistenciaCeldasHolder {
+        /*extends CeldasViewHolder<Asistencia> {
     @BindView(R.id.textViewValorNumerico)
     TextView textViewDatos;
     @BindView(R.id.root)
@@ -72,5 +62,5 @@ public class AsistenciaCeldasHolder extends CeldasViewHolder<Asistencia> {
 
     public Asistencia obtenerAsistenciaUi() {
         return asistenciaUi;
-    }
+    }*/
 }

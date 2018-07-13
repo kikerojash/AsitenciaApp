@@ -2,28 +2,32 @@ package com.systemvv.grupo.asitenciaapp.asistenciaM;
 
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.util.Log;
 
-import com.systemvv.grupo.asitenciaapp.asistenciaM.adapter.estructura.AsistenciaCeldas;
-import com.systemvv.grupo.asitenciaapp.asistenciaM.adapter.estructura.AsistenciaColumna;
-import com.systemvv.grupo.asitenciaapp.asistenciaM.adapter.estructura.AsistenciaFilas;
-import com.systemvv.grupo.asitenciaapp.asistenciaM.entidad.Asistencia;
-import com.systemvv.grupo.asitenciaapp.asistenciaM.entidad.TipoAsistencia;
+
+import com.systemvv.grupo.asitenciaapp.asistenciaM.adapter.estructura.CeldasAsistencia;
+import com.systemvv.grupo.asitenciaapp.asistenciaM.adapter.estructura.ColumnaCabeceraAsistencia;
+import com.systemvv.grupo.asitenciaapp.asistenciaM.adapter.estructura.FilaCabeceraAsistencia;
 import com.systemvv.grupo.asitenciaapp.base.UseCaseHandler;
 import com.systemvv.grupo.asitenciaapp.base.activity.BaseActivityPresenterImpl;
+import com.systemvv.grupo.asitenciaapp.cursos.entidad.AlumnosUi;
+import com.systemvv.grupo.asitenciaapp.cursos.entidad.AsistenciaUi;
 import com.systemvv.grupo.asitenciaapp.cursos.entidad.CursoUi;
+import com.systemvv.grupo.asitenciaapp.cursos.entidad.MotivosAsistenciaUi;
 
 import org.parceler.Parcels;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public class ControlAsistenciaPresenterImpl extends BaseActivityPresenterImpl<ControlAsistenciaView> implements ControlAsistenciaPresenter {
 
     public static final String TAG = ControlAsistenciaPresenterImpl.class.getSimpleName();
 
-    private List<AsistenciaColumna> columnHeaderList;
-    private List<List<AsistenciaCeldas>> cellsList;
-    private List<AsistenciaFilas> rowHeaderList;
+    private List<ColumnaCabeceraAsistencia> columnHeaderList;
+    private List<List<CeldasAsistencia>> cellsList;
+    private List<FilaCabeceraAsistencia> rowHeaderList;
 
     CursoUi cursoUi;
 
@@ -59,54 +63,38 @@ public class ControlAsistenciaPresenterImpl extends BaseActivityPresenterImpl<Co
 
     private void initVistas() {
         columnHeaderList = new ArrayList<>();
-        cellsList=new ArrayList<>();
-        rowHeaderList=new ArrayList<>();
+        cellsList = new ArrayList<>();
+        rowHeaderList = new ArrayList<>();
 
-        columnHeaderList.addAll(cursoUi.getAlumnosUiList());
-        rowHeaderList.addAll(getTipoAsistencia());
-        cellsList.addAll(getListaCeldas());
-        if (view!=null)view.mostrarListaTablas(columnHeaderList,rowHeaderList,getListaCeldas());
+        columnHeaderList.addAll(cursoUi.getMotivosAsistenciaUiList());
+        rowHeaderList.addAll(cursoUi.getAlumnosUiList());
+        cellsList.addAll(getCellListForSortingTest());
+
+        if (view != null) view.mostrarListaTablas(columnHeaderList, rowHeaderList, cellsList);
     }
 
-    private List<List<AsistenciaCeldas>> getListaCeldas() {
-        List<List<AsistenciaCeldas>> cellsList = new ArrayList<>();
 
-        for (int i = 0; i < 10; i++) {
-            List<AsistenciaCeldas> celdas = new ArrayList<>();
-            for (int j=0;j<3;j++){
-                Asistencia asistencia = new Asistencia();
-                asistencia.setaBoolean(false);
-                //asistencia.setTipoAsistencia(TipoAsistencia.MotivoAsistencia.TIPO_ASISTENCIA_PRESENTE.name()+"");
-                //asistencia.setNombreAsistencia("asdasdasd");
-                celdas.add(asistencia);
+
+   private List<List<CeldasAsistencia>> getCellListForSortingTest() {
+        List<List<CeldasAsistencia>> list = new ArrayList<>();
+        for (int i = 0; i < cursoUi.getAlumnosUiList().size(); i++) {
+            List<CeldasAsistencia> cellList = new ArrayList<>();
+
+            for (int j = 0; j < cursoUi.getMotivosAsistenciaUiList().size(); j++) {
+
+                AsistenciaUi asistencia = new AsistenciaUi();
+                asistencia.setPintar(false);
+                asistencia.setTipoAsistencia("" + j);
+                asistencia.setTipoAsistencia("asdasdasd" + j);
+               cellList.add(asistencia);
             }
-            cellsList.add(celdas);
+            list.add(cellList);
         }
-        return cellsList;
+        return list;
     }
 
-    private List<TipoAsistencia> getTipoAsistencia() {
-        List<TipoAsistencia> tipoAsistencias = new ArrayList<>();
 
-        TipoAsistencia tipoAsistencia = new TipoAsistencia();
-        tipoAsistencia.setMotivoAsistencia(TipoAsistencia.MotivoAsistencia.TIPO_ASISTENCIA_PRESENTE);
-        tipoAsistencias.add(tipoAsistencia);
-
-        TipoAsistencia tipoAsistencia2 = new TipoAsistencia();
-
-        tipoAsistencia2.setMotivoAsistencia(TipoAsistencia.MotivoAsistencia.TTIPO_ASISTENCIA_TARDE);
-        tipoAsistencias.add(tipoAsistencia2);
-
-        TipoAsistencia tipoAsistencia3 = new TipoAsistencia();
-        tipoAsistencia3.setMotivoAsistencia(TipoAsistencia.MotivoAsistencia.TIPO_ASISTENCIA_FALTO);
-        tipoAsistencias.add(tipoAsistencia3);
-
-
-       /* for (int i = 0;i<10;i++){
-            tipoAsistencias.add(new TipoAsistencia(Mo, "puntual"));
-        }*/
-        return tipoAsistencias;
-    }
+    //  for(AlumnosUi alumnosUi:cursoUi.getAlumnosUiList()){}
 
     @Override
     public void onListAdapter() {

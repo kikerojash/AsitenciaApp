@@ -1,8 +1,8 @@
 package com.systemvv.grupo.asitenciaapp.asistenciaM;
 
-import com.systemvv.grupo.asitenciaapp.asistenciaM.adapter.estructura.AsistenciaCeldas;
-import com.systemvv.grupo.asitenciaapp.asistenciaM.adapter.estructura.AsistenciaColumna;
-import com.systemvv.grupo.asitenciaapp.asistenciaM.adapter.estructura.AsistenciaFilas;
+import com.systemvv.grupo.asitenciaapp.asistenciaM.adapter.estructura.CeldasAsistencia;
+import com.systemvv.grupo.asitenciaapp.asistenciaM.adapter.estructura.ColumnaCabeceraAsistencia;
+import com.systemvv.grupo.asitenciaapp.asistenciaM.adapter.estructura.FilaCabeceraAsistencia;
 import com.systemvv.grupo.asitenciaapp.base.activity.BaseActivityView;
 import com.systemvv.grupo.asitenciaapp.cursos.entidad.CursoUi;
 
@@ -12,5 +12,5 @@ public interface ControlAsistenciaView extends BaseActivityView<ControlAsistenci
 
     void mostrarInformacionBasica(CursoUi cursoUi);
 
-    void mostrarListaTablas(List<AsistenciaColumna> columnHeaderList, List<AsistenciaFilas> rowHeaderList, List<List<AsistenciaCeldas>> cellsList);
+    void mostrarListaTablas(List<ColumnaCabeceraAsistencia> columnHeaderList, List<FilaCabeceraAsistencia> rowHeaderList, List<List<CeldasAsistencia>> cellsList);
 }

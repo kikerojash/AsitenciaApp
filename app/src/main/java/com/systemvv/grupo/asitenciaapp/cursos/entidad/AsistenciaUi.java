@@ -1,20 +1,20 @@
 package com.systemvv.grupo.asitenciaapp.cursos.entidad;
 
-import com.systemvv.grupo.asitenciaapp.asistencia.tablaAdapter.estructura.AsistenciaCelda;
-import com.systemvv.grupo.asitenciaapp.asistencia.tablaAdapter.estructura.AsistenciaCeldasHolderUi;
+
+import com.systemvv.grupo.asitenciaapp.asistenciaM.adapter.estructura.CeldasAsistencia;
 
 import org.parceler.Parcel;
 
 @Parcel
-public class AsistenciaUi extends AsistenciaCelda {
+public class AsistenciaUi extends CeldasAsistencia {
 
-    public enum TipoAsistencia{ASISTENCIA_PRESENTE,ASISTENCIA_TARDE,ASISTENCIA_FALTO}
+  //  public enum TipoAsistencia {ASISTENCIA_PRESENTE, ASISTENCIA_TARDE, ASISTENCIA_JUSTIFICADA, ASISTENCIA_FALTO}
     private String tipoAsistencia;
     private int justificacion;
     private MotivosAsistenciaUi motivosAsistenciaUi;
     private AlumnosUi alumnosUi;
     private boolean pintar;
-    private TipoAsistencia tipasistencia;
+ //   private TipoAsistencia tipasistencia;
 
 
     public AsistenciaUi() {
@@ -67,11 +67,11 @@ public class AsistenciaUi extends AsistenciaCelda {
         this.pintar = pintar;
     }
 
-    public TipoAsistencia getTipasistencia() {
+    /*public TipoAsistencia getTipasistencia() {
         return tipasistencia;
     }
 
     public void setTipasistencia(TipoAsistencia tipasistencia) {
         this.tipasistencia = tipasistencia;
-    }
+    }*/
 }

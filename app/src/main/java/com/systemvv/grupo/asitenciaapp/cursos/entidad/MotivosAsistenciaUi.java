@@ -1,21 +1,24 @@
 package com.systemvv.grupo.asitenciaapp.cursos.entidad;
 
-import com.systemvv.grupo.asitenciaapp.asistencia.tablaAdapter.estructura.AsistenciaCelda;
+
+import com.systemvv.grupo.asitenciaapp.asistenciaM.adapter.estructura.ColumnaCabeceraAsistencia;
 
 import org.parceler.Parcel;
 
 import java.util.List;
 
 @Parcel
-public class MotivosAsistenciaUi extends AsistenciaCelda {
+public class MotivosAsistenciaUi extends ColumnaCabeceraAsistencia {
 
     public static final int TIPO_ASISTENCIA_PUNTUAL = 1;
     public static final int TIPO_ASISTENCIA_TARDE = 2;
     public static final int TIPO_ASISTENCIA_TARDE_JUSTIFICADO = 3;
     public static final int TIPO_ASISTENCIA_FALTO = 4;
+
     private int tipoMotivo;
     private String justificacion;
     private List<AsistenciaUi> asistenciaUiList;
+
 
     public MotivosAsistenciaUi() {
     }
@@ -49,4 +52,12 @@ public class MotivosAsistenciaUi extends AsistenciaCelda {
     public void setAsistenciaUiList(List<AsistenciaUi> asistenciaUiList) {
         this.asistenciaUiList = asistenciaUiList;
     }
+
+    /*public AlumnosUi getAlumnosUi() {
+        return alumnosUi;
+    }
+
+    public void setAlumnosUi(AlumnosUi alumnosUi) {
+        this.alumnosUi = alumnosUi;
+    }*/
 }
