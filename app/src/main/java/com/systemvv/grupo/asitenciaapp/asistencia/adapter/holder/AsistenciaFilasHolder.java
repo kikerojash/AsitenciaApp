@@ -1,4 +1,4 @@
-package com.systemvv.grupo.asitenciaapp.asistenciaM.adapter.holder;
+package com.systemvv.grupo.asitenciaapp.asistencia.adapter.holder;
 
 
 

@@ -1,4 +1,4 @@
-package com.systemvv.grupo.asitenciaapp.asistenciaM.adapter;
+package com.systemvv.grupo.asitenciaapp.asistencia.adapter;
 
 import com.evrencoskun.tableview.adapter.AbstractTableAdapter;
 

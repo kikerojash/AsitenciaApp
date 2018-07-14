@@ -4,9 +4,9 @@ import org.parceler.Parcel;
 
 @Parcel
 public class SeccionUi {
-    private int grado;
-    private String seccion;
-    private InstitutoUi instituto;
+    public int grado;
+    public String seccion;
+    public InstitutoUi instituto;
 
     public SeccionUi() {
     }

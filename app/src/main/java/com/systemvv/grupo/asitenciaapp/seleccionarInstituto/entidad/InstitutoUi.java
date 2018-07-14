@@ -6,11 +6,11 @@ import java.util.List;
 
 @Parcel
 public class InstitutoUi {
-    private String nombre;
-    private String image;
-    private String cede;
-    private String direccion;
-    private List<SeccionUi> seccionList;
+    public String nombre;
+    public String image;
+    public String cede;
+    public String direccion;
+    public List<SeccionUi> seccionList;
 
     public InstitutoUi() {
     }

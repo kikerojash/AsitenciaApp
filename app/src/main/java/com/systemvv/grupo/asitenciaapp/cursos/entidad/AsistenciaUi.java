@@ -1,20 +1,20 @@
 package com.systemvv.grupo.asitenciaapp.cursos.entidad;
 
 
-import com.systemvv.grupo.asitenciaapp.asistenciaM.adapter.estructura.CeldasAsistencia;
+import com.systemvv.grupo.asitenciaapp.asistencia.adapter.estructura.CeldasAsistencia;
 
 import org.parceler.Parcel;
 
 @Parcel
 public class AsistenciaUi extends CeldasAsistencia {
 
-  //  public enum TipoAsistencia {ASISTENCIA_PRESENTE, ASISTENCIA_TARDE, ASISTENCIA_JUSTIFICADA, ASISTENCIA_FALTO}
-    private String tipoAsistencia;
-    private int justificacion;
-    private MotivosAsistenciaUi motivosAsistenciaUi;
-    private AlumnosUi alumnosUi;
-    private boolean pintar;
- //   private TipoAsistencia tipasistencia;
+    //  public enum TipoAsistencia {ASISTENCIA_PRESENTE, ASISTENCIA_TARDE, ASISTENCIA_JUSTIFICADA, ASISTENCIA_FALTO}
+    public String tipoAsistencia;
+    public int justificacion;
+    public MotivosAsistenciaUi motivosAsistenciaUi;
+    public AlumnosUi alumnosUi;
+    public boolean pintar;
+    //   private TipoAsistencia tipasistencia;
 
 
     public AsistenciaUi() {

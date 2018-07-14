@@ -1,7 +1,7 @@
 package com.systemvv.grupo.asitenciaapp.cursos.entidad;
 
 
-import com.systemvv.grupo.asitenciaapp.asistenciaM.adapter.estructura.ColumnaCabeceraAsistencia;
+import com.systemvv.grupo.asitenciaapp.asistencia.adapter.estructura.ColumnaCabeceraAsistencia;
 
 import org.parceler.Parcel;
 
@@ -15,9 +15,9 @@ public class MotivosAsistenciaUi extends ColumnaCabeceraAsistencia {
     public static final int TIPO_ASISTENCIA_TARDE_JUSTIFICADO = 3;
     public static final int TIPO_ASISTENCIA_FALTO = 4;
 
-    private int tipoMotivo;
-    private String justificacion;
-    private List<AsistenciaUi> asistenciaUiList;
+    public int tipoMotivo;
+    public String justificacion;
+    public List<AsistenciaUi> asistenciaUiList;
 
 
     public MotivosAsistenciaUi() {

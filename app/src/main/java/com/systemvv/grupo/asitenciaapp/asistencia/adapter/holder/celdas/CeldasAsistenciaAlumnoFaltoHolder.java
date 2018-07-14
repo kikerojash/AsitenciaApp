@@ -1,4 +1,4 @@
-package com.systemvv.grupo.asitenciaapp.asistenciaM.adapter.holder.celdas;
+package com.systemvv.grupo.asitenciaapp.asistencia.adapter.holder.celdas;
 
 import android.support.constraint.ConstraintLayout;
 import android.view.View;

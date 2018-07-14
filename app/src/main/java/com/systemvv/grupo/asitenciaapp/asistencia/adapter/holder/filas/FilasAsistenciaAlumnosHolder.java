@@ -1,4 +1,4 @@
-package com.systemvv.grupo.asitenciaapp.asistenciaM.adapter.holder.filas;
+package com.systemvv.grupo.asitenciaapp.asistencia.adapter.holder.filas;
 
 import android.view.View;
 import android.widget.ImageView;

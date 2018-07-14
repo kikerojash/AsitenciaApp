@@ -1,4 +1,4 @@
-package com.systemvv.grupo.asitenciaapp.asistenciaM.adapter;
+package com.systemvv.grupo.asitenciaapp.asistencia.adapter;
 
 import android.content.Context;
 import android.util.Log;
@@ -8,17 +8,17 @@ import android.view.ViewGroup;
 import com.systemvv.grupo.asitenciaapp.R;
 import com.evrencoskun.tableview.adapter.AbstractTableAdapter;
 import com.evrencoskun.tableview.adapter.recyclerview.holder.AbstractViewHolder;
-import com.systemvv.grupo.asitenciaapp.asistenciaM.adapter.estructura.CeldasAsistencia;
-import com.systemvv.grupo.asitenciaapp.asistenciaM.adapter.estructura.ColumnaCabeceraAsistencia;
-import com.systemvv.grupo.asitenciaapp.asistenciaM.adapter.estructura.FilaCabeceraAsistencia;
-import com.systemvv.grupo.asitenciaapp.asistenciaM.adapter.holder.celdas.CeldasAsistenciaAlumnoFaltoHolder;
-import com.systemvv.grupo.asitenciaapp.asistenciaM.adapter.holder.celdas.CeldasAsistenciaAlumnoJustificadoHolder;
-import com.systemvv.grupo.asitenciaapp.asistenciaM.adapter.holder.celdas.CeldasAsistenciaAlumnoPuntualHolder;
-import com.systemvv.grupo.asitenciaapp.asistenciaM.adapter.holder.celdas.CeldasAsistenciaAlumnoTardeHolder;
-import com.systemvv.grupo.asitenciaapp.asistenciaM.adapter.holder.columnas.ColumnaTipoFaltoHolder;
-import com.systemvv.grupo.asitenciaapp.asistenciaM.adapter.holder.columnas.ColumnaTipoPresenteHolder;
-import com.systemvv.grupo.asitenciaapp.asistenciaM.adapter.holder.columnas.ColumnaTipoTardeHolder;
-import com.systemvv.grupo.asitenciaapp.asistenciaM.adapter.holder.filas.FilasAsistenciaAlumnosHolder;
+import com.systemvv.grupo.asitenciaapp.asistencia.adapter.estructura.CeldasAsistencia;
+import com.systemvv.grupo.asitenciaapp.asistencia.adapter.estructura.ColumnaCabeceraAsistencia;
+import com.systemvv.grupo.asitenciaapp.asistencia.adapter.estructura.FilaCabeceraAsistencia;
+import com.systemvv.grupo.asitenciaapp.asistencia.adapter.holder.celdas.CeldasAsistenciaAlumnoFaltoHolder;
+import com.systemvv.grupo.asitenciaapp.asistencia.adapter.holder.celdas.CeldasAsistenciaAlumnoJustificadoHolder;
+import com.systemvv.grupo.asitenciaapp.asistencia.adapter.holder.celdas.CeldasAsistenciaAlumnoPuntualHolder;
+import com.systemvv.grupo.asitenciaapp.asistencia.adapter.holder.celdas.CeldasAsistenciaAlumnoTardeHolder;
+import com.systemvv.grupo.asitenciaapp.asistencia.adapter.holder.columnas.ColumnaTipoFaltoHolder;
+import com.systemvv.grupo.asitenciaapp.asistencia.adapter.holder.columnas.ColumnaTipoPresenteHolder;
+import com.systemvv.grupo.asitenciaapp.asistencia.adapter.holder.columnas.ColumnaTipoTardeHolder;
+import com.systemvv.grupo.asitenciaapp.asistencia.adapter.holder.filas.FilasAsistenciaAlumnosHolder;
 import com.systemvv.grupo.asitenciaapp.cursos.entidad.AlumnosUi;
 import com.systemvv.grupo.asitenciaapp.cursos.entidad.AsistenciaUi;
 import com.systemvv.grupo.asitenciaapp.cursos.entidad.MotivosAsistenciaUi;
@@ -81,7 +81,8 @@ public class AsistenciaAdapter extends AbstractTableAdapter<ColumnaCabeceraAsist
             if (cell instanceof AsistenciaUi) {
                 AsistenciaUi asistenciaUi = (AsistenciaUi) cell;
                 AlumnosUi alumnosUi = asistenciaUi.getAlumnosUi();
-                //Log.d(TAG,"getCellItemViewTypeTipo : "+alumnosUi.getTipoAsistencia() );
+                Log.d(TAG,"getCellItemViewTypeTipo : "+alumnosUi.getTipoAsistencia()
+                +"AlumnoNombre: " +alumnosUi.getNombre());
                 if (alumnosUi == null) return 0;
                 if (alumnosUi.getTipoAsistencia() == TIPO_ASISTENCIA_CELDAS_ALUMNOS_PUNTUAL) {
                     Log.d(TAG,"TIPO_ASISTENCIA_CELDAS_ALUMNOS_PUNTUAL : " );

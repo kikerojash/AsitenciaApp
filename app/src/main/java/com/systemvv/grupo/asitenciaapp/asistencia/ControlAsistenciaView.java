@@ -1,8 +1,8 @@
-package com.systemvv.grupo.asitenciaapp.asistenciaM;
+package com.systemvv.grupo.asitenciaapp.asistencia;
 
-import com.systemvv.grupo.asitenciaapp.asistenciaM.adapter.estructura.CeldasAsistencia;
-import com.systemvv.grupo.asitenciaapp.asistenciaM.adapter.estructura.ColumnaCabeceraAsistencia;
-import com.systemvv.grupo.asitenciaapp.asistenciaM.adapter.estructura.FilaCabeceraAsistencia;
+import com.systemvv.grupo.asitenciaapp.asistencia.adapter.estructura.CeldasAsistencia;
+import com.systemvv.grupo.asitenciaapp.asistencia.adapter.estructura.ColumnaCabeceraAsistencia;
+import com.systemvv.grupo.asitenciaapp.asistencia.adapter.estructura.FilaCabeceraAsistencia;
 import com.systemvv.grupo.asitenciaapp.base.activity.BaseActivityView;
 import com.systemvv.grupo.asitenciaapp.cursos.entidad.CursoUi;
 

@@ -1,19 +1,19 @@
 package com.systemvv.grupo.asitenciaapp.cursos.entidad;
 
-import com.systemvv.grupo.asitenciaapp.asistenciaM.adapter.estructura.FilaCabeceraAsistencia;
+import com.systemvv.grupo.asitenciaapp.asistencia.adapter.estructura.FilaCabeceraAsistencia;
 
 import org.parceler.Parcel;
 
 @Parcel
 //public class AlumnosUi extends AsistenciaColumnaCabecera {
 public class AlumnosUi extends FilaCabeceraAsistencia {
-    private int conteo;
-    private String nombre;
-    private String apellido;
-    private String foto;
-    private AsistenciaUi asistenciaUi;
-    private MotivosAsistenciaUi motivosAsistenciaUi;
-    private int tipoAsistencia;
+    public int conteo;
+    public String nombre;
+    public String apellido;
+    public String foto;
+    public AsistenciaUi asistenciaUi;
+    public MotivosAsistenciaUi motivosAsistenciaUi;
+    public int tipoAsistencia;
 
 
     public AlumnosUi() {

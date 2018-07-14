@@ -1,4 +1,4 @@
-package com.systemvv.grupo.asitenciaapp.asistenciaM.adapter.holder.celdas;
+package com.systemvv.grupo.asitenciaapp.asistencia.adapter.holder.celdas;
 
 import android.support.constraint.ConstraintLayout;
 import android.view.View;
@@ -11,14 +11,14 @@ import com.systemvv.grupo.asitenciaapp.cursos.entidad.AsistenciaUi;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class CeldasAsistenciaAlumnoTardeHolder extends AbstractViewHolder {
-
+public class CeldasAsistenciaAlumnoPuntualHolder extends AbstractViewHolder {
     @BindView(R.id.textViewValorNumerico)
     TextView textViewDatos;
     @BindView(R.id.root)
     ConstraintLayout fondo;
 
-    public CeldasAsistenciaAlumnoTardeHolder(View itemView) {
+
+    public CeldasAsistenciaAlumnoPuntualHolder(View itemView) {
         super(itemView);
         ButterKnife.bind(this,itemView);
     }
@@ -26,7 +26,7 @@ public class CeldasAsistenciaAlumnoTardeHolder extends AbstractViewHolder {
     public void bind(AsistenciaUi asistencia) {
         textViewDatos.setText("X");
         if (asistencia.isPintar()) {
-            fondo.setBackgroundColor(itemView.getResources().getColor(R.color.md_orange_500));
+            fondo.setBackgroundColor(itemView.getResources().getColor(R.color.md_green_500));
         } else {
             fondo.setBackgroundColor(itemView.getResources().getColor(R.color.md_white_1000));
         }

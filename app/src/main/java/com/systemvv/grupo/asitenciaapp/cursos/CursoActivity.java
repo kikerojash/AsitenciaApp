@@ -10,7 +10,7 @@ import android.view.MenuInflater;
 import android.widget.ProgressBar;
 
 import com.systemvv.grupo.asitenciaapp.R;
-import com.systemvv.grupo.asitenciaapp.asistenciaM.ControlAsistenciaActivity;
+import com.systemvv.grupo.asitenciaapp.asistencia.ControlAsistenciaActivity;
 import com.systemvv.grupo.asitenciaapp.base.UseCaseHandler;
 import com.systemvv.grupo.asitenciaapp.base.UseCaseThreadPoolScheduler;
 import com.systemvv.grupo.asitenciaapp.base.activity.BaseActivity;

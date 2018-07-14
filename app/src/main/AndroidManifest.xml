@@ -38,7 +38,7 @@
         </activity>
 
 
-        <activity android:name=".asistenciaM.ControlAsistenciaActivity"></activity>
+        <activity android:name=".asistencia.ControlAsistenciaActivity"></activity>
     </application>
 
 </manifest>
