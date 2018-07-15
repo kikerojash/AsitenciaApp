@@ -201,12 +201,12 @@ public class ControlAsistenciaActivity extends BaseActivity<ControlAsistenciaVie
     @Override
     public void onCellLongPressed(@NonNull RecyclerView.ViewHolder holder, int column, int row) {
         // Do What you want
-       /* if (holder instanceof AsistenciaCeldasHolder) {
-            AsistenciaCeldasHolder celdasAsistenciaHolder = (AsistenciaCeldasHolder) holder;
-            Asistencia asistenciaUi = celdasAsistenciaHolder.obtenerAsistenciaUi();
-            Log.d(TAG, "asistenciaUi : " + asistenciaUi.getNombreAsistencia() + " / bollean " + asistenciaUi.isaBoolean());
+        if (holder instanceof CeldasAsistenciaAlumnoTardeHolder) {
+            CeldasAsistenciaAlumnoTardeHolder celdasAsistenciaHolder = (CeldasAsistenciaAlumnoTardeHolder) holder;
+            AsistenciaUi asistenciaUi = (AsistenciaUi) table.getAdapter().getCellItem(column, row);
+            AlumnosUi alumnosUi = asistenciaUi.getAlumnosUi();
 
-        }*/
+        }
     }
 
 

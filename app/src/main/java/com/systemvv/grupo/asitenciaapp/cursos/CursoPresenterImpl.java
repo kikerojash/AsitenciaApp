@@ -109,6 +109,7 @@ public class CursoPresenterImpl extends BaseActivityPresenterImpl<CursoView> imp
         asistenciaPuntual.setAlumnosUi(alumnoJuanM);
         alumnoJuanM.setTipoAsistencia(MotivosAsistenciaUi.TIPO_ASISTENCIA_PUNTUAL);
 
+        asistenciaUiListPuntuales.add(asistenciaPuntual);
 
         alumnosUiList.add(alumnoJuanManuel);
         alumnosUiList.add(alumnoRonald);
@@ -128,7 +129,7 @@ public class CursoPresenterImpl extends BaseActivityPresenterImpl<CursoView> imp
 
         AsistenciaUi asistenciaTarde = new AsistenciaUi();
         asistenciaTarde.setJustificacion(MotivosAsistenciaUi.TIPO_ASISTENCIA_TARDE);
-       // asistenciaTarde.setTipasistencia(AsistenciaUi.TipoAsistencia.ASISTENCIA_TARDE);
+        // asistenciaTarde.setTipasistencia(AsistenciaUi.TipoAsistencia.ASISTENCIA_TARDE);
         asistenciaTarde.setTipoAsistencia("Tarde");
         asistenciaTarde.setPintar(false);
 
@@ -146,6 +147,7 @@ public class CursoPresenterImpl extends BaseActivityPresenterImpl<CursoView> imp
 
         asistenciaTarde.setMotivosAsistenciaUi(motivosAsistenciaTardeUi);
         asistenciaUiLista.add(asistenciaTarde);
+        asistenciaUiListTardes.add(asistenciaTarde);
         motivosAsistenciaTardeUi.setAsistenciaUiList(asistenciaUiListTardes);
 
 
@@ -186,6 +188,7 @@ public class CursoPresenterImpl extends BaseActivityPresenterImpl<CursoView> imp
 
         asistenciaFalto.setMotivosAsistenciaUi(motivosAsistenciaFaltoUi);
         asistenciaUiLista.add(asistenciaFalto);
+        asistenciaUiListFaltaron.add(asistenciaFalto);
         motivosAsistenciaFaltoUi.setAsistenciaUiList(asistenciaUiListFaltaron);
 
 

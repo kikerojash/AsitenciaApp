@@ -126,6 +126,7 @@ public class SeccionDialog extends DialogFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.dialog_fragment_seccion, container, false);
         ButterKnife.bind(this, v);
+        this.getDialog().requestWindowFeature(STYLE_NO_TITLE);
         return v;
     }
 

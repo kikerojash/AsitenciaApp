@@ -80,7 +80,22 @@ public class AsistenciaAdapter extends AbstractTableAdapter<ColumnaCabeceraAsist
             CeldasAsistencia cell = mCellItems.get(0).get(position);
             if (cell instanceof AsistenciaUi) {
                 AsistenciaUi asistenciaUi = (AsistenciaUi) cell;
-                AlumnosUi alumnosUi = asistenciaUi.getAlumnosUi();
+
+                if (asistenciaUi.getJustificacion() == TIPO_ASISTENCIA_CELDAS_ALUMNOS_PUNTUAL) {
+                    Log.d(TAG,"TIPO_ASISTENCIA_CELDAS_ALUMNOS_PUNTUAL : " );
+                    return TIPO_ASISTENCIA_CELDAS_ALUMNOS_PUNTUAL;
+                } else if (asistenciaUi.getJustificacion() == TIPO_ASISTENCIA_CELDAS_ALUMNOS_TARDE) {
+                    Log.d(TAG,"TIPO_ASISTENCIA_CELDAS_ALUMNOS_TARDE : " );
+                    return TIPO_ASISTENCIA_CELDAS_ALUMNOS_TARDE;
+                } else if (asistenciaUi.getJustificacion() == TIPO_ASISTENCIA_CELDAS_ALUMNOS_TARDE_JUSTIFICADO) {
+                    Log.d(TAG,"TIPO_ASISTENCIA_CELDAS_ALUMNOS_TARDE_JUSTIFICADO : " );
+                    return TIPO_ASISTENCIA_CELDAS_ALUMNOS_TARDE_JUSTIFICADO;
+                } else if (asistenciaUi.getJustificacion() == TIPO_ASISTENCIA_CELDAS_ALUMNOS_FALTO) {
+                    Log.d(TAG,"TIPO_ASISTENCIA_CELDAS_ALUMNOS_FALTO : " );
+                    return TIPO_ASISTENCIA_CELDAS_ALUMNOS_FALTO;
+                }
+
+               /* AlumnosUi alumnosUi = asistenciaUi.getAlumnosUi();
                 Log.d(TAG,"getCellItemViewTypeTipo : "+alumnosUi.getTipoAsistencia()
                 +"AlumnoNombre: " +alumnosUi.getNombre());
                 if (alumnosUi == null) return 0;
@@ -96,7 +111,7 @@ public class AsistenciaAdapter extends AbstractTableAdapter<ColumnaCabeceraAsist
                 } else if (alumnosUi.getTipoAsistencia() == TIPO_ASISTENCIA_CELDAS_ALUMNOS_FALTO) {
                     Log.d(TAG,"TIPO_ASISTENCIA_CELDAS_ALUMNOS_FALTO : " );
                     return TIPO_ASISTENCIA_CELDAS_ALUMNOS_FALTO;
-                }
+                }*/
             }
         }
         return 0;

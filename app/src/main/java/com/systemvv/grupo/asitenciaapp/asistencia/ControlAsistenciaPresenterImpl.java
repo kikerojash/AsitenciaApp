@@ -102,25 +102,43 @@ public class ControlAsistenciaPresenterImpl extends BaseActivityPresenterImpl<Co
             for (int j = 0; j < cursoUi.getMotivosAsistenciaUiList().size(); j++) {
                 MotivosAsistenciaUi motivosAsistenciaUi = cursoUi.getMotivosAsistenciaUiList().get(j);
 
-                AsistenciaUi asistencia = new AsistenciaUi();
-                asistencia.setPintar(false);
-                asistencia.setTipoAsistencia("asdasdasd" + j);
-
-                if (alumnosUi.getTipoAsistencia() == 1) {
-                    asistencia.setAlumnosUi(alumnosUi);
-                    Log.d(TAG, "alumnosUi.getTipoAsistencia() 1: " + motivosAsistenciaUi.getTipoMotivo());
-                }else if (alumnosUi.getTipoAsistencia() == 2) {
-                    asistencia.setAlumnosUi(alumnosUi);
-                    Log.d(TAG, "alumnosUi.getTipoAsistencia() 2: " + motivosAsistenciaUi.getTipoMotivo());
-                }else if (alumnosUi.getTipoAsistencia() == 3) {
-                    asistencia.setAlumnosUi(alumnosUi);
-                    Log.d(TAG, "alumnosUi.getTipoAsistencia() 3: " + motivosAsistenciaUi.getTipoMotivo());
-                }else if (alumnosUi.getTipoAsistencia() == 4) {
-                    asistencia.setAlumnosUi(alumnosUi);
-                    Log.d(TAG, "alumnosUi.getTipoAsistencia() 4: " + motivosAsistenciaUi.getTipoMotivo());
+                Log.d(TAG,"MotivoAsistencia : " + motivosAsistenciaUi.getAsistenciaUiList().size());
+                for (AsistenciaUi asistenciaUi :motivosAsistenciaUi.getAsistenciaUiList()){
+                    Log.d(TAG, "CURSO::ASISTENCIA : " + cursoUi.getAsistenciaUis().size());
+                    if (asistenciaUi.getJustificacion() == 1) {
+                        AsistenciaUi asistencia = new AsistenciaUi();
+                        asistencia.setPintar(false);
+                        asistencia.setJustificacion(MotivosAsistenciaUi.TIPO_ASISTENCIA_PUNTUAL);
+                        asistencia.setTipoAsistencia("asdasdasd" + j);
+                        asistencia.setAlumnosUi(alumnosUi);
+                        cellList.add(asistencia);
+                        Log.d(TAG, "alumnosUi.getTipoAsistencia() 1: " + motivosAsistenciaUi.getTipoMotivo());
+                    } else if (asistenciaUi.getJustificacion() == 2) {
+                        AsistenciaUi asistencia = new AsistenciaUi();
+                        asistencia.setPintar(false);
+                        asistencia.setJustificacion(MotivosAsistenciaUi.TIPO_ASISTENCIA_TARDE);
+                        asistencia.setTipoAsistencia("asdasdasd" + j);
+                        asistencia.setAlumnosUi(alumnosUi);
+                        cellList.add(asistencia);
+                        Log.d(TAG, "alumnosUi.getTipoAsistencia() 2: " + motivosAsistenciaUi.getTipoMotivo());
+                    } else if (asistenciaUi.getJustificacion() == 3) {
+                        AsistenciaUi asistencia = new AsistenciaUi();
+                        asistencia.setPintar(false);
+                        asistencia.setJustificacion(MotivosAsistenciaUi.TIPO_ASISTENCIA_TARDE_JUSTIFICADO);
+                        asistencia.setTipoAsistencia("asdasdasd" + j);
+                        asistencia.setAlumnosUi(alumnosUi);
+                        cellList.add(asistencia);
+                        Log.d(TAG, "alumnosUi.getTipoAsistencia() 3: " + motivosAsistenciaUi.getTipoMotivo());
+                    } else if (asistenciaUi.getJustificacion() == 4) {
+                        AsistenciaUi asistencia = new AsistenciaUi();
+                        asistencia.setPintar(false);
+                        asistencia.setJustificacion(MotivosAsistenciaUi.TIPO_ASISTENCIA_FALTO);
+                        asistencia.setTipoAsistencia("asdasdasd" + j);
+                        asistencia.setAlumnosUi(alumnosUi);
+                        cellList.add(asistencia);
+                        Log.d(TAG, "alumnosUi.getTipoAsistencia() 4: " + motivosAsistenciaUi.getTipoMotivo());
+                    }
                 }
-
-                cellList.add(asistencia);
             }
             list.add(cellList);
         }
