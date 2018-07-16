@@ -8,13 +8,14 @@ import org.parceler.Parcel;
 @Parcel
 public class AsistenciaUi extends CeldasAsistencia {
 
-    //  public enum TipoAsistencia {ASISTENCIA_PRESENTE, ASISTENCIA_TARDE, ASISTENCIA_JUSTIFICADA, ASISTENCIA_FALTO}
+    public enum TipoAsistencia {ASISTENCIA_TARDE, ASISTENCIA_TARDE_JUSTIFICADA, ASISTENCIA_FALTO, ASISTENCIA_FALTO_JUSTIFICADA}
+
     public String tipoAsistencia;
     public int justificacion;
     public MotivosAsistenciaUi motivosAsistenciaUi;
     public AlumnosUi alumnosUi;
     public boolean pintar;
-    //   private TipoAsistencia tipasistencia;
+    public TipoAsistencia tipasistencia;
 
 
     public AsistenciaUi() {
@@ -25,6 +26,8 @@ public class AsistenciaUi extends CeldasAsistencia {
         this.justificacion = justificacion;
         this.motivosAsistenciaUi = motivosAsistenciaUi;
         this.alumnosUi = alumnosUi;
+        this.tipasistencia = TipoAsistencia.ASISTENCIA_TARDE;
+
     }
 
     public String getTipoAsistencia() {
@@ -67,11 +70,11 @@ public class AsistenciaUi extends CeldasAsistencia {
         this.pintar = pintar;
     }
 
-    /*public TipoAsistencia getTipasistencia() {
+    public TipoAsistencia getTipasistencia() {
         return tipasistencia;
     }
 
     public void setTipasistencia(TipoAsistencia tipasistencia) {
         this.tipasistencia = tipasistencia;
-    }*/
+    }
 }

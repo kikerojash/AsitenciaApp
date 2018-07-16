@@ -17,5 +17,7 @@ public interface LoginView extends BaseActivityView<LoginPresenter> {
 
     void initSeleccionarInstituto(String usuario,String clave);
 
+    void initVistaPadre(String usuarioPadre,String ClavePadre);
+
 
 }

@@ -1,5 +1,7 @@
 package com.systemvv.grupo.asitenciaapp.login;
 
+import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -13,6 +15,8 @@ import com.systemvv.grupo.asitenciaapp.R;
 import com.systemvv.grupo.asitenciaapp.base.UseCaseHandler;
 import com.systemvv.grupo.asitenciaapp.base.UseCaseThreadPoolScheduler;
 import com.systemvv.grupo.asitenciaapp.base.activity.BaseActivity;
+import com.systemvv.grupo.asitenciaapp.padre.HijosActivity;
+import com.systemvv.grupo.asitenciaapp.padre.dialogHijos.DialogHijos;
 import com.systemvv.grupo.asitenciaapp.seleccionarInstituto.InstitutoActivity;
 
 import butterknife.BindView;
@@ -142,5 +146,14 @@ public class LoginActivity extends BaseActivity<LoginView, LoginPresenter> imple
         intent.putExtra("datousuario", usuario);
         intent.putExtra("datoclave", clave);
         startActivity(intent);
+    }
+
+    @Override
+    public void initVistaPadre(String usuarioPadre, String ClavePadre) {
+        Intent intent = new Intent(this, HijosActivity.class);
+      /*  intent.putExtra("datousuario", usuario);
+        intent.putExtra("datoclave", clave);*/
+        startActivity(intent);
+
     }
 }

@@ -20,15 +20,37 @@ public class CeldasAsistenciaAlumnoTardeHolder extends AbstractViewHolder {
 
     public CeldasAsistenciaAlumnoTardeHolder(View itemView) {
         super(itemView);
-        ButterKnife.bind(this,itemView);
+        ButterKnife.bind(this, itemView);
     }
 
     public void bind(AsistenciaUi asistencia) {
         textViewDatos.setText("X");
+       // validacionPintar(asistencia);
         if (asistencia.isPintar()) {
             fondo.setBackgroundColor(itemView.getResources().getColor(R.color.md_orange_500));
         } else {
             fondo.setBackgroundColor(itemView.getResources().getColor(R.color.md_white_1000));
+        }
+    }
+
+    private void validacionPintar(AsistenciaUi asistencia) {
+        switch (asistencia.getTipasistencia()) {
+            case ASISTENCIA_TARDE:
+                if (asistencia.isPintar()) {
+                    fondo.setBackgroundColor(itemView.getResources().getColor(R.color.md_orange_500));
+                } else {
+                    fondo.setBackgroundColor(itemView.getResources().getColor(R.color.md_white_1000));
+                }
+                break;
+            case ASISTENCIA_TARDE_JUSTIFICADA:
+                if (asistencia.isPintar()) {
+                    fondo.setBackgroundColor(itemView.getResources().getColor(R.color.md_yellow_500));
+                } else {
+                    fondo.setBackgroundColor(itemView.getResources().getColor(R.color.md_white_1000));
+                }
+                break;
+            default:
+                break;
         }
     }
 }

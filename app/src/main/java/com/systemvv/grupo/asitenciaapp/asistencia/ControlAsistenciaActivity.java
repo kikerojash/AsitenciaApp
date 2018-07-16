@@ -3,6 +3,7 @@ package com.systemvv.grupo.asitenciaapp.asistencia;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
+import android.os.Parcel;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
@@ -28,13 +29,16 @@ import com.systemvv.grupo.asitenciaapp.asistencia.adapter.holder.celdas.CeldasAs
 import com.systemvv.grupo.asitenciaapp.asistencia.adapter.holder.celdas.CeldasAsistenciaAlumnoPuntualHolder;
 import com.systemvv.grupo.asitenciaapp.asistencia.adapter.holder.celdas.CeldasAsistenciaAlumnoTardeHolder;
 import com.systemvv.grupo.asitenciaapp.asistencia.adapter.holder.columnas.ColumnaTipoPresenteHolder;
+import com.systemvv.grupo.asitenciaapp.asistencia.adapter.holder.filas.FilasAsistenciaAlumnosHolder;
 import com.systemvv.grupo.asitenciaapp.asistencia.adapter.justificacion.JustificacionDialog;
+import com.systemvv.grupo.asitenciaapp.asistencia.adapter.justificacion.listener.JustificacionListener;
 import com.systemvv.grupo.asitenciaapp.base.UseCaseHandler;
 import com.systemvv.grupo.asitenciaapp.base.UseCaseThreadPoolScheduler;
 import com.systemvv.grupo.asitenciaapp.base.activity.BaseActivity;
 import com.systemvv.grupo.asitenciaapp.cursos.entidad.AlumnosUi;
 import com.systemvv.grupo.asitenciaapp.cursos.entidad.AsistenciaUi;
 import com.systemvv.grupo.asitenciaapp.cursos.entidad.CursoUi;
+import com.systemvv.grupo.asitenciaapp.cursos.entidad.MotivosAsistenciaUi;
 import com.systemvv.grupo.asitenciaapp.seleccionarInstituto.dialogSeccion.SeccionDialog;
 
 import org.parceler.Parcels;
@@ -45,7 +49,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class ControlAsistenciaActivity extends BaseActivity<ControlAsistenciaView, ControlAsistenciaPresenter> implements ControlAsistenciaView, ITableViewListener {
+public class ControlAsistenciaActivity extends BaseActivity<ControlAsistenciaView, ControlAsistenciaPresenter>
+        implements ControlAsistenciaView, ITableViewListener,JustificacionListener {
 
     public static final String TAG = ControlAsistenciaActivity.class.getSimpleName();
 
@@ -137,53 +142,47 @@ public class ControlAsistenciaActivity extends BaseActivity<ControlAsistenciaVie
 
     @Override
     public void onCellClicked(@NonNull RecyclerView.ViewHolder holder, int column, int row) {
-       /* if (clickColumn == true) {
+        if (clickColumn == true) {
             if (holder instanceof CeldasAsistenciaAlumnoPuntualHolder ||
                     holder instanceof CeldasAsistenciaAlumnoTardeHolder ||
                     holder instanceof CeldasAsistenciaAlumnoJustificadoHolder ||
                     holder instanceof CeldasAsistenciaAlumnoFaltoHolder) {
-
-                List<CeldasAsistencia> celdasList = adapter.getCellRowItems(row);
                 AsistenciaUi asistenciaUi = (AsistenciaUi) table.getAdapter().getCellItem(column, row);
-                for (int i = 0; i < celdasList.size(); i++) {
-                    AsistenciaUi asistencia = (AsistenciaUi) celdasList.get(i);
-                    if (asistencia.isPintar()) {
-                        remplazarItem(asistencia, asistenciaUi);
-                        return;
-                    }
-                }
-                asistenciaUi.setPintar(true);
+                List<CeldasAsistencia> celdasList = adapter.getCellRowItems(row);
+
+                pintandoCeldas(asistenciaUi, celdasList);
+                AlumnosUi alumnosUi = asistenciaUi.getAlumnosUi();
             }
             adapter.notifyDataSetChanged();
         }else {
             Toast.makeText(getApplicationContext(),"Seleccione todos los items primero ",Toast.LENGTH_SHORT).show();
-        }*/
+        }
 
 
-        if (clickColumn == true) {
+        /*if (clickColumn == true) {
             List<CeldasAsistencia> celdasList = adapter.getCellRowItems(row);
             AsistenciaUi asistenciaUi = (AsistenciaUi) table.getAdapter().getCellItem(column, row);
             if (holder instanceof CeldasAsistenciaAlumnoPuntualHolder) {
                 pintandoCeldas(asistenciaUi, celdasList);
                 AlumnosUi alumnosUi = asistenciaUi.getAlumnosUi();
-                Log.d(TAG,"alumnosUiPuntual : "+ alumnosUi.getNombre());
+                Log.d(TAG, "alumnosUiPuntual : " + alumnosUi.getNombre());
             } else if (holder instanceof CeldasAsistenciaAlumnoTardeHolder) {
                 AlumnosUi alumnosUi = asistenciaUi.getAlumnosUi();
-                Log.d(TAG,"alumnosUiTarde : "+ alumnosUi.getNombre());
+                Log.d(TAG, "alumnosUiTarde : " + alumnosUi.getNombre());
                 pintandoCeldas(asistenciaUi, celdasList);
             } else if (holder instanceof CeldasAsistenciaAlumnoJustificadoHolder) {
                 AlumnosUi alumnosUi = asistenciaUi.getAlumnosUi();
-                Log.d(TAG,"alumnosUiTardeJustificada : "+ alumnosUi.getTipoAsistencia());
+                Log.d(TAG, "alumnosUiTardeJustificada : " + alumnosUi.getTipoAsistencia());
                 pintandoCeldas(asistenciaUi, celdasList);
             } else if (holder instanceof CeldasAsistenciaAlumnoFaltoHolder) {
                 AlumnosUi alumnosUi = asistenciaUi.getAlumnosUi();
-                Log.d(TAG,"alumnosUiFalto : "+ alumnosUi.getTipoAsistencia());
+                Log.d(TAG, "alumnosUiFalto : " + alumnosUi.getTipoAsistencia());
                 pintandoCeldas(asistenciaUi, celdasList);
             }
             adapter.notifyDataSetChanged();
         } else {
             Toast.makeText(getApplicationContext(), "Seleccione todos los items primero ", Toast.LENGTH_SHORT).show();
-        }
+        }*/
 
     }
 
@@ -206,25 +205,29 @@ public class ControlAsistenciaActivity extends BaseActivity<ControlAsistenciaVie
 
     @Override
     public void onCellLongPressed(@NonNull RecyclerView.ViewHolder holder, int column, int row) {
-        // Do What you want
-        if (holder instanceof CeldasAsistenciaAlumnoTardeHolder) {
-            CeldasAsistenciaAlumnoTardeHolder celdasAsistenciaHolder = (CeldasAsistenciaAlumnoTardeHolder) holder;
-            AsistenciaUi asistenciaUi = (AsistenciaUi) table.getAdapter().getCellItem(column, row);
-            AlumnosUi alumnosUi = asistenciaUi.getAlumnosUi();
+        /* Do What you want
+        if (clickColumn == true) {
+            if (holder instanceof CeldasAsistenciaAlumnoTardeHolder) {
+                CeldasAsistenciaAlumnoTardeHolder celdasAsistenciaHolder = (CeldasAsistenciaAlumnoTardeHolder) holder;
+                AsistenciaUi asistenciaUi = (AsistenciaUi) table.getAdapter().getCellItem(column, row);
+                AlumnosUi alumnosUi = asistenciaUi.getAlumnosUi();
 
-            FragmentTransaction ft = getFragmentManager().beginTransaction();
-            Fragment prev = getFragmentManager().findFragmentByTag("dialog");
-            if (prev != null) {
-                ft.remove(prev);
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                Fragment prev = getFragmentManager().findFragmentByTag("dialog");
+                if (prev != null) {
+                    ft.remove(prev);
+                }
+                ft.addToBackStack(null);
+                JustificacionDialog dialogFragment = new JustificacionDialog();
+                Bundle bundle = new Bundle();
+                bundle.putInt("column",column);
+                bundle.putInt("row",row);
+                bundle.putParcelable("alumnoUi", Parcels.wrap(alumnosUi));
+                bundle.putParcelable("asistenciaUi", Parcels.wrap(asistenciaUi));
+                dialogFragment.setArguments(bundle);
+                dialogFragment.show(ft, "dialog");
             }
-            ft.addToBackStack(null);
-            JustificacionDialog dialogFragment = new JustificacionDialog();
-            Bundle bundle = new Bundle();
-            bundle.putParcelable("alumnoUi", Parcels.wrap(alumnosUi));
-            dialogFragment.setArguments(bundle);
-            dialogFragment.show(ft, "dialog");
-
-        }
+        }*/
     }
 
 
@@ -256,12 +259,42 @@ public class ControlAsistenciaActivity extends BaseActivity<ControlAsistenciaVie
     }
 
     @Override
-    public void onRowHeaderClicked(@NonNull RecyclerView.ViewHolder p_jRowHeaderView, int p_nYPosition) {
+    public void onRowHeaderClicked(@NonNull RecyclerView.ViewHolder holder, int row) {
+        if (holder instanceof FilasAsistenciaAlumnosHolder) {
+            FilasAsistenciaAlumnosHolder filasAsistenciaAlumnosHolder = (FilasAsistenciaAlumnosHolder) holder;
+            AlumnosUi alumnosUi = (AlumnosUi) table.getAdapter().getRowHeaderItem(row);
 
+            FragmentTransaction ft = getFragmentManager().beginTransaction();
+            Fragment prev = getFragmentManager().findFragmentByTag("dialog");
+            if (prev != null) {
+                ft.remove(prev);
+            }
+            ft.addToBackStack(null);
+            JustificacionDialog dialogFragment = new JustificacionDialog();
+            Bundle bundle = new Bundle();
+
+            bundle.putInt("row",row);
+            bundle.putParcelable("alumnoUi", Parcels.wrap(alumnosUi));
+            dialogFragment.setArguments(bundle);
+            dialogFragment.show(ft, "dialog");
+        }
     }
 
     @Override
     public void onRowHeaderLongPressed(@NonNull RecyclerView.ViewHolder p_jRowHeaderView, int p_nYPosition) {
 
     }
+
+    @Override
+    public void onClickAceptar(int rowPosition) {
+        AlumnosUi alumnosUi = (AlumnosUi) table.getAdapter().getRowHeaderItem(rowPosition);
+        Log.d(TAG,"alumnosUi : "+ alumnosUi.getNombre());
+        /*AsistenciaUi asistenciaUi2 = (AsistenciaUi) table.getAdapter().getCellItem(columnPosition, rowPosition);
+        asistenciaUi2.setTipasistencia(AsistenciaUi.TipoAsistencia.ASISTENCIA_TARDE_JUSTIFICADA);
+        List<CeldasAsistencia> celdasList = adapter.getCellRowItems(rowPosition);
+        pintandoCeldas(asistenciaUi2, celdasList);*/
+
+    }
+
+
 }

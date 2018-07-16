@@ -6,4 +6,5 @@
 
     <dimen name="dialog_profile_width">250dp</dimen>
     <dimen name="dialog_profile_height">272dp</dimen>
+    <dimen name= "tamanio_item_decarador">10dp</dimen>
 </resources>

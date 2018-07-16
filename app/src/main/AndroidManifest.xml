@@ -30,15 +30,20 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".seleccionarInstituto.InstitutoActivity">
 
-        </activity>
-        <activity android:name=".cursos.CursoActivity">
-
-        </activity>
+        <activity android:name=".seleccionarInstituto.InstitutoActivity"/>
 
 
-        <activity android:name=".asistencia.ControlAsistenciaActivity"></activity>
+        <activity android:name=".cursos.CursoActivity"/>
+
+
+        <activity android:name=".padre.HijosActivity"/>
+
+        <activity android:name=".padre.cursoHijos.CursoHijosActivity"></activity>
+
+
+        <activity android:name=".asistencia.ControlAsistenciaActivity"/>
+
     </application>
 
 </manifest>

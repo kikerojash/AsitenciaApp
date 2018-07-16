@@ -68,9 +68,9 @@ public class ControlAsistenciaPresenterImpl extends BaseActivityPresenterImpl<Co
 
         columnHeaderList.addAll(cursoUi.getMotivosAsistenciaUiList());
         rowHeaderList.addAll(cursoUi.getAlumnosUiList());
-        //cellsList.addAll(getCellListForSortingTest());
+        cellsList.addAll(getCellListForSortingTest());
 
-        if (view != null) view.mostrarListaTablas(columnHeaderList, rowHeaderList, getCellListForSortingTest());
+        if (view != null) view.mostrarListaTablas(columnHeaderList, rowHeaderList, cellsList);
     }
 
 
@@ -117,6 +117,7 @@ public class ControlAsistenciaPresenterImpl extends BaseActivityPresenterImpl<Co
                         AsistenciaUi asistencia = new AsistenciaUi();
                         asistencia.setPintar(false);
                         asistencia.setJustificacion(MotivosAsistenciaUi.TIPO_ASISTENCIA_TARDE);
+                        asistencia.setTipasistencia(AsistenciaUi.TipoAsistencia.ASISTENCIA_TARDE);
                         asistencia.setTipoAsistencia("asdasdasd" + j);
                         asistencia.setAlumnosUi(alumnosUi);
                         cellList.add(asistencia);

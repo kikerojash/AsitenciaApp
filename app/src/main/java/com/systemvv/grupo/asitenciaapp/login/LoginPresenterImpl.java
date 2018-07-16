@@ -58,6 +58,7 @@ public class LoginPresenterImpl extends BaseActivityPresenterImpl<LoginView> imp
         initLoginActivity(usuario, clave);
 
 
+
     }
 
     private void initLoginActivity(String usuario, String clave) {
@@ -65,7 +66,7 @@ public class LoginPresenterImpl extends BaseActivityPresenterImpl<LoginView> imp
         if (usuario.equals("juanperez@gmail.com") && clave.equals("123")) {
             if (view!=null)view.initSeleccionarInstituto(usuario,clave);
         } else if (usuario.equals("jorgefernandez@gmail.com") && clave.equals("123")) {/*Padre*/
-           // if (view!=null)view.initInstituto(usuario,clave);
+            if (view!=null)view.initVistaPadre(usuario,clave);
         }
     }
 
