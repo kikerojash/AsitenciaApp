@@ -1,5 +1,7 @@
 package com.systemvv.grupo.asitenciaapp.asistencia;
 
+import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -26,12 +28,16 @@ import com.systemvv.grupo.asitenciaapp.asistencia.adapter.holder.celdas.CeldasAs
 import com.systemvv.grupo.asitenciaapp.asistencia.adapter.holder.celdas.CeldasAsistenciaAlumnoPuntualHolder;
 import com.systemvv.grupo.asitenciaapp.asistencia.adapter.holder.celdas.CeldasAsistenciaAlumnoTardeHolder;
 import com.systemvv.grupo.asitenciaapp.asistencia.adapter.holder.columnas.ColumnaTipoPresenteHolder;
+import com.systemvv.grupo.asitenciaapp.asistencia.adapter.justificacion.JustificacionDialog;
 import com.systemvv.grupo.asitenciaapp.base.UseCaseHandler;
 import com.systemvv.grupo.asitenciaapp.base.UseCaseThreadPoolScheduler;
 import com.systemvv.grupo.asitenciaapp.base.activity.BaseActivity;
 import com.systemvv.grupo.asitenciaapp.cursos.entidad.AlumnosUi;
 import com.systemvv.grupo.asitenciaapp.cursos.entidad.AsistenciaUi;
 import com.systemvv.grupo.asitenciaapp.cursos.entidad.CursoUi;
+import com.systemvv.grupo.asitenciaapp.seleccionarInstituto.dialogSeccion.SeccionDialog;
+
+import org.parceler.Parcels;
 
 import java.util.List;
 
@@ -205,6 +211,18 @@ public class ControlAsistenciaActivity extends BaseActivity<ControlAsistenciaVie
             CeldasAsistenciaAlumnoTardeHolder celdasAsistenciaHolder = (CeldasAsistenciaAlumnoTardeHolder) holder;
             AsistenciaUi asistenciaUi = (AsistenciaUi) table.getAdapter().getCellItem(column, row);
             AlumnosUi alumnosUi = asistenciaUi.getAlumnosUi();
+
+            FragmentTransaction ft = getFragmentManager().beginTransaction();
+            Fragment prev = getFragmentManager().findFragmentByTag("dialog");
+            if (prev != null) {
+                ft.remove(prev);
+            }
+            ft.addToBackStack(null);
+            JustificacionDialog dialogFragment = new JustificacionDialog();
+            Bundle bundle = new Bundle();
+            bundle.putParcelable("alumnoUi", Parcels.wrap(alumnosUi));
+            dialogFragment.setArguments(bundle);
+            dialogFragment.show(ft, "dialog");
 
         }
     }
