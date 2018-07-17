@@ -92,15 +92,15 @@
 
 
                 <!--<ImageView-->
-                    <!--android:id="@+id/fondoCurso"-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="match_parent"-->
-                    <!--app:layout_constraintBottom_toBottomOf="parent"-->
-                    <!--app:layout_constraintEnd_toEndOf="@+id/profile_image"-->
-                    <!--app:layout_constraintHorizontal_bias="0.0"-->
-                    <!--app:layout_constraintStart_toStartOf="parent"-->
-                    <!--app:layout_constraintTop_toTopOf="parent"-->
-                    <!--app:layout_constraintVertical_bias="0.0" />-->
+                <!--android:id="@+id/fondoCurso"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent"-->
+                <!--app:layout_constraintBottom_toBottomOf="parent"-->
+                <!--app:layout_constraintEnd_toEndOf="@+id/profile_image"-->
+                <!--app:layout_constraintHorizontal_bias="0.0"-->
+                <!--app:layout_constraintStart_toStartOf="parent"-->
+                <!--app:layout_constraintTop_toTopOf="parent"-->
+                <!--app:layout_constraintVertical_bias="0.0" />-->
 
 
                 <TextView
@@ -154,11 +154,6 @@
                     app:layout_constraintLeft_toLeftOf="parent" />
 
 
-
-
-
-
-
                 <de.hdodenhof.circleimageview.CircleImageView
                     xmlns:app="http://schemas.android.com/apk/res-auto"
                     android:id="@+id/profile_image"
@@ -189,48 +184,10 @@
             </android.support.constraint.ConstraintLayout>
 
 
-            <!--<ImageView-->
-            <!--android:id="@+id/backdrop"-->
-            <!--android:layout_width="12"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:fitsSystemWindows="true"-->
-            <!--android:scaleType="centerCrop"-->
-            <!--app:layout_collapseMode="parallax" />-->
-
-            <!--<android.support.v7.widget.Toolbar-->
-            <!--android:id="@+id/toolbar"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="100dp"-->
-            <!--android:background="@android:color/transparent"-->
-            <!--app:layout_collapseMode="pin"-->
-            <!--app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />-->
-            <!---->
-            <!---->
-
 
         </android.support.design.widget.CollapsingToolbarLayout>
 
     </android.support.design.widget.AppBarLayout>
-
-    <com.evrencoskun.tableview.TableView
-        android:id="@+id/content_container"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:minHeight="100dp"
-        app:column_header_height="@dimen/table_header_width_eval_session"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appbar"
-        app:row_header_width="@dimen/table_firstheader_width_eval_session"
-        app:shadow_color="@color/md_grey_50"
-        app:unselected_color="@color/md_red_200" />
 
 
     <ProgressBar

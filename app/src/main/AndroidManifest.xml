@@ -44,6 +44,8 @@
 
         <activity android:name=".asistencia.ControlAsistenciaActivity"/>
 
+
+
     </application>
 
 </manifest>

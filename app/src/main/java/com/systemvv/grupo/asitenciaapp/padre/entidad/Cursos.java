@@ -8,15 +8,18 @@ public class Cursos {
     private String nombreCurso;
     private String horario;
     private String nombreProfesor;
+    private String fotoCurso;
+    private Hijos hijos;
 
     public Cursos() {
     }
 
-    public Cursos(String id, String nombreCurso, String horario, String nombreProfesor) {
+    public Cursos(String id, String nombreCurso, String horario, String nombreProfesor, String fotoCurso) {
         this.id = id;
         this.nombreCurso = nombreCurso;
         this.horario = horario;
         this.nombreProfesor = nombreProfesor;
+        this.fotoCurso = fotoCurso;
     }
 
     public String getId() {
@@ -49,5 +52,21 @@ public class Cursos {
 
     public void setNombreProfesor(String nombreProfesor) {
         this.nombreProfesor = nombreProfesor;
+    }
+
+    public String getFotoCurso() {
+        return fotoCurso;
+    }
+
+    public void setFotoCurso(String fotoCurso) {
+        this.fotoCurso = fotoCurso;
+    }
+
+    public Hijos getHijos() {
+        return hijos;
+    }
+
+    public void setHijos(Hijos hijos) {
+        this.hijos = hijos;
     }
 }
