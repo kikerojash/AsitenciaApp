@@ -4,7 +4,10 @@
     <dimen name="table_firstheader_width_eval_session">120dp</dimen>
     <dimen name="table_body_height_eval_bidimencional">55dp</dimen>
 
-    <dimen name="dialog_profile_width">250dp</dimen>
-    <dimen name="dialog_profile_height">272dp</dimen>
+    <!--<dimen name="dialog_profile_width">250dp</dimen>-->
+    <!--<dimen name="dialog_profile_height">272dp</dimen>-->
+    <dimen name="dialog_profile_width">280dp</dimen>
+    <dimen name="dialog_profile_height">322dp</dimen>
+
     <dimen name= "tamanio_item_decarador">10dp</dimen>
 </resources>

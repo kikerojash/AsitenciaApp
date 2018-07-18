@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -31,6 +32,8 @@ public class JustificacionDialog extends DialogFragment {
     TextView textViewApellidoeAlumno;
     @BindView(R.id.imgProfile)
     ImageView imgProfile;
+    @BindView(R.id.spnIncidencias)
+    Spinner spinnerIncidencias;
 
     public static final String TAG = JustificacionDialog.class.getSimpleName();
     private AlumnosUi alumnosUi;

@@ -4,6 +4,10 @@ import android.content.res.Resources;
 
 import com.systemvv.grupo.asitenciaapp.base.UseCaseHandler;
 import com.systemvv.grupo.asitenciaapp.base.fragment.BaseFragmentPresenterImpl;
+import com.systemvv.grupo.asitenciaapp.padre.entidad.Incidencias;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ReporteIncidenciasPresenterImpl extends BaseFragmentPresenterImpl<ReporteIncidenciasView> implements ReporteIncidenciasPresenter {
 
@@ -21,5 +25,31 @@ public class ReporteIncidenciasPresenterImpl extends BaseFragmentPresenterImpl<R
     @Override
     public void onActivityCreated() {
 
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        initListaIncidencias();
+    }
+
+    private void initListaIncidencias() {
+        if (view != null) view.mostrarLista(getListaIncidencias());
+    }
+
+    private List<Incidencias> getListaIncidencias() {
+
+        List<Incidencias> incidenciasList = new ArrayList<>();
+
+        Incidencias incidencias1 = new Incidencias(1, "El alumno presento un mal comportamiento", "09/07/2017", "10:00", 1);
+        Incidencias incidencias2 = new Incidencias(2, "El alumno presento sintomas de fiebre", "09/07/2017", "10:00", 1);
+        Incidencias incidencias3 = new Incidencias(3, "El alumno no presta atención en clase", "10/07/2017", "10:00", 2);
+        Incidencias incidencias4 = new Incidencias(4, "Habla mucho con su compañero de clase, no hace caso", "12/07/2017", "10:00", 3);
+        incidenciasList.add(incidencias1);
+        incidenciasList.add(incidencias2);
+        incidenciasList.add(incidencias3);
+        incidenciasList.add(incidencias4);
+        return incidenciasList;
     }
 }

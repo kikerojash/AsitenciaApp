@@ -58,7 +58,6 @@
         app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
     <EditText
-        android:background="@color/md_grey_200"
         android:id="@+id/editText4"
         android:layout_width="0dp"
         android:layout_height="100dp"
@@ -67,12 +66,14 @@
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
+        android:background="@color/md_grey_200"
         android:gravity="start"
         android:hint="Escriba Tardanza Justificada"
         android:inputType="textMultiLine"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view2" />
+        app:layout_constraintTop_toBottomOf="@+id/linearLayoutGrado" />
 
 
     <Button
@@ -88,5 +89,39 @@
         app:layout_constraintTop_toBottomOf="@+id/editText4" />
 
 
+    <LinearLayout
+        android:id="@+id/linearLayoutGrado"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/btn_bg"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view2">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:text="Nivel :"
+            android:textColor="#f9ffffff"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <Spinner
+            android:id="@+id/spnIncidencias"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:entries="@array/array_name"
+            android:popupBackground="#3b5998" />
+    </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>
