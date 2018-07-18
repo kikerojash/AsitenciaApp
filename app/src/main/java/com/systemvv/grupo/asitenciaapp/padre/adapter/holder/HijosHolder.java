@@ -4,6 +4,7 @@ import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.TextureView;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -32,6 +33,9 @@ public class HijosHolder extends RecyclerView.ViewHolder implements View.OnClick
     TextView textViewGrado;
     @BindView(R.id.cardviewHijos)
     CardView cardView;
+    @BindView(R.id.fondo)
+    ImageView imageViewFondo;
+
     Hijos hijos;
     HijosListener listener;
 
@@ -42,7 +46,7 @@ public class HijosHolder extends RecyclerView.ViewHolder implements View.OnClick
         cardView.setOnClickListener(this);
     }
 
-    public void bind(Hijos hijos,HijosListener listener) {
+    public void bind(Hijos hijos, HijosListener listener,int positionToColor) {
         this.hijos = hijos;
         this.listener = listener;
         nombreInstituto.setText(hijos.getNombreInstituto());
@@ -52,6 +56,17 @@ public class HijosHolder extends RecyclerView.ViewHolder implements View.OnClick
         textViewEdad.setText("Edad: " + hijos.getEdad() + " Años");
         textViewGrado.setText("Grado: " + hijos.getGrado() + " Sección: " + hijos.getSeccion());
         Glide.with(itemView.getContext()).load(hijos.getFoto()).into(circleImageViewHijo);
+        switch (positionToColor){
+            case 0:
+                imageViewFondo.setBackground(itemView.getResources().getDrawable(R.drawable.background_primer_hijo));
+                break;
+            case 1:
+                imageViewFondo.setBackground(itemView.getResources().getDrawable(R.drawable.background_primer_hijo));
+                break;
+            default:
+                imageViewFondo.setBackground(itemView.getResources().getDrawable(R.drawable.background_primer_hijo));
+                break;
+        }
     }
 
     @Override

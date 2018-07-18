@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.ProgressBar;
 
 import com.systemvv.grupo.asitenciaapp.R;
@@ -67,8 +68,12 @@ public class CursoActivity extends BaseActivity<CursoView, CursoPresenter> imple
     protected void setContentView() {
         setContentView(R.layout.activity_curso);
         ButterKnife.bind(this);
-        setSupportActionBar(toolbar);
+        setupToolbar();
         initVistas();
+    }
+    private void setupToolbar() {
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     private void initVistas() {
@@ -100,6 +105,16 @@ public class CursoActivity extends BaseActivity<CursoView, CursoPresenter> imple
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 }

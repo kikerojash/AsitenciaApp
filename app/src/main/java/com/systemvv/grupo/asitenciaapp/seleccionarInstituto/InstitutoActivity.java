@@ -6,7 +6,10 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.ProgressBar;
 
 import com.systemvv.grupo.asitenciaapp.R;
@@ -29,7 +32,7 @@ import butterknife.ButterKnife;
 public class InstitutoActivity extends BaseActivity<InstitutoView, InstitutoPresenter> implements InstitutoView, InstitutoListener {
     public static final String TAG = InstitutoActivity.class.getSimpleName();
     @BindView(R.id.toolbar)
-    android.support.v7.widget.Toolbar toolbar;
+    Toolbar toolbar;
     @BindView(R.id.progressBar)
     ProgressBar progressBar;
     @BindView(R.id.reciclador)
@@ -78,6 +81,7 @@ public class InstitutoActivity extends BaseActivity<InstitutoView, InstitutoPres
 
     private void initToolbar() {
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     @Override
@@ -105,5 +109,19 @@ public class InstitutoActivity extends BaseActivity<InstitutoView, InstitutoPres
         bundle.putParcelable("example", Parcels.wrap(institutoUi));
         dialogFragment.setArguments(bundle);
         dialogFragment.show(ft, "dialog");
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

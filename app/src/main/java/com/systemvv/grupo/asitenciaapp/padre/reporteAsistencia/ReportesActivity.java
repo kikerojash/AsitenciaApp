@@ -1,5 +1,6 @@
 package com.systemvv.grupo.asitenciaapp.padre.reporteAsistencia;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -8,6 +9,9 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -17,6 +21,7 @@ import com.systemvv.grupo.asitenciaapp.R;
 import com.systemvv.grupo.asitenciaapp.base.UseCaseHandler;
 import com.systemvv.grupo.asitenciaapp.base.UseCaseThreadPoolScheduler;
 import com.systemvv.grupo.asitenciaapp.base.activity.BaseActivity;
+import com.systemvv.grupo.asitenciaapp.padre.cursoHijos.CursoHijosActivity;
 import com.systemvv.grupo.asitenciaapp.padre.entidad.Cursos;
 import com.systemvv.grupo.asitenciaapp.padre.reporteAsistencia.listaReporteAsistencia.ReporteAsistenciaFragment;
 import com.systemvv.grupo.asitenciaapp.padre.reporteAsistencia.listaReporteIncidencias.ReporteIncidenciasFragment;
@@ -88,9 +93,6 @@ public class ReportesActivity extends BaseActivity<ReportesView, ReportesPresent
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-       /* if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            appBar.setTransitionName("view");
-        }*/
     }
 
     @Override
@@ -145,6 +147,21 @@ public class ReportesActivity extends BaseActivity<ReportesView, ReportesPresent
         textViewNombreHijo.setText(cursos.getHijos().getNombre());
         Glide.with(this).load(cursos.getFotoCurso()).into(imageViewFondo);
         Glide.with(this).load(cursos.getHijos().getFoto()).into(circleImageView);
-
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
 }

@@ -6,6 +6,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.ProgressBar;
 
 import com.systemvv.grupo.asitenciaapp.base.UseCaseHandler;
@@ -36,6 +39,8 @@ public class CursoHijosActivity extends BaseActivity<CursoHijosView, CursoHijosP
     @BindView(R.id.reciclador)
     RecyclerView reciclador;
     CursoHijosAdapter adapter;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
 
     @Override
     protected String getTag() {
@@ -67,10 +72,17 @@ public class CursoHijosActivity extends BaseActivity<CursoHijosView, CursoHijosP
         setContentView(R.layout.activity_curso_hijos);
         ButterKnife.bind(this);
         initVistas();
+        setupToolbar();
 
     }
 
+    private void setupToolbar() {
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
     private void initVistas() {
+
         adapter = new CursoHijosAdapter(new ArrayList<Cursos>(),this);
         reciclador.setLayoutManager(new GridLayoutManager(getApplicationContext(),2));
         reciclador.addItemDecoration(new ItemDecarador(
@@ -97,5 +109,20 @@ public class CursoHijosActivity extends BaseActivity<CursoHijosView, CursoHijosP
         bundle.putParcelable("cursosUi", Parcels.wrap(cursos));
         intent.putExtras(bundle);
         startActivity(intent);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

@@ -33,7 +33,8 @@ public class HijosAdapter extends RecyclerView.Adapter<HijosHolder> {
     @Override
     public void onBindViewHolder(@NonNull HijosHolder holder, int position) {
         Hijos hijos = hijosList.get(position);
-        holder.bind(hijos,listener);
+        int positionToColor = position % 3 ;
+        holder.bind(hijos,listener,positionToColor);
     }
 
     @Override

@@ -5,7 +5,10 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.ProgressBar;
 
 import com.systemvv.grupo.asitenciaapp.R;
@@ -31,6 +34,8 @@ public class HijosActivity extends BaseActivity<HijosView, HijosPresenter> imple
     ProgressBar progressBar;
     @BindView(R.id.reciclador)
     RecyclerView reciclador;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
     HijosAdapter hijosAdapter;
 
     @Override
@@ -63,6 +68,7 @@ public class HijosActivity extends BaseActivity<HijosView, HijosPresenter> imple
         setContentView(R.layout.activity_hijos);
         ButterKnife.bind(this);
         initVistas();
+        setupToolbar();
     }
 
     private void initVistas() {
@@ -90,5 +96,25 @@ public class HijosActivity extends BaseActivity<HijosView, HijosPresenter> imple
         bundle.putParcelable("hijos", Parcels.wrap(hijos));
         intent.putExtras(bundle);
         startActivity(intent);
+    }
+
+    private void setupToolbar() {
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

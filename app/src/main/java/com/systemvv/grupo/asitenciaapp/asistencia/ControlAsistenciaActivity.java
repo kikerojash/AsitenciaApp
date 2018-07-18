@@ -7,7 +7,10 @@ import android.os.Parcel;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -50,7 +53,7 @@ import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ControlAsistenciaActivity extends BaseActivity<ControlAsistenciaView, ControlAsistenciaPresenter>
-        implements ControlAsistenciaView, ITableViewListener,JustificacionListener {
+        implements ControlAsistenciaView, ITableViewListener, JustificacionListener {
 
     public static final String TAG = ControlAsistenciaActivity.class.getSimpleName();
 
@@ -69,8 +72,8 @@ public class ControlAsistenciaActivity extends BaseActivity<ControlAsistenciaVie
     ImageView imageViewFondo;
     @BindView(R.id.content_container)
     TableView table;
-    /*@BindView(R.id.collapsingToolbarLayout)
-    CollapsingToolbarLayout collapsingToolbarLayout;*/
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
     @BindView(R.id.profile_image)
     CircleImageView circleImageView;
     private AsistenciaAdapter adapter;
@@ -104,6 +107,13 @@ public class ControlAsistenciaActivity extends BaseActivity<ControlAsistenciaVie
     protected void setContentView() {
         setContentView(R.layout.activity_asistencia);
         ButterKnife.bind(this);
+        setupToolbar();
+    }
+
+    private void setupToolbar() {
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
     }
 
     @Override
@@ -154,8 +164,8 @@ public class ControlAsistenciaActivity extends BaseActivity<ControlAsistenciaVie
                 AlumnosUi alumnosUi = asistenciaUi.getAlumnosUi();
             }
             adapter.notifyDataSetChanged();
-        }else {
-            Toast.makeText(getApplicationContext(),"Seleccione todos los items primero ",Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(getApplicationContext(), "Seleccione todos los items primero ", Toast.LENGTH_SHORT).show();
         }
 
 
@@ -273,7 +283,7 @@ public class ControlAsistenciaActivity extends BaseActivity<ControlAsistenciaVie
             JustificacionDialog dialogFragment = new JustificacionDialog();
             Bundle bundle = new Bundle();
 
-            bundle.putInt("row",row);
+            bundle.putInt("row", row);
             bundle.putParcelable("alumnoUi", Parcels.wrap(alumnosUi));
             dialogFragment.setArguments(bundle);
             dialogFragment.show(ft, "dialog");
@@ -288,12 +298,50 @@ public class ControlAsistenciaActivity extends BaseActivity<ControlAsistenciaVie
     @Override
     public void onClickAceptar(int rowPosition) {
         AlumnosUi alumnosUi = (AlumnosUi) table.getAdapter().getRowHeaderItem(rowPosition);
-        Log.d(TAG,"alumnosUi : "+ alumnosUi.getNombre());
+        Log.d(TAG, "alumnosUi : " + alumnosUi.getNombre());
         /*AsistenciaUi asistenciaUi2 = (AsistenciaUi) table.getAdapter().getCellItem(columnPosition, rowPosition);
         asistenciaUi2.setTipasistencia(AsistenciaUi.TipoAsistencia.ASISTENCIA_TARDE_JUSTIFICADA);
         List<CeldasAsistencia> celdasList = adapter.getCellRowItems(rowPosition);
         pintandoCeldas(asistenciaUi2, celdasList);*/
+    }
 
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_asistencia_docente, menu);
+        //return super.onCreateOptionsMenu(menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        switch (id) {
+            case R.id.menu_guardar_entrada:
+                Toast.makeText(getApplicationContext(),"Registro Guardados de Entrada",Toast.LENGTH_SHORT).show();
+                Log.d(TAG, "menu_guardar_entrada:");
+                break;
+            case R.id.menu_guardar_salida:
+                Toast.makeText(getApplicationContext(),"Registro Guardados de Salida",Toast.LENGTH_SHORT).show();
+                Log.d(TAG, "menu_guardar_salida:");
+                break;
+            default:
+                Log.d(TAG, "default:");
+                onBackPressed();
+                break;
+        }
+       /* switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+            case android.R.id.menu_guardar_entrada:
+                onBackPressed();
+                return true;
+            case android.R.id.menu_guardar_salida:
+                onBackPressed();
+                return true;
+        }*/
+        return super.onOptionsItemSelected(item);
     }
 
 
