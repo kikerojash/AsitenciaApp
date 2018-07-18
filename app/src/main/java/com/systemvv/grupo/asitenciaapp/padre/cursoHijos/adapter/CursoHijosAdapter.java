@@ -19,9 +19,9 @@ public class CursoHijosAdapter extends RecyclerView.Adapter<CursoHijosHolder> {
     private List<Cursos> cursosList;
     private CursoHijosListener listener;
 
-    public CursoHijosAdapter(List<Cursos> cursosList) {
+    public CursoHijosAdapter(List<Cursos> cursosList,CursoHijosListener listener) {
         this.cursosList = cursosList;
-      //  this.listener = listener;
+        this.listener = listener;
     }
 
     @NonNull
@@ -34,7 +34,7 @@ public class CursoHijosAdapter extends RecyclerView.Adapter<CursoHijosHolder> {
     @Override
     public void onBindViewHolder(@NonNull CursoHijosHolder holder, int position) {
         Cursos cursos = cursosList.get(position);
-        holder.bind(cursos);
+        holder.bind(cursos,listener);
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.systemvv.grupo.asitenciaapp.padre.cursoHijos;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
@@ -13,7 +14,11 @@ import com.systemvv.grupo.asitenciaapp.base.activity.BaseActivity;
 import com.systemvv.grupo.asitenciaapp.R;
 import com.systemvv.grupo.asitenciaapp.cursos.adapter.decarador.ItemDecarador;
 import com.systemvv.grupo.asitenciaapp.padre.cursoHijos.adapter.CursoHijosAdapter;
+import com.systemvv.grupo.asitenciaapp.padre.cursoHijos.listener.CursoHijosListener;
 import com.systemvv.grupo.asitenciaapp.padre.entidad.Cursos;
+import com.systemvv.grupo.asitenciaapp.padre.reporteAsistencia.ReportesActivity;
+
+import org.parceler.Parcels;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +26,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class CursoHijosActivity extends BaseActivity<CursoHijosView, CursoHijosPresenter> implements CursoHijosView {
+public class CursoHijosActivity extends BaseActivity<CursoHijosView, CursoHijosPresenter> implements CursoHijosView,CursoHijosListener{
 
     public static final String TAG = CursoHijosActivity.class.getSimpleName();
 
@@ -66,7 +71,7 @@ public class CursoHijosActivity extends BaseActivity<CursoHijosView, CursoHijosP
     }
 
     private void initVistas() {
-        adapter = new CursoHijosAdapter(new ArrayList<Cursos>());
+        adapter = new CursoHijosAdapter(new ArrayList<Cursos>(),this);
         reciclador.setLayoutManager(new GridLayoutManager(getApplicationContext(),2));
         reciclador.addItemDecoration(new ItemDecarador(
                 getResources().getDimensionPixelSize(R.dimen.tamanio_item_decarador),
@@ -83,5 +88,14 @@ public class CursoHijosActivity extends BaseActivity<CursoHijosView, CursoHijosP
     @Override
     public void mostrarListaCursos(List<Cursos> cursosList) {
         adapter.mostrarLista(cursosList);
+    }
+
+    @Override
+    public void onItemClickCursoHijos(Cursos cursos) {
+        Intent intent = new Intent(this, ReportesActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("cursosUi", Parcels.wrap(cursos));
+        intent.putExtras(bundle);
+        startActivity(intent);
     }
 }
