@@ -27,6 +27,8 @@ import com.systemvv.grupo.asitenciaapp.padre.reporteAsistencia.listaReporteAsist
 import com.systemvv.grupo.asitenciaapp.padre.reporteAsistencia.listaReporteIncidencias.ReporteIncidenciasFragment;
 import com.systemvv.grupo.asitenciaapp.utils.MyFragmentAdapter;
 
+import org.parceler.Parcels;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -103,14 +105,16 @@ public class ReportesActivity extends BaseActivity<ReportesView, ReportesPresent
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        initViewAdapter();
+       // initViewAdapter();
     }
 
-    private void initViewAdapter() {
+    private void initViewAdapter(Cursos cursos) {
         Bundle args = new Bundle();
-        args.putAll(getIntent().getExtras());
+
         /*args.putInt("idCargaCurso", idCargaCurso);
         args.putInt("cursoId", idCurso);*/
+        args.putParcelable("cursos", Parcels.wrap(cursos));
+        args.putAll(getIntent().getExtras());
         MyFragmentAdapter fragmentAdapter = new MyFragmentAdapter(getSupportFragmentManager());
         fragmentAdapter.addFragment(ReporteAsistenciaFragment.newInstance(args), "ASISTENCIA");
         fragmentAdapter.addFragment(ReporteIncidenciasFragment.newInstance(args), "INCIDENCIAS");
@@ -147,6 +151,11 @@ public class ReportesActivity extends BaseActivity<ReportesView, ReportesPresent
         textViewNombreHijo.setText(cursos.getHijos().getNombre());
         Glide.with(this).load(cursos.getFotoCurso()).into(imageViewFondo);
         Glide.with(this).load(cursos.getHijos().getFoto()).into(circleImageView);
+    }
+
+    @Override
+    public void initAdapter(Cursos cursos) {
+        initViewAdapter(cursos);
     }
 
     @Override

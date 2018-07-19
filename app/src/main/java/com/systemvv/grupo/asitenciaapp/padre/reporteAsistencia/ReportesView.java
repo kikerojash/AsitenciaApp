@@ -6,4 +6,6 @@ import com.systemvv.grupo.asitenciaapp.padre.entidad.Cursos;
 public interface ReportesView extends BaseActivityView<ReportesPresenter>{
 
     void mostrarDatos(Cursos cursos);
+
+    void initAdapter(Cursos cursos);
 }

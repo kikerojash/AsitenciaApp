@@ -1,10 +1,14 @@
 package com.systemvv.grupo.asitenciaapp.padre.reporteAsistencia.listaReporteIncidencias;
 
 import android.content.res.Resources;
+import android.os.Bundle;
 
 import com.systemvv.grupo.asitenciaapp.base.UseCaseHandler;
 import com.systemvv.grupo.asitenciaapp.base.fragment.BaseFragmentPresenterImpl;
+import com.systemvv.grupo.asitenciaapp.padre.entidad.Cursos;
 import com.systemvv.grupo.asitenciaapp.padre.entidad.Incidencias;
+
+import org.parceler.Parcels;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +16,8 @@ import java.util.List;
 public class ReporteIncidenciasPresenterImpl extends BaseFragmentPresenterImpl<ReporteIncidenciasView> implements ReporteIncidenciasPresenter {
 
     public static final String TAG = ReporteIncidenciasPresenterImpl.class.getSimpleName();
+
+    private Cursos cursos;
 
     public ReporteIncidenciasPresenterImpl(UseCaseHandler handler, Resources res) {
         super(handler, res);
@@ -27,6 +33,13 @@ public class ReporteIncidenciasPresenterImpl extends BaseFragmentPresenterImpl<R
 
     }
 
+
+    @Override
+    public void setExtras(Bundle extras) {
+        super.setExtras(extras);
+        if (extras == null) return;
+        cursos = Parcels.unwrap(extras.getParcelable("cursos"));
+    }
 
     @Override
     public void onResume() {

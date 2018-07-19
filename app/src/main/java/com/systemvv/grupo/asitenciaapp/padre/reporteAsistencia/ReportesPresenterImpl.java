@@ -28,6 +28,7 @@ public class ReportesPresenterImpl extends BaseActivityPresenterImpl<ReportesVie
     }
 
     private Cursos cursos;
+
     @Override
     public void setExtras(Bundle extras) {
         super.setExtras(extras);
@@ -41,9 +42,10 @@ public class ReportesPresenterImpl extends BaseActivityPresenterImpl<ReportesVie
     }
 
 
-
-
     private void initDatos(Cursos cursos) {
-        if(view!=null)view.mostrarDatos(cursos);
+        if (view != null) {
+            view.mostrarDatos(cursos);
+            view.initAdapter(cursos);
+        }
     }
 }

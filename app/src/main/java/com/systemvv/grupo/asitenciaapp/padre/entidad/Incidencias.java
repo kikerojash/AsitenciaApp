@@ -1,5 +1,8 @@
 package com.systemvv.grupo.asitenciaapp.padre.entidad;
 
+import org.parceler.Parcel;
+
+@Parcel
 public class Incidencias {
     private int conteo;
     private String nombreIncidencias;

@@ -2,6 +2,8 @@ package com.systemvv.grupo.asitenciaapp.padre.entidad;
 
 import org.parceler.Parcel;
 
+import java.util.List;
+
 @Parcel
 public class Cursos {
     private String id;
@@ -10,6 +12,7 @@ public class Cursos {
     private String nombreProfesor;
     private String fotoCurso;
     private Hijos hijos;
+    private List<Incidencias> incidenciasList;
 
     public Cursos() {
     }
@@ -68,5 +71,13 @@ public class Cursos {
 
     public void setHijos(Hijos hijos) {
         this.hijos = hijos;
+    }
+
+    public List<Incidencias> getIncidenciasList() {
+        return incidenciasList;
+    }
+
+    public void setIncidenciasList(List<Incidencias> incidenciasList) {
+        this.incidenciasList = incidenciasList;
     }
 }
