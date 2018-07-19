@@ -19,11 +19,12 @@ public class ColumnaTipoPresenteHolder extends AbstractViewHolder {
 
     public ColumnaTipoPresenteHolder(View itemView) {
         super(itemView);
-        ButterKnife.bind(this,itemView);
+        ButterKnife.bind(this, itemView);
     }
 
     public void bind(MotivosAsistenciaUi motivosAsistenciaUi) {
         fondo.setBackgroundColor(itemView.getResources().getColor(R.color.md_green_600));
         textViewTitulo.setText("Presente");
+        //fondo.getLayoutParams().width = ConstraintLayout.LayoutParams.MATCH_PARENT;
     }
 }

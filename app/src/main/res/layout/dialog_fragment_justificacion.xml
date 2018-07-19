@@ -68,7 +68,7 @@
         android:layout_marginTop="16dp"
         android:background="@color/md_grey_200"
         android:gravity="start"
-        android:hint="Escriba Tardanza Justificada"
+        android:hint="Escriba la Observación"
         android:inputType="textMultiLine"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"

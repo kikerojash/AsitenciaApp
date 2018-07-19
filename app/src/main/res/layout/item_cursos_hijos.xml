@@ -78,6 +78,48 @@
                 android:textColor="@color/md_white_1000"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textViewNombreCurso" />
+
+
+            <TextView
+                android:id="@+id/textViewIncidencia"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="8dp"
+
+                android:layout_marginRight="8dp"
+                android:text=""
+                android:textColor="@color/md_white_1000"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/textView12" />
+
+
+
+            <TextView
+                android:id="@+id/textView12"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/style_circular_button"
+                android:gravity="center"
+                android:text="4"
+                android:textColor="@color/md_white_1000"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/textViewNombreCurso"
+                app:layout_constraintTop_toBottomOf="@+id/textViewNombreCurso" />
+
+
+
+
+
+
+
         </android.support.constraint.ConstraintLayout>
 
 

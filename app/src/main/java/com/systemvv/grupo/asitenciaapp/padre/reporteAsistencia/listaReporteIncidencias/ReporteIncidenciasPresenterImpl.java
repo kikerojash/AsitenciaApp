@@ -48,7 +48,7 @@ public class ReporteIncidenciasPresenterImpl extends BaseFragmentPresenterImpl<R
     }
 
     private void initListaIncidencias() {
-        if (view != null) view.mostrarLista(getListaIncidencias());
+        if (view != null) view.mostrarLista(cursos.getIncidenciasList());
     }
 
     private List<Incidencias> getListaIncidencias() {

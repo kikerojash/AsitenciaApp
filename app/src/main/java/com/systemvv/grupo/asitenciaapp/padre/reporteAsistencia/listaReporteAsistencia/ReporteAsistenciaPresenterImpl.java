@@ -53,11 +53,11 @@ public class ReporteAsistenciaPresenterImpl extends BaseFragmentPresenterImpl<Re
     private List<Asistencia> getListaAsistencia() {
         List<Asistencia> asistenciaList = new ArrayList<>();
 
-        Asistencia asistencia1 = new Asistencia("id1", "09/07/2017", 1, 1);
-        Asistencia asistencia2 = new Asistencia("id1", "10/07/2017", 1, 2);
-        Asistencia asistencia3 = new Asistencia("id1", "11/07/2017", 1, 3);
-        Asistencia asistencia4 = new Asistencia("id1", "12/07/2017", 1, 4);
-        Asistencia asistencia5 = new Asistencia("id1", "13/07/2017", 2, 5);
+        Asistencia asistencia1 = new Asistencia("id1", "09/07/2017", 1, 1,"8:00 A.M","11:00 A.M");
+        Asistencia asistencia2 = new Asistencia("id1", "10/07/2017", 1, 2,"8:40 A.M","11:00 A.M");
+        Asistencia asistencia3 = new Asistencia("id1", "11/07/2017", 1, 3,"8:20 A.M","11:00 A.M");
+        Asistencia asistencia4 = new Asistencia("id1", "12/07/2017", 1, 4,"9:00 A.M","11:00 A.M");
+        Asistencia asistencia5 = new Asistencia("id1", "13/07/2017", 2, 5,"9:30 A.M","11:00 A.M");
         asistenciaList.add(asistencia1);
         asistenciaList.add(asistencia2);
         asistenciaList.add(asistencia3);

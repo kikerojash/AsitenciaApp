@@ -5,15 +5,19 @@ public class Asistencia {
     private String fecha;
     private int tipoAsistencia;
     private int conteo;
+    private String inicioRegistroHora;
+    private String finRegistroHora;
 
     public Asistencia() {
     }
 
-    public Asistencia(String id, String fecha, int tipoAsistencia, int conteo) {
+    public Asistencia(String id, String fecha, int tipoAsistencia, int conteo, String inicioRegistroHora, String finRegistroHora) {
         this.id = id;
         this.fecha = fecha;
         this.tipoAsistencia = tipoAsistencia;
         this.conteo = conteo;
+        this.inicioRegistroHora = inicioRegistroHora;
+        this.finRegistroHora = finRegistroHora;
     }
 
     public String getId() {
@@ -46,5 +50,21 @@ public class Asistencia {
 
     public void setConteo(int conteo) {
         this.conteo = conteo;
+    }
+
+    public String getInicioRegistroHora() {
+        return inicioRegistroHora;
+    }
+
+    public void setInicioRegistroHora(String inicioRegistroHora) {
+        this.inicioRegistroHora = inicioRegistroHora;
+    }
+
+    public String getFinRegistroHora() {
+        return finRegistroHora;
+    }
+
+    public void setFinRegistroHora(String finRegistroHora) {
+        this.finRegistroHora = finRegistroHora;
     }
 }

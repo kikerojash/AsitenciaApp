@@ -16,6 +16,7 @@ public class ColumnaTipoTardeHolder extends AbstractViewHolder {
     TextView textViewTitulo;
     @BindView(R.id.root)
     ConstraintLayout fondo;
+
     public ColumnaTipoTardeHolder(View itemView) {
         super(itemView);
         ButterKnife.bind(this,itemView);
@@ -24,5 +25,6 @@ public class ColumnaTipoTardeHolder extends AbstractViewHolder {
     public void bind(MotivosAsistenciaUi motivosAsistenciaUi) {
         textViewTitulo.setText("Tardanza");
         fondo.setBackgroundColor(itemView.getResources().getColor(R.color.md_yellow_900));
+      //  fondo.getLayoutParams().width = ConstraintLayout.LayoutParams.MATCH_PARENT;
     }
 }

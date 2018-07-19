@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.systemvv.grupo.asitenciaapp.R;
 import com.systemvv.grupo.asitenciaapp.base.UseCaseHandler;
@@ -26,6 +27,8 @@ public class ReporteIncidenciasFragment extends BaseFragment<ReporteIncidenciasV
     public static final String TAG = ReporteIncidenciasFragment.class.getSimpleName();
     @BindView(R.id.reciclador)
     RecyclerView recyclerView;
+    @BindView(R.id.mensajeVacio)
+    TextView textViewVacio;
     ReporteIncidenciasAdapter reporteIncidenciasAdapter;
 
     public ReporteIncidenciasFragment() {
@@ -80,6 +83,11 @@ public class ReporteIncidenciasFragment extends BaseFragment<ReporteIncidenciasV
 
     @Override
     public void mostrarLista(List<Incidencias> incidenciasList) {
-        reporteIncidenciasAdapter.mostrarLista(incidenciasList);
+        if (incidenciasList == null || incidenciasList.isEmpty()) {
+            textViewVacio.setVisibility(View.VISIBLE);
+        } else {
+            reporteIncidenciasAdapter.mostrarLista(incidenciasList);
+            textViewVacio.setVisibility(View.GONE);
+        }
     }
 }

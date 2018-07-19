@@ -6,6 +6,7 @@ import com.systemvv.grupo.asitenciaapp.base.UseCaseHandler;
 import com.systemvv.grupo.asitenciaapp.base.activity.BaseActivityPresenterImpl;
 import com.systemvv.grupo.asitenciaapp.padre.entidad.Cursos;
 import com.systemvv.grupo.asitenciaapp.padre.entidad.Hijos;
+import com.systemvv.grupo.asitenciaapp.padre.entidad.Incidencias;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,41 +37,46 @@ public class HijosPresenterImpl extends BaseActivityPresenterImpl<HijosView> imp
 
         List<Cursos> cursosList3 = new ArrayList<>();
 
-        Cursos cursosPrimerHijoMatematica = new Cursos("D-MATE", "Matematica", "8:00 a 10:00 am", "Juan Perez","https://lh4.googleusercontent.com/-BM1HpAOAH8s/VN0opWfgsNI/AAAAAAAAAVc/xbsgs7KRG_o/w984-h209-no/162_bookshelf_brown.jpg");
+        Cursos cursosPrimerHijoMatematica = new Cursos("D-MATE", "Matematica", "8:00 a 10:00 am", "Juan Perez", "https://lh4.googleusercontent.com/-BM1HpAOAH8s/VN0opWfgsNI/AAAAAAAAAVc/xbsgs7KRG_o/w984-h209-no/162_bookshelf_brown.jpg");
+        cursosPrimerHijoMatematica.setIncidenciasList(obtenerListaIncidenciasPrimerHijoCursoMatematica());
 
-        Cursos cursosPrimerHijoComunicacion = new Cursos("D-COMU", "Comunicación", "10:00 a 11:00 am", "Jose Beteta","https://lh5.googleusercontent.com/-Fu7AEy1bRQs/VN0ojktkA4I/AAAAAAAAATE/73rXQ2D-iR0/w984-h209-no/13_drops.jpg");
-        Cursos cursosPrimerHijoPersonaSocial = new Cursos("D-SOCI", "Persona Social", "11:30 a 12:30 am", "Juana Lopez","https://lh6.googleusercontent.com/-7Ww0toY0P1s/VN0op12wi-I/AAAAAAAAAVs/GUcBQ4yvdPw/w984-h209-no/164_windows_ltblue.jpg");
-        Cursos cursosPrimerHijoComputo = new Cursos("D-COMP", "Computo", "12:00 a 1:00 pm", "Luis Rojas","https://lh6.googleusercontent.com/-VZ0OG0lXwVk/VN0or214CJI/AAAAAAAAAWg/aZZDUTx3M2E/w984-h209-no/23_piano.jpg");
-        Cursos cursosPrimerHijoReligion = new Cursos("D-RELI", "Religión", "1:00 a 1:30 pm", "Kenner Begazo","https://lh4.googleusercontent.com/-BM1HpAOAH8s/VN0opWfgsNI/AAAAAAAAAVc/xbsgs7KRG_o/w984-h209-no/162_bookshelf_brown.jpg");
-        Cursos cursosPrimerHijoArte = new Cursos("D-ARTE", "Arte", "1:30 a 2:00 pm", "Rosmeri Guevara","https://lh5.googleusercontent.com/-Fu7AEy1bRQs/VN0ojktkA4I/AAAAAAAAATE/73rXQ2D-iR0/w984-h209-no/13_drops.jpg");
+        Cursos cursosPrimerHijoComunicacion = new Cursos("D-COMU", "Comunicación", "10:00 a 11:00 am", "Jose Beteta", "https://lh5.googleusercontent.com/-Fu7AEy1bRQs/VN0ojktkA4I/AAAAAAAAATE/73rXQ2D-iR0/w984-h209-no/13_drops.jpg");
+        cursosPrimerHijoComunicacion.setIncidenciasList(obtenerListaIncidenciasPrimerHijoCursoComunicacion());
 
+        Cursos cursosPrimerHijoPersonaSocial = new Cursos("D-SOCI", "Persona Social", "11:30 a 12:30 am", "Juana Lopez", "https://lh6.googleusercontent.com/-7Ww0toY0P1s/VN0op12wi-I/AAAAAAAAAVs/GUcBQ4yvdPw/w984-h209-no/164_windows_ltblue.jpg");
+        cursosPrimerHijoPersonaSocial.setIncidenciasList(obtenerListaIncidenciasPrimerHijoCursoPersonaSocial());
 
+        Cursos cursosPrimerHijoComputo = new Cursos("D-COMP", "Computo", "12:00 a 1:00 pm", "Luis Rojas", "https://lh6.googleusercontent.com/-VZ0OG0lXwVk/VN0or214CJI/AAAAAAAAAWg/aZZDUTx3M2E/w984-h209-no/23_piano.jpg");
+        Cursos cursosPrimerHijoReligion = new Cursos("D-RELI", "Religión", "1:00 a 1:30 pm", "Kenner Begazo", "https://lh4.googleusercontent.com/-BM1HpAOAH8s/VN0opWfgsNI/AAAAAAAAAVc/xbsgs7KRG_o/w984-h209-no/162_bookshelf_brown.jpg");
+        Cursos cursosPrimerHijoArte = new Cursos("D-ARTE", "Arte", "1:30 a 2:00 pm", "Rosmeri Guevara", "https://lh5.googleusercontent.com/-Fu7AEy1bRQs/VN0ojktkA4I/AAAAAAAAATE/73rXQ2D-iR0/w984-h209-no/13_drops.jpg");
 
-        Cursos cursosSegundoHijoMatematica = new Cursos("D-MATE", "Matematica", "8:00 a 10:00 am", "Juan Perez","https://lh4.googleusercontent.com/-BM1HpAOAH8s/VN0opWfgsNI/AAAAAAAAAVc/xbsgs7KRG_o/w984-h209-no/162_bookshelf_brown.jpg");
+        /*Curso de Segundo Hijo*/
 
-        Cursos cursosSegundoHijoComunicacion = new Cursos("D-COMU", "Comunicación", "10:00 a 11:00 am", "Jose Beteta","https://lh5.googleusercontent.com/-Fu7AEy1bRQs/VN0ojktkA4I/AAAAAAAAATE/73rXQ2D-iR0/w984-h209-no/13_drops.jpg");
-        Cursos cursosSegundoHijoPersonaSocial = new Cursos("D-SOCI", "Persona Social", "11:30 a 12:30 am", "Juana Lopez","https://lh6.googleusercontent.com/-7Ww0toY0P1s/VN0op12wi-I/AAAAAAAAAVs/GUcBQ4yvdPw/w984-h209-no/164_windows_ltblue.jpg");
-        Cursos cursosSegundoHijoComputo = new Cursos("D-COMP", "Computo", "12:00 a 1:00 pm", "Luis Rojas","https://lh6.googleusercontent.com/-VZ0OG0lXwVk/VN0or214CJI/AAAAAAAAAWg/aZZDUTx3M2E/w984-h209-no/23_piano.jpg");
-        Cursos cursosSegundoHijoReligion = new Cursos("D-RELI", "Religión", "1:00 a 1:30 pm", "Kenner Begazo","https://lh4.googleusercontent.com/-BM1HpAOAH8s/VN0opWfgsNI/AAAAAAAAAVc/xbsgs7KRG_o/w984-h209-no/162_bookshelf_brown.jpg");
-        Cursos cursosSegundoHijoArte = new Cursos("D-ARTE", "Arte", "1:30 a 2:00 pm", "Rosmeri Guevara","https://lh5.googleusercontent.com/-Fu7AEy1bRQs/VN0ojktkA4I/AAAAAAAAATE/73rXQ2D-iR0/w984-h209-no/13_drops.jpg");
+        Cursos cursosSegundoHijoMatematica = new Cursos("D-MATE", "Matematica", "8:00 a 10:00 am", "Juan Perez", "https://lh4.googleusercontent.com/-BM1HpAOAH8s/VN0opWfgsNI/AAAAAAAAAVc/xbsgs7KRG_o/w984-h209-no/162_bookshelf_brown.jpg");
+        cursosSegundoHijoMatematica.setIncidenciasList(obtenerListaIncidenciasSegundoHijoCursoMatematica());
 
+        Cursos cursosSegundoHijoComunicacion = new Cursos("D-COMU", "Comunicación", "10:00 a 11:00 am", "Jose Beteta", "https://lh5.googleusercontent.com/-Fu7AEy1bRQs/VN0ojktkA4I/AAAAAAAAATE/73rXQ2D-iR0/w984-h209-no/13_drops.jpg");
+        cursosSegundoHijoComunicacion.setIncidenciasList(obtenerListaIncidenciasSegundoHijoCursoComunicacion());
 
-
-
-
-
-
-        Cursos cursosTercerHijoSegundoMatematica = new Cursos("D-MATE", "Matematica", "8:00 a 10:00 am", "Juan Perez","https://lh4.googleusercontent.com/-BM1HpAOAH8s/VN0opWfgsNI/AAAAAAAAAVc/xbsgs7KRG_o/w984-h209-no/162_bookshelf_brown.jpg");
-        Cursos cursosTercerHijoSegundoComunicacion = new Cursos("D-COMU", "Comunicación", "10:00 a 11:00 am", "Jose Beteta","https://lh5.googleusercontent.com/-Fu7AEy1bRQs/VN0ojktkA4I/AAAAAAAAATE/73rXQ2D-iR0/w984-h209-no/13_drops.jpg");
-        Cursos cursosTercerHijoSegundoPersonaSocial = new Cursos("D-SOCI", "Persona Social", "11:30 a 12:30 am", "Juana Lopez","https://lh6.googleusercontent.com/-7Ww0toY0P1s/VN0op12wi-I/AAAAAAAAAVs/GUcBQ4yvdPw/w984-h209-no/164_windows_ltblue.jpg");
-        Cursos cursosTercerHijoSegundoComputo = new Cursos("D-COMP", "Computo", "12:00 a 1:00 pm", "Luis Rojas","https://lh5.googleusercontent.com/-Fu7AEy1bRQs/VN0ojktkA4I/AAAAAAAAATE/73rXQ2D-iR0/w984-h209-no/13_drops.jpg");
+        Cursos cursosSegundoHijoPersonaSocial = new Cursos("D-SOCI", "Persona Social", "11:30 a 12:30 am", "Juana Lopez", "https://lh6.googleusercontent.com/-7Ww0toY0P1s/VN0op12wi-I/AAAAAAAAAVs/GUcBQ4yvdPw/w984-h209-no/164_windows_ltblue.jpg");
+        Cursos cursosSegundoHijoComputo = new Cursos("D-COMP", "Computo", "12:00 a 1:00 pm", "Luis Rojas", "https://lh6.googleusercontent.com/-VZ0OG0lXwVk/VN0or214CJI/AAAAAAAAAWg/aZZDUTx3M2E/w984-h209-no/23_piano.jpg");
+        Cursos cursosSegundoHijoReligion = new Cursos("D-RELI", "Religión", "1:00 a 1:30 pm", "Kenner Begazo", "https://lh4.googleusercontent.com/-BM1HpAOAH8s/VN0opWfgsNI/AAAAAAAAAVc/xbsgs7KRG_o/w984-h209-no/162_bookshelf_brown.jpg");
+        Cursos cursosSegundoHijoArte = new Cursos("D-ARTE", "Arte", "1:30 a 2:00 pm", "Rosmeri Guevara", "https://lh5.googleusercontent.com/-Fu7AEy1bRQs/VN0ojktkA4I/AAAAAAAAATE/73rXQ2D-iR0/w984-h209-no/13_drops.jpg");
 
 
-        Hijos primerHijo = new Hijos("1204560", "Andy Manuel", "Vega Soza", "8", "Colegio Peruano - Britanico", "3", "A", "http://ilumina2photo.es/wp-content/uploads/2016/03/fotografos-barcelona-reportaje-fotos-infantil-cumplea%C3%B1os-sesion-fotografica-familiar-exterior-pareja-fotografo-familia.jpg");
+        Cursos cursosTercerHijoSegundoMatematica = new Cursos("D-MATE", "Matematica", "8:00 a 10:00 am", "Juan Perez", "https://lh4.googleusercontent.com/-BM1HpAOAH8s/VN0opWfgsNI/AAAAAAAAAVc/xbsgs7KRG_o/w984-h209-no/162_bookshelf_brown.jpg");
+        cursosTercerHijoSegundoMatematica.setIncidenciasList(obtenerListaIncidenciasTercerHijoCursoMatematica());
+        Cursos cursosTercerHijoSegundoComunicacion = new Cursos("D-COMU", "Comunicación", "10:00 a 11:00 am", "Jose Beteta", "https://lh5.googleusercontent.com/-Fu7AEy1bRQs/VN0ojktkA4I/AAAAAAAAATE/73rXQ2D-iR0/w984-h209-no/13_drops.jpg");
+        cursosTercerHijoSegundoComunicacion.setIncidenciasList(obtenerListaIncidenciasTercerHijoCursoComunicacion());
+        Cursos cursosTercerHijoSegundoPersonaSocial = new Cursos("D-SOCI", "Persona Social", "11:30 a 12:30 am", "Juana Lopez", "https://lh6.googleusercontent.com/-7Ww0toY0P1s/VN0op12wi-I/AAAAAAAAAVs/GUcBQ4yvdPw/w984-h209-no/164_windows_ltblue.jpg");
+        Cursos cursosTercerHijoSegundoComputo = new Cursos("D-COMP", "Computo", "12:00 a 1:00 pm", "Luis Rojas", "https://lh5.googleusercontent.com/-Fu7AEy1bRQs/VN0ojktkA4I/AAAAAAAAATE/73rXQ2D-iR0/w984-h209-no/13_drops.jpg");
+
+
+        Hijos primerHijo = new Hijos("1204560", "Andy Manuel", "Vega Soza", "8", "Colegio Peruano - Britanico", "1", "A", "https://tiedralc.files.wordpress.com/2013/03/nino-gafas.jpg");
         primerHijo.setCursosList(cursosList);
-        Hijos segundoHijo = new Hijos("1204561", "Mateo Guillermo", "Vega Soza", "8", "Colegio Peruano - Britanico", "3", "A", "http://ilumina2photo.es/wp-content/uploads/2016/03/fotografos-barcelona-reportaje-fotos-infantil-cumplea%C3%B1os-sesion-fotografica-familiar-exterior-pareja-fotografo-familia.jpg");
-        segundoHijo.setCursosList(cursosList);
-        Hijos tercerHijo = new Hijos("1204580", "Jean Piere", "Vega Fernandez", "14", "Centro Peruano de Estudios", "6", "B", "http://ilumina2photo.es/wp-content/uploads/2016/02/sesion-fotos-ni%C3%B1os-playa-barcelona-infantil-reportaje-fotografia-costa-ni%C3%B1o-ni%C3%B1a-aire-libre-2.jpg");
+        Hijos segundoHijo = new Hijos("1204561", "Mateo Guillermo", "Vega Soza", "8", "Colegio Peruano - Britanico", "3", "A", "http://1.bp.blogspot.com/_wh03KzzmB8s/TKDZvV9ROFI/AAAAAAAAB3g/KXjiCT5JPk0/s1600/josem.JPG");
+        segundoHijo.setCursosList(cursosList2);
+        Hijos tercerHijo = new Hijos("1204580", "Jean Piere", "Vega Fernandez", "14", "Centro Peruano de Estudios", "6", "B", "http://vientosurnoticias.com.ar/wp-content/uploads/2015/05/Birke-Baehr.png");
         tercerHijo.setCursosList(cursosList3);
 
         cursosPrimerHijoMatematica.setHijos(primerHijo);
@@ -92,7 +98,6 @@ public class HijosPresenterImpl extends BaseActivityPresenterImpl<HijosView> imp
         cursosTercerHijoSegundoComunicacion.setHijos(tercerHijo);
         cursosTercerHijoSegundoPersonaSocial.setHijos(tercerHijo);
         cursosTercerHijoSegundoComputo.setHijos(tercerHijo);
-
 
 
         cursosList.add(cursosPrimerHijoMatematica);
@@ -117,13 +122,90 @@ public class HijosPresenterImpl extends BaseActivityPresenterImpl<HijosView> imp
         cursosList3.add(cursosTercerHijoSegundoComputo);
 
 
-
-
-
         hijosList.add(primerHijo);
         hijosList.add(segundoHijo);
         hijosList.add(tercerHijo);
         return hijosList;
+    }
+
+    private  List<Incidencias> obtenerListaIncidenciasTercerHijoCursoComunicacion() {
+        List<Incidencias> incidenciasList = new ArrayList<>();
+        Incidencias incidencias1 = new Incidencias(1, "El alumno presento un mal comportamiento", "09/07/2017", "10:00", 1);
+        Incidencias incidencias2 = new Incidencias(2, "El alumno presento sintomas de fiebre", "09/07/2017", "10:00", 1);
+        Incidencias incidencias3 = new Incidencias(3, "El alumno no presta atención en clase", "10/07/2017", "10:00", 2);
+        Incidencias incidencias4 = new Incidencias(4, "Habla mucho con su compañero de clase, no hace caso", "12/07/2017", "10:00", 3);
+        incidenciasList.add(incidencias1);
+        incidenciasList.add(incidencias2);
+        incidenciasList.add(incidencias3);
+        incidenciasList.add(incidencias4);
+        return incidenciasList;
+    }
+
+    private List<Incidencias> obtenerListaIncidenciasTercerHijoCursoMatematica() {
+        List<Incidencias> incidenciasList = new ArrayList<>();
+        Incidencias incidencias1 = new Incidencias(1, "El alumno presento un mal comportamiento", "09/07/2017", "10:00", 1);
+        Incidencias incidencias2 = new Incidencias(2, "El alumno presento sintomas de fiebre", "09/07/2017", "10:00", 1);
+        incidenciasList.add(incidencias1);
+        incidenciasList.add(incidencias2);
+        return incidenciasList;
+    }
+
+    private List<Incidencias> obtenerListaIncidenciasSegundoHijoCursoComunicacion() {
+        List<Incidencias> incidenciasList = new ArrayList<>();
+        Incidencias incidencias1 = new Incidencias(1, "El alumno presento un mal comportamiento", "09/07/2017", "10:00", 1);
+        Incidencias incidencias2 = new Incidencias(2, "El alumno presento sintomas de fiebre", "09/07/2017", "10:00", 1);
+        Incidencias incidencias3 = new Incidencias(3, "Habla mucho con su compañero de clase, no hace caso", "12/07/2017", "10:00", 3);
+        incidenciasList.add(incidencias1);
+        incidenciasList.add(incidencias2);
+        incidenciasList.add(incidencias3);
+        return incidenciasList;
+    }
+
+    private List<Incidencias> obtenerListaIncidenciasSegundoHijoCursoMatematica() {
+        List<Incidencias> incidenciasList = new ArrayList<>();
+        Incidencias incidencias1 = new Incidencias(1, "El alumno presento un mal comportamiento", "09/07/2017", "10:00", 1);
+        Incidencias incidencias2 = new Incidencias(2, "El alumno presento sintomas de fiebre", "09/07/2017", "10:00", 1);
+        Incidencias incidencias3 = new Incidencias(3, "Habla mucho con su compañero de clase, no hace caso", "12/07/2017", "10:00", 3);
+        incidenciasList.add(incidencias1);
+        incidenciasList.add(incidencias2);
+        incidenciasList.add(incidencias3);
+        return incidenciasList;
+    }
+
+    private List<Incidencias> obtenerListaIncidenciasPrimerHijoCursoPersonaSocial() {
+        List<Incidencias> incidenciasList = new ArrayList<>();
+        Incidencias incidencias1 = new Incidencias(1, "El alumno presento un mal comportamiento", "09/07/2017", "10:00", 1);
+        Incidencias incidencias2 = new Incidencias(2, "El alumno presento sintomas de fiebre", "09/07/2017", "10:00", 1);
+        incidenciasList.add(incidencias1);
+        incidenciasList.add(incidencias2);
+        return incidenciasList;
+    }
+
+    private List<Incidencias> obtenerListaIncidenciasPrimerHijoCursoComunicacion() {
+        List<Incidencias> incidenciasList = new ArrayList<>();
+        Incidencias incidencias1 = new Incidencias(1, "El alumno presento un mal comportamiento", "09/07/2017", "10:00", 1);
+        Incidencias incidencias2 = new Incidencias(2, "El alumno presento sintomas de fiebre", "09/07/2017", "10:00", 1);
+        Incidencias incidencias3 = new Incidencias(3, "Habla mucho con su compañero de clase, no hace caso", "12/07/2017", "10:00", 3);
+        incidenciasList.add(incidencias1);
+        incidenciasList.add(incidencias2);
+        incidenciasList.add(incidencias3);
+        return incidenciasList;
+    }
+
+    private List<Incidencias> obtenerListaIncidenciasPrimerHijoCursoMatematica() {
+
+        List<Incidencias> incidenciasList = new ArrayList<>();
+
+        Incidencias incidencias1 = new Incidencias(1, "El alumno presento un mal comportamiento", "09/07/2017", "10:00", 1);
+        Incidencias incidencias2 = new Incidencias(2, "El alumno presento sintomas de fiebre", "09/07/2017", "10:00", 1);
+        Incidencias incidencias3 = new Incidencias(3, "El alumno no presta atención en clase", "10/07/2017", "10:00", 2);
+        Incidencias incidencias4 = new Incidencias(4, "Habla mucho con su compañero de clase, no hace caso", "12/07/2017", "10:00", 3);
+        incidenciasList.add(incidencias1);
+        incidenciasList.add(incidencias2);
+        incidenciasList.add(incidencias3);
+        incidenciasList.add(incidencias4);
+        return incidenciasList;
+
     }
 
     @Override

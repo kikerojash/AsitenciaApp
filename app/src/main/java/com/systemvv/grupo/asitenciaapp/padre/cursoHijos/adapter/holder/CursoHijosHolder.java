@@ -26,6 +26,8 @@ public class CursoHijosHolder extends RecyclerView.ViewHolder implements View.On
     CircleImageView circleImageViewHijo;
     @BindView(R.id.cardViewItem)
     ConstraintLayout constraintLayout;
+    @BindView(R.id.textView12)
+    TextView textViewContadorIncidencia;
     CursoHijosListener listener;
     Cursos cursos;
 
@@ -41,6 +43,12 @@ public class CursoHijosHolder extends RecyclerView.ViewHolder implements View.On
         this.listener = listener;
         textViewNombreCurso.setText(cursos.getNombreCurso());
         textViewGradoSeccion.setText("Grado: " + cursos.getHijos().getGrado() + " Sección: " + cursos.getHijos().getSeccion());
+        if(cursos.getIncidenciasList()==null){
+            textViewContadorIncidencia.setText("0");
+        }else {
+            textViewContadorIncidencia.setText(cursos.getIncidenciasList().size()+"");
+        }
+
         Glide.with(itemView.getContext()).load(cursos.getFotoCurso()).into(imageViewFotoCurso);
         Glide.with(itemView.getContext()).load(cursos.getHijos().getFoto()).into(circleImageViewHijo);
     }

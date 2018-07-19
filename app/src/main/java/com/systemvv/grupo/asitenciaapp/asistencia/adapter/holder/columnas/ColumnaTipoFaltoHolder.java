@@ -25,5 +25,6 @@ public class ColumnaTipoFaltoHolder extends AbstractViewHolder {
     public void bind(MotivosAsistenciaUi motivosAsistenciaUi) {
         textViewTitulo.setText("Ausente");
         fondo.setBackgroundColor(itemView.getResources().getColor(R.color.md_red_A400));
+      //  fondo.getLayoutParams().width = ConstraintLayout.LayoutParams.MATCH_PARENT;
     }
 }

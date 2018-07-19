@@ -93,7 +93,7 @@ public class JustificacionDialog extends DialogFragment {
     @OnClick(R.id.btnAceptar)
     public void onClick() {
         if (fila == -1) return;
-        listener.onClickAceptar(fila);
+        //listener.onClickAceptar(fila);
         dismiss();
     }
 

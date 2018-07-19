@@ -3,14 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/menu_guardar_entrada"
-        android:icon="@drawable/ic_play_arrow_black_24dp"
+        android:icon="@drawable/ic_save_black_24dp"
         android:orderInCategory="100"
         app:showAsAction="always"
         android:title="" />
 
     <item
         android:id="@+id/menu_guardar_salida"
-        android:icon="@drawable/ic_stop_black_24dp"
+        android:icon="@drawable/ic_exit_to_app_black_24dp"
         android:orderInCategory="100"
         app:showAsAction="always"
         android:title="" />

@@ -17,6 +17,10 @@ public class ReporteAsistenciaHolder extends RecyclerView.ViewHolder {
     TextView textViewConteo;
     @BindView(R.id.textView6)
     TextView textViewFecha;
+    @BindView(R.id.textViewHoraInicio)
+    TextView textViewInicioHora;
+    @BindView(R.id.textViewHoraFin)
+    TextView textViewFinHora;
     @BindView(R.id.textView8)
     ImageView imageView;
 
@@ -29,6 +33,8 @@ public class ReporteAsistenciaHolder extends RecyclerView.ViewHolder {
     public void bind(Asistencia asistencia) {
         textViewConteo.setText(asistencia.getConteo() + "");
         textViewFecha.setText(asistencia.getFecha());
+        textViewInicioHora.setText(asistencia.getInicioRegistroHora());
+        textViewFinHora.setText(asistencia.getFinRegistroHora());
         validarTipoAsistencia(asistencia);
     }
 
