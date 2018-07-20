@@ -1,31 +1,27 @@
-package com.systemvv.grupo.asitenciaapp.cursos.entidad;
+package com.systemvv.grupo.asitenciaapp.asistencia.entidad;
 
 import com.systemvv.grupo.asitenciaapp.asistencia.adapter.estructura.FilaCabeceraAsistencia;
 
-import org.parceler.Parcel;
+public class Alumnos extends FilaCabeceraAsistencia {
 
-@Parcel
-//public class AlumnosUi extends AsistenciaColumnaCabecera {
-public class AlumnosUi extends FilaCabeceraAsistencia {
     public int conteo;
     public String nombre;
     public String apellido;
     public String foto;
-    public AsistenciaUi asistenciaUi;
-    public MotivosAsistenciaUi motivosAsistenciaUi;
+
     public int tipoAsistencia;
     public int tipoPadecimiento;
 
 
-    public AlumnosUi() {
+    public Alumnos() {
     }
 
-    public AlumnosUi(int conteo, String nombre, String apellido, String foto, AsistenciaUi asistenciaUi) {
+    public Alumnos(int conteo, String nombre, String apellido, String foto) {
         this.conteo = conteo;
         this.nombre = nombre;
         this.apellido = apellido;
         this.foto = foto;
-        this.asistenciaUi = asistenciaUi;
+
     }
 
     public int getConteo() {
@@ -58,22 +54,6 @@ public class AlumnosUi extends FilaCabeceraAsistencia {
 
     public void setFoto(String foto) {
         this.foto = foto;
-    }
-
-    public AsistenciaUi getAsistenciaUi() {
-        return asistenciaUi;
-    }
-
-    public void setAsistenciaUi(AsistenciaUi asistenciaUi) {
-        this.asistenciaUi = asistenciaUi;
-    }
-
-    public MotivosAsistenciaUi getMotivosAsistenciaUi() {
-        return motivosAsistenciaUi;
-    }
-
-    public void setMotivosAsistenciaUi(MotivosAsistenciaUi motivosAsistenciaUi) {
-        this.motivosAsistenciaUi = motivosAsistenciaUi;
     }
 
     public int getTipoAsistencia() {

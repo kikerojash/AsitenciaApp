@@ -82,32 +82,39 @@ public class CursoPresenterImpl extends BaseActivityPresenterImpl<CursoView> imp
         asistenciaPuntual.setAlumnosUi(alumnoJuanManuel);
         alumnoJuanManuel.setAsistenciaUi(asistenciaPuntual);
         alumnoJuanManuel.setTipoAsistencia(MotivosAsistenciaUi.TIPO_ASISTENCIA_PUNTUAL);
+        alumnoJuanManuel.setTipoPadecimiento(0);
 
 
         AlumnosUi alumnoRonald = new AlumnosUi(2, "Lizbeth Eliza", "Rodriguez Soza", "https://tiedralc.files.wordpress.com/2013/03/nino-sin-gafas.jpg", asistenciaPuntual);
         asistenciaPuntual.setAlumnosUi(alumnoRonald);
         alumnoRonald.setAsistenciaUi(asistenciaPuntual);
         alumnoRonald.setTipoAsistencia(MotivosAsistenciaUi.TIPO_ASISTENCIA_PUNTUAL);
+        alumnoRonald.setTipoPadecimiento(0);
 
 
         AlumnosUi alumnoAlexManuel = new AlumnosUi(3, "Maria Fernanda ", "Chambilla Rojas", "https://lh4.googleusercontent.com/-YEAuX1F0AiE/TW6WB1Ve_PI/AAAAAAAADEs/K-u36P-xzZ8/s1600/cats.jpg", asistenciaPuntual);
         asistenciaPuntual.setAlumnosUi(alumnoAlexManuel);
         alumnoAlexManuel.setTipoAsistencia(MotivosAsistenciaUi.TIPO_ASISTENCIA_PUNTUAL);
+        alumnoAlexManuel.setTipoPadecimiento(1);
 
 
         AlumnosUi alumnoAndyManuel = new AlumnosUi(4, "Alex Rodolfo", "Aguilar Vera", "https://lh5.googleusercontent.com/-d5pBHBjNdxk/TYe2xBopLlI/AAAAAAAADUM/yAcg7udW6T0/s1600/hugo+n.JPG", asistenciaPuntual);
         asistenciaPuntual.setAlumnosUi(alumnoAndyManuel);
         alumnoAndyManuel.setTipoAsistencia(MotivosAsistenciaUi.TIPO_ASISTENCIA_PUNTUAL);
+        alumnoAndyManuel.setTipoPadecimiento(0);
 
 
         AlumnosUi alumnoArturitManuel = new AlumnosUi(5, "Andy Manuel", "Vega Soza", "https://lh6.googleusercontent.com/-zO_nrglt9M8/TXfNjwZbbfI/AAAAAAAADKk/cKZ4mxXS150/s1600/hugom.JPG", asistenciaPuntual);
         asistenciaPuntual.setAlumnosUi(alumnoArturitManuel);
         alumnoArturitManuel.setTipoAsistencia(MotivosAsistenciaUi.TIPO_ASISTENCIA_PUNTUAL);
         asistenciaPuntual.setAlumnosUi(alumnoArturitManuel);
+        alumnoArturitManuel.setTipoPadecimiento(0);
+
 
         AlumnosUi alumnoJuanM = new AlumnosUi(6, "Arturito Manuel", "Perez Chancl", "https://www.parentcenterhub.org/wp-content/uploads/2010/08/rsz_hispboy-six.jpg", asistenciaPuntual);
         asistenciaPuntual.setAlumnosUi(alumnoJuanM);
         alumnoJuanM.setTipoAsistencia(MotivosAsistenciaUi.TIPO_ASISTENCIA_PUNTUAL);
+        alumnoJuanM.setTipoPadecimiento(2);
 
         asistenciaUiListPuntuales.add(asistenciaPuntual);
 
@@ -136,10 +143,12 @@ public class CursoPresenterImpl extends BaseActivityPresenterImpl<CursoView> imp
         AlumnosUi alumnoPedroJuan = new AlumnosUi(7, "Estefany Valentina", "Perez Soza", "http://lainmaculada.pe/website/wp-content/uploads/2016/02/ninosinicial16-1024x672.jpg", asistenciaTarde);
         alumnoPedroJuan.setTipoAsistencia(MotivosAsistenciaUi.TIPO_ASISTENCIA_TARDE);
         asistenciaTarde.setAlumnosUi(alumnoPedroJuan);
+        alumnoPedroJuan.setTipoPadecimiento(0);
 
         AlumnosUi alumnoJuanMa = new AlumnosUi(8, "Juan Manuel", "Perez Soza", "http://lainmaculada.pe/website/wp-content/uploads/2016/02/ninosinicial18-1024x672.jpg", asistenciaTarde);
         asistenciaTarde.setAlumnosUi(alumnoJuanMa);
         alumnoJuanMa.setTipoAsistencia(MotivosAsistenciaUi.TIPO_ASISTENCIA_TARDE);
+        alumnoJuanMa.setTipoPadecimiento(0);
 
 
         alumnosUiList.add(alumnoPedroJuan);
@@ -163,7 +172,7 @@ public class CursoPresenterImpl extends BaseActivityPresenterImpl<CursoView> imp
         asistenciaTardeJustificado.setPintar(false);*/
 
         AlumnosUi alumnoRobertol = new AlumnosUi(9, "Roberto Manuel", "Perez Soza", "http://ilumina2photo.es/wp-content/uploads/2016/02/fotografo-infantil-barcelona-reportaje-fotos-ni%C3%B1os-campo-sesion-fotografica-estudio-profesional-008.jpg", null);
-
+        alumnoRobertol.setTipoPadecimiento(0);
         alumnoRobertol.setTipoAsistencia(MotivosAsistenciaUi.TIPO_ASISTENCIA_TARDE_JUSTIFICADO);
         alumnosUiList.add(alumnoRobertol);
 
@@ -184,6 +193,7 @@ public class CursoPresenterImpl extends BaseActivityPresenterImpl<CursoView> imp
 
         AlumnosUi alumnoUltimo = new AlumnosUi(10, "Juan Manuel", "Perez Soza", "http://ilumina2photo.es/wp-content/uploads/2016/02/sesion-fotos-ni%C3%B1os-playa-barcelona-infantil-reportaje-fotografia-costa-ni%C3%B1o-ni%C3%B1a-aire-libre-2.jpg", asistenciaFalto);
         alumnoUltimo.setTipoAsistencia(MotivosAsistenciaUi.TIPO_ASISTENCIA_FALTO);
+        alumnoUltimo.setTipoPadecimiento(0);
         alumnosUiList.add(alumnoUltimo);
 
         asistenciaFalto.setMotivosAsistenciaUi(motivosAsistenciaFaltoUi);

@@ -20,6 +20,7 @@ import com.systemvv.grupo.asitenciaapp.cursos.entidad.AlumnosUi;
 import com.systemvv.grupo.asitenciaapp.cursos.entidad.AsistenciaUi;
 
 import org.parceler.Parcels;
+import org.w3c.dom.Text;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -34,6 +35,8 @@ public class JustificacionDialog extends DialogFragment {
     ImageView imgProfile;
     @BindView(R.id.spnIncidencias)
     Spinner spinnerIncidencias;
+    @BindView(R.id.textViewPadece)
+    TextView textViewPadecimiento;
 
     public static final String TAG = JustificacionDialog.class.getSimpleName();
     private AlumnosUi alumnosUi;
@@ -59,7 +62,7 @@ public class JustificacionDialog extends DialogFragment {
         //this.columna = bundle.getInt("column", 0);
         this.fila = bundle.getInt("row", 0);
         this.alumnosUi = Parcels.unwrap(bundle.getParcelable("alumnoUi"));
-       // this.asistenciaUi = Parcels.unwrap(bundle.getParcelable("asistenciaUi"));
+        // this.asistenciaUi = Parcels.unwrap(bundle.getParcelable("asistenciaUi"));
         Log.d(TAG, "alumnosUi : " + alumnosUi.getNombre());
     }
 
@@ -78,7 +81,22 @@ public class JustificacionDialog extends DialogFragment {
     private void initVistas() {
         textViewNombreAlumno.setText(alumnosUi.getNombre());
         textViewApellidoeAlumno.setText(alumnosUi.getApellido());
+        validarTipoPadencia(alumnosUi.getTipoPadecimiento());
         Glide.with(getActivity()).load(alumnosUi.getFoto()).into(imgProfile);
+    }
+
+    private void validarTipoPadencia(int tipoPadecimiento) {
+        switch (tipoPadecimiento) {
+            case 1:
+                textViewPadecimiento.setText("Padecimiento: Epilesia");
+                break;
+            case 2:
+                textViewPadecimiento.setText("Padecimiento: Alergia");
+                break;
+            default:
+                textViewPadecimiento.setText("Padecimiento: No Padece");
+                break;
+        }
     }
 
 

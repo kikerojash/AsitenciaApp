@@ -8,6 +8,9 @@ import android.util.Log;
 import com.systemvv.grupo.asitenciaapp.asistencia.adapter.estructura.CeldasAsistencia;
 import com.systemvv.grupo.asitenciaapp.asistencia.adapter.estructura.ColumnaCabeceraAsistencia;
 import com.systemvv.grupo.asitenciaapp.asistencia.adapter.estructura.FilaCabeceraAsistencia;
+import com.systemvv.grupo.asitenciaapp.asistencia.entidad.Alumnos;
+import com.systemvv.grupo.asitenciaapp.asistencia.entidad.Asistencia;
+import com.systemvv.grupo.asitenciaapp.asistencia.entidad.MotivoAsistencia;
 import com.systemvv.grupo.asitenciaapp.base.UseCaseHandler;
 import com.systemvv.grupo.asitenciaapp.base.activity.BaseActivityPresenterImpl;
 import com.systemvv.grupo.asitenciaapp.cursos.entidad.AlumnosUi;
@@ -67,10 +70,43 @@ public class ControlAsistenciaPresenterImpl extends BaseActivityPresenterImpl<Co
         rowHeaderList = new ArrayList<>();
 
         columnHeaderList.addAll(cursoUi.getMotivosAsistenciaUiList());
+        //---columnHeaderList.addAll(obtenerMotivoAsistenciaLista());
         rowHeaderList.addAll(cursoUi.getAlumnosUiList());
+        //--rowHeaderList.addAll(obtenerAlumnosLista());
         cellsList.addAll(getCellListForSortingTest());
 
         if (view != null) view.mostrarListaTablas(columnHeaderList, rowHeaderList, cellsList);
+    }
+
+    private List<Alumnos> obtenerAlumnosLista() {
+        List<Alumnos> alumnos = new ArrayList<>();
+        for (AlumnosUi alumnosUi : cursoUi.getAlumnosUiList()) {
+            Alumnos alumnos1 = new Alumnos();
+            alumnos1.setConteo(alumnosUi.getConteo());
+            alumnos1.setNombre(alumnosUi.getNombre());
+            alumnos1.setApellido(alumnosUi.getApellido());
+            alumnos1.setFoto(alumnosUi.getFoto());
+            alumnos1.setTipoAsistencia(alumnosUi.getTipoAsistencia());
+            alumnos1.setTipoPadecimiento(alumnosUi.getTipoPadecimiento());
+        }
+        return alumnos;
+    }
+
+    private List<MotivoAsistencia> obtenerMotivoAsistenciaLista() {
+        List<MotivoAsistencia> motivoAsistencias = new ArrayList<>();
+        for (MotivosAsistenciaUi motivosAsistenciaUi : cursoUi.getMotivosAsistenciaUiList()) {
+            MotivoAsistencia motivoAsistencia = new MotivoAsistencia();
+            motivoAsistencia.setJustificacion(motivosAsistenciaUi.getJustificacion());
+            motivoAsistencia.setTipoMotivo(motivosAsistenciaUi.getTipoMotivo());
+            for(AsistenciaUi asistenciaUi : motivosAsistenciaUi.getAsistenciaUiList()){
+
+               // motivoAsistencia.setAsistenciaUiList();
+            }
+
+
+
+        }
+        return motivoAsistencias;
     }
 
 
@@ -102,8 +138,8 @@ public class ControlAsistenciaPresenterImpl extends BaseActivityPresenterImpl<Co
             for (int j = 0; j < cursoUi.getMotivosAsistenciaUiList().size(); j++) {
                 MotivosAsistenciaUi motivosAsistenciaUi = cursoUi.getMotivosAsistenciaUiList().get(j);
 
-                Log.d(TAG,"MotivoAsistencia : " + motivosAsistenciaUi.getAsistenciaUiList().size());
-                for (AsistenciaUi asistenciaUi :motivosAsistenciaUi.getAsistenciaUiList()){
+                Log.d(TAG, "MotivoAsistencia : " + motivosAsistenciaUi.getAsistenciaUiList().size());
+                for (AsistenciaUi asistenciaUi : motivosAsistenciaUi.getAsistenciaUiList()) {
                     Log.d(TAG, "CURSO::ASISTENCIA : " + cursoUi.getAsistenciaUis().size());
                     if (asistenciaUi.getJustificacion() == 1) {
                         AsistenciaUi asistencia = new AsistenciaUi();
@@ -146,6 +182,11 @@ public class ControlAsistenciaPresenterImpl extends BaseActivityPresenterImpl<Co
 
         return list;
     }
+
+
+
+
+
 
     //  for(AlumnosUi alumnosUi:cursoUi.getAlumnosUiList()){}
 
