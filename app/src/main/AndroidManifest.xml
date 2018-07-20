@@ -31,21 +31,28 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".seleccionarInstituto.InstitutoActivity" />
+        <activity
+            android:name=".seleccionarInstituto.InstitutoActivity"
+            android:label="@string/titulo_activity_instituto" />
 
 
-        <activity android:name=".cursos.CursoActivity" />
+        <activity
+            android:name=".cursos.CursoActivity"
+            android:label="@string/titulo_activity_curso_docente" />
 
 
-        <activity android:name=".padre.HijosActivity"
-            android:label="@string/titulo_activity_hijos"/>
+        <activity
+            android:name=".padre.HijosActivity"
+            android:label="@string/titulo_activity_hijos" />
 
-        <activity android:name=".padre.cursoHijos.CursoHijosActivity"
-            android:label="@string/titulo_activity_curso_hijos"/>
+        <activity
+            android:name=".padre.cursoHijos.CursoHijosActivity"
+            android:label="@string/titulo_activity_curso_hijos" />
 
 
-        <activity android:name=".asistencia.ControlAsistenciaActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".asistencia.ControlAsistenciaActivity"
+            android:screenOrientation="portrait" />
 
         <activity android:name=".padre.reporteAsistencia.ReportesActivity" />
 
