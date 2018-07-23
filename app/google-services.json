@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "855338909975",
+    "firebase_url": "https://asistenciaapp-667c6.firebaseio.com",
+    "project_id": "asistenciaapp-667c6",
+    "storage_bucket": "asistenciaapp-667c6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:855338909975:android:7331a13a3ce6d091",
+        "android_client_info": {
+          "package_name": "com.systemvv.grupo.asitenciaapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "855338909975-t610dhnqbfjdej6qk332811mb7anpt8l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCazrPt207Lo5QxvzHFuZ_rQb4kshKEEOI"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

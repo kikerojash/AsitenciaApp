@@ -55,10 +55,15 @@ public class LoginPresenterImpl extends BaseActivityPresenterImpl<LoginView> imp
                 view.nulearUsuarioIncompleto();
         }
 
-        initLoginActivity(usuario, clave);
+        initAutenticacion(usuario,clave);
+        //initLoginActivity(usuario, clave);
 
 
 
+    }
+
+    private void initAutenticacion(String usuario, String clave) {
+        if(view!=null)view.initAutenticacion(usuario,clave);
     }
 
     private void initLoginActivity(String usuario, String clave) {

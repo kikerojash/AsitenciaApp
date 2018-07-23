@@ -2,7 +2,9 @@ package com.systemvv.grupo.asitenciaapp.seleccionarInstituto;
 
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -12,10 +14,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ProgressBar;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.systemvv.grupo.asitenciaapp.R;
 import com.systemvv.grupo.asitenciaapp.base.UseCaseHandler;
 import com.systemvv.grupo.asitenciaapp.base.UseCaseThreadPoolScheduler;
 import com.systemvv.grupo.asitenciaapp.base.activity.BaseActivity;
+import com.systemvv.grupo.asitenciaapp.login.LoginActivity;
 import com.systemvv.grupo.asitenciaapp.seleccionarInstituto.adapter.InstitutoAdapter;
 import com.systemvv.grupo.asitenciaapp.seleccionarInstituto.dialogSeccion.SeccionDialog;
 import com.systemvv.grupo.asitenciaapp.seleccionarInstituto.entidad.InstitutoUi;
@@ -38,6 +42,9 @@ public class InstitutoActivity extends BaseActivity<InstitutoView, InstitutoPres
     @BindView(R.id.reciclador)
     RecyclerView reciclador;
     InstitutoAdapter adapter;
+
+    //firebase auth object
+    private FirebaseAuth firebaseAuth;
 
     @Override
     protected String getTag() {
@@ -67,6 +74,8 @@ public class InstitutoActivity extends BaseActivity<InstitutoView, InstitutoPres
     @Override
     protected void setContentView() {
         setContentView(R.layout.activity_instituto);
+        //initializing firebase authentication object
+        firebaseAuth = FirebaseAuth.getInstance();
         ButterKnife.bind(this);
         initVistas();
         initToolbar();
@@ -110,18 +119,39 @@ public class InstitutoActivity extends BaseActivity<InstitutoView, InstitutoPres
         dialogFragment.setArguments(bundle);
         dialogFragment.show(ft, "dialog");
     }
-    @Override
+
+
     public boolean onCreateOptionsMenu(Menu menu) {
-        return super.onCreateOptionsMenu(menu);
+        getMenuInflater().inflate(R.menu.menu_instituto_docente, menu);
+        //return super.onCreateOptionsMenu(menu);
+        return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
+        int id = item.getItemId();
+        switch (id) {
+            case R.id.menu_opcion_desconectar:
+                firebaseAuth.signOut();
+                finish();
+                startActivity(new Intent(this, LoginActivity.class));
+                break;
+            default:
+                Log.d(TAG, "default:");
                 onBackPressed();
-                return true;
+                break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if(firebaseAuth.getCurrentUser() == null){
+            //closing this activity
+            finish();
+            //starting login activity
+            startActivity(new Intent(this, LoginActivity.class));
+        }
     }
 }

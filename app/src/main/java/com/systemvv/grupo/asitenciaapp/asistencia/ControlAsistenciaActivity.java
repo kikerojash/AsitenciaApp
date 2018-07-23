@@ -2,9 +2,11 @@ package com.systemvv.grupo.asitenciaapp.asistencia;
 
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcel;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -19,6 +21,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.evrencoskun.tableview.TableView;
 import com.evrencoskun.tableview.listener.ITableViewListener;
+import com.google.firebase.auth.FirebaseAuth;
 import com.systemvv.grupo.asitenciaapp.R;
 
 import com.systemvv.grupo.asitenciaapp.asistencia.adapter.AdapterTest;
@@ -42,6 +45,7 @@ import com.systemvv.grupo.asitenciaapp.cursos.entidad.AlumnosUi;
 import com.systemvv.grupo.asitenciaapp.cursos.entidad.AsistenciaUi;
 import com.systemvv.grupo.asitenciaapp.cursos.entidad.CursoUi;
 import com.systemvv.grupo.asitenciaapp.cursos.entidad.MotivosAsistenciaUi;
+import com.systemvv.grupo.asitenciaapp.login.LoginActivity;
 import com.systemvv.grupo.asitenciaapp.seleccionarInstituto.dialogSeccion.SeccionDialog;
 
 import org.parceler.Parcels;
@@ -78,6 +82,8 @@ public class ControlAsistenciaActivity extends BaseActivity<ControlAsistenciaVie
     CircleImageView circleImageView;
     private AsistenciaAdapter adapter;
 
+    //firebase auth object
+    private FirebaseAuth firebaseAuth;
     @Override
     protected String getTag() {
         return TAG;
@@ -106,8 +112,11 @@ public class ControlAsistenciaActivity extends BaseActivity<ControlAsistenciaVie
     @Override
     protected void setContentView() {
         setContentView(R.layout.activity_asistencia);
+        //initializing firebase authentication object
+        firebaseAuth = FirebaseAuth.getInstance();
         ButterKnife.bind(this);
         setupToolbar();
+        initAdapter();
     }
 
     private void setupToolbar() {
@@ -129,12 +138,17 @@ public class ControlAsistenciaActivity extends BaseActivity<ControlAsistenciaVie
         textViewNombreCuro.setText(cursoUi.getNombre());
         textViewGradoSeccion.setText("Grado : " + cursoUi.getGradoSelected() + " Sección : " + cursoUi.getSeccionSelected());
         Glide.with(this).load(cursoUi.getFoto()).into(imageViewFondo);
-        initAdapter();
+        //initAdapter();
     }
 
     @Override
     public void mostrarListaTablas(List<ColumnaCabeceraAsistencia> columnHeaderList, List<FilaCabeceraAsistencia> rowHeaderList, List<List<CeldasAsistencia>> cellsList) {
         adapter.setAllItems(columnHeaderList, rowHeaderList, cellsList);
+    }
+
+    @Override
+    public void actualizarDatosCambiadosTabla() {
+        adapter.notifyDataSetChanged();
     }
     //adapter.setAllItems(rowHeaderList, columnHeaderList, cellsList);
     //adapter.setAllItems(rowHeaderList, columnHeaderList, getListaCeldas());
@@ -145,14 +159,17 @@ public class ControlAsistenciaActivity extends BaseActivity<ControlAsistenciaVie
         table.setIgnoreSelectionColors(false);
         table.setHasFixedWidth(false);
         table.setIgnoreSelectionColors(true);
-        presenter.onListAdapter();
+//        presenter.onListAdapter();
         table.setTableViewListener(this);
 
     }
 
     @Override
     public void onCellClicked(@NonNull RecyclerView.ViewHolder holder, int column, int row) {
-        if (clickColumn == true) {
+        AsistenciaUi asistenciaUi = (AsistenciaUi) table.getAdapter().getCellItem(column, row);
+        List<CeldasAsistencia> celdasList = adapter.getCellRowItems(row);
+
+       /* if (clickColumn == true) {
             if (holder instanceof CeldasAsistenciaAlumnoPuntualHolder ||
                     holder instanceof CeldasAsistenciaAlumnoTardeHolder ||
                     holder instanceof CeldasAsistenciaAlumnoJustificadoHolder ||
@@ -166,7 +183,8 @@ public class ControlAsistenciaActivity extends BaseActivity<ControlAsistenciaVie
             adapter.notifyDataSetChanged();
         } else {
             Toast.makeText(getApplicationContext(), "Seleccione todos los items primero ", Toast.LENGTH_SHORT).show();
-        }
+        }*/
+        presenter.onClickCeldas(holder,asistenciaUi,celdasList);
 
 
         /*if (clickColumn == true) {
@@ -245,7 +263,7 @@ public class ControlAsistenciaActivity extends BaseActivity<ControlAsistenciaVie
 
     @Override
     public void onColumnHeaderClicked(@NonNull RecyclerView.ViewHolder holder, int p_nXPosition) {
-        if (clickColumn == false) {
+       /* if (clickColumn == false) {
             if (holder instanceof ColumnaTipoPresenteHolder) {
                 clickColumn = true;
                 List<CeldasAsistencia> celdasColumnaList = adapter.getCellColumnItems(p_nXPosition);
@@ -259,7 +277,10 @@ public class ControlAsistenciaActivity extends BaseActivity<ControlAsistenciaVie
             adapter.notifyDataSetChanged();
         } else {
             Log.d(TAG, "no hacer nada");
-        }
+        }*/
+
+        List<CeldasAsistencia> celdasColumnaList = adapter.getCellColumnItems(p_nXPosition);
+        presenter.onClickColumnaCabecera(holder,celdasColumnaList);
 
     }
 
@@ -320,6 +341,7 @@ public class ControlAsistenciaActivity extends BaseActivity<ControlAsistenciaVie
             case R.id.menu_guardar_entrada:
                 Toast.makeText(getApplicationContext(),"Registro Guardados de Entrada",Toast.LENGTH_SHORT).show();
                 Log.d(TAG, "menu_guardar_entrada:");
+                presenter.onGuardarEntrada();
                 break;
             case R.id.menu_guardar_salida:
                 Toast.makeText(getApplicationContext(),"Registro Guardados de Salida",Toast.LENGTH_SHORT).show();
@@ -330,19 +352,15 @@ public class ControlAsistenciaActivity extends BaseActivity<ControlAsistenciaVie
                 onBackPressed();
                 break;
         }
-       /* switch (item.getItemId()) {
-            case android.R.id.home:
-                onBackPressed();
-                return true;
-            case android.R.id.menu_guardar_entrada:
-                onBackPressed();
-                return true;
-            case android.R.id.menu_guardar_salida:
-                onBackPressed();
-                return true;
-        }*/
         return super.onOptionsItemSelected(item);
     }
 
-
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if(firebaseAuth.getCurrentUser() == null){
+            finish();
+            startActivity(new Intent(this, LoginActivity.class));
+        }
+    }
 }

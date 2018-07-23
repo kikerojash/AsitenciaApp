@@ -2,8 +2,11 @@ package com.systemvv.grupo.asitenciaapp.login;
 
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -11,6 +14,10 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 import com.systemvv.grupo.asitenciaapp.R;
 import com.systemvv.grupo.asitenciaapp.base.UseCaseHandler;
 import com.systemvv.grupo.asitenciaapp.base.UseCaseThreadPoolScheduler;
@@ -34,6 +41,12 @@ public class LoginActivity extends BaseActivity<LoginView, LoginPresenter> imple
     TextInputLayout textInputLayoutUsuario;
     @BindView(R.id.desing_password)
     TextInputLayout textInputLayoutClave;
+
+    //progress dialog
+    private ProgressDialog progressDialog;
+
+    //firebase auth object
+    private FirebaseAuth firebaseAuth;
 
     public static final String TAG = LoginActivity.class.getSimpleName();
 
@@ -66,8 +79,11 @@ public class LoginActivity extends BaseActivity<LoginView, LoginPresenter> imple
     protected void setContentView() {
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
-        editTextUsuario.setText("juanperez@gmail.com");
-        editTextClave.setText("123");
+        //initializing firebase authentication object
+        firebaseAuth = FirebaseAuth.getInstance();
+        progressDialog = new ProgressDialog(this);
+        editTextUsuario.setText("kikerojash@gmail.com");
+        editTextClave.setText("kikerojas12");
 
     }
 
@@ -155,5 +171,42 @@ public class LoginActivity extends BaseActivity<LoginView, LoginPresenter> imple
         intent.putExtra("datoclave", clave);*/
         startActivity(intent);
 
+    }
+
+    @Override
+    public void initAutenticacion(final String usuario, final String clave) {
+        progressDialog.setMessage("Cargando Sesión Espere....");
+        progressDialog.show();
+
+        //logging in the user
+        firebaseAuth.signInWithEmailAndPassword(usuario, clave)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        progressDialog.dismiss();
+                        //if the task is successfull
+                        if (task.isSuccessful()) {
+                            //start the profile activity
+                            initSeleccionarInstituto(usuario, clave);
+                            //startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
+                        }
+                    }
+                });
+    }
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+
+        if (firebaseAuth.getCurrentUser() != null) {
+            //close this activity
+            finish();
+            //opening profile activity
+            // startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
+            String email = "kikerojash@gmail.com";
+            String clave = "kikerojas12";
+            initSeleccionarInstituto(email, clave);
+        }
     }
 }

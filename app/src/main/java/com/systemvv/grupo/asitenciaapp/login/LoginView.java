@@ -19,5 +19,7 @@ public interface LoginView extends BaseActivityView<LoginPresenter> {
 
     void initVistaPadre(String usuarioPadre,String ClavePadre);
 
+    void initAutenticacion(String usuario,String clave);
+
 
 }

@@ -16,13 +16,15 @@ public class CeldasAsistenciaAlumnoPuntualHolder extends AbstractViewHolder {
     TextView textViewDatos;
     @BindView(R.id.root)
     ConstraintLayout fondo;
+    AsistenciaUi asistenciaUi;
 
     public CeldasAsistenciaAlumnoPuntualHolder(View itemView) {
         super(itemView);
-        ButterKnife.bind(this,itemView);
+        ButterKnife.bind(this, itemView);
     }
 
     public void bind(AsistenciaUi asistencia) {
+        this.asistenciaUi = asistencia;
         textViewDatos.setText("X");
         fondo.getLayoutParams().width = ConstraintLayout.LayoutParams.MATCH_PARENT;
         if (asistencia.isPintar()) {
@@ -30,5 +32,9 @@ public class CeldasAsistenciaAlumnoPuntualHolder extends AbstractViewHolder {
         } else {
             fondo.setBackgroundColor(itemView.getResources().getColor(R.color.md_white_1000));
         }
+    }
+
+    public AsistenciaUi obtenerAsistencia(){
+        return asistenciaUi;
     }
 }

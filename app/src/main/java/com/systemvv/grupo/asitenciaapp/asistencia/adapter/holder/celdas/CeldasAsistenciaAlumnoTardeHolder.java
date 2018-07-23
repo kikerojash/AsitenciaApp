@@ -17,6 +17,7 @@ public class CeldasAsistenciaAlumnoTardeHolder extends AbstractViewHolder {
     TextView textViewDatos;
     @BindView(R.id.root)
     ConstraintLayout fondo;
+    AsistenciaUi asistenciaUi;
 
     public CeldasAsistenciaAlumnoTardeHolder(View itemView) {
         super(itemView);
@@ -24,6 +25,7 @@ public class CeldasAsistenciaAlumnoTardeHolder extends AbstractViewHolder {
     }
 
     public void bind(AsistenciaUi asistencia) {
+        this.asistenciaUi = asistencia;
         textViewDatos.setText("X");
         fondo.getLayoutParams().width = ConstraintLayout.LayoutParams.MATCH_PARENT;
        // validacionPintar(asistencia);
@@ -32,6 +34,10 @@ public class CeldasAsistenciaAlumnoTardeHolder extends AbstractViewHolder {
         } else {
             fondo.setBackgroundColor(itemView.getResources().getColor(R.color.md_white_1000));
         }
+    }
+
+    public AsistenciaUi obtenerAsistencia(){
+        return asistenciaUi;
     }
 
     private void validacionPintar(AsistenciaUi asistencia) {

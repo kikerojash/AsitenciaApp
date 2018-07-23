@@ -13,4 +13,7 @@ public interface ControlAsistenciaView extends BaseActivityView<ControlAsistenci
     void mostrarInformacionBasica(CursoUi cursoUi);
 
     void mostrarListaTablas(List<ColumnaCabeceraAsistencia> columnHeaderList, List<FilaCabeceraAsistencia> rowHeaderList, List<List<CeldasAsistencia>> cellsList);
+
+    void actualizarDatosCambiadosTabla();
+
 }
