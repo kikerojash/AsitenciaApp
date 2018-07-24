@@ -11,9 +11,9 @@ import java.util.List;
 
 public interface ControlAsistenciaPresenter extends BaseActivityPresenter<ControlAsistenciaView> {
 
-    void onClickColumnaCabecera(@NonNull RecyclerView.ViewHolder holder,List<CeldasAsistencia> celdasColumnaList);
+    void onClickColumnaCabecera(@NonNull RecyclerView.ViewHolder holder,List<CeldasAsistencia> clickColumnaList);
 
-    void onClickCeldas(@NonNull RecyclerView.ViewHolder holder, AsistenciaUi asistenciaUi,List<CeldasAsistencia> celdasColumnaList);
+    void onClickCeldas(@NonNull RecyclerView.ViewHolder holder, AsistenciaUi asistenciaUi,List<CeldasAsistencia> clickCeldasList);
 
 
     void onGuardarEntrada();

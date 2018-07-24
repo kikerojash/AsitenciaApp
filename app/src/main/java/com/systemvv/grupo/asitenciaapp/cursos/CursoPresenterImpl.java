@@ -78,7 +78,7 @@ public class CursoPresenterImpl extends BaseActivityPresenterImpl<CursoView> imp
         asistenciaPuntual.setPintar(false);
         asistenciaPuntual.setTipoAsistencia("Puntual");
 
-        AlumnosUi alumnoJuanManuel = new AlumnosUi(1, "Juan Manuel", "Perez Soza", "https://tiedralc.files.wordpress.com/2013/03/nino-gafas.jpg", asistenciaPuntual);
+        AlumnosUi alumnoJuanManuel = new AlumnosUi(1, "Jorgue Manuel", "Perez Soza", "https://tiedralc.files.wordpress.com/2013/03/nino-gafas.jpg", asistenciaPuntual);
         asistenciaPuntual.setAlumnosUi(alumnoJuanManuel);
         alumnoJuanManuel.setAsistenciaUi(asistenciaPuntual);
         alumnoJuanManuel.setTipoAsistencia(MotivosAsistenciaUi.TIPO_ASISTENCIA_PUNTUAL);
@@ -191,7 +191,7 @@ public class CursoPresenterImpl extends BaseActivityPresenterImpl<CursoView> imp
 
 
 
-        AlumnosUi alumnoUltimo = new AlumnosUi(10, "Juan Manuel", "Perez Soza", "http://ilumina2photo.es/wp-content/uploads/2016/02/sesion-fotos-ni%C3%B1os-playa-barcelona-infantil-reportaje-fotografia-costa-ni%C3%B1o-ni%C3%B1a-aire-libre-2.jpg", asistenciaFalto);
+        AlumnosUi alumnoUltimo = new AlumnosUi(10, "Juan Pepito", "Perez Soza", "http://ilumina2photo.es/wp-content/uploads/2016/02/sesion-fotos-ni%C3%B1os-playa-barcelona-infantil-reportaje-fotografia-costa-ni%C3%B1o-ni%C3%B1a-aire-libre-2.jpg", asistenciaFalto);
         alumnoUltimo.setTipoAsistencia(MotivosAsistenciaUi.TIPO_ASISTENCIA_FALTO);
         alumnoUltimo.setTipoPadecimiento(0);
         alumnosUiList.add(alumnoUltimo);

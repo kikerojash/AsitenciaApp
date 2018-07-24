@@ -84,6 +84,7 @@ public class ControlAsistenciaActivity extends BaseActivity<ControlAsistenciaVie
 
     //firebase auth object
     private FirebaseAuth firebaseAuth;
+
     @Override
     protected String getTag() {
         return TAG;
@@ -150,8 +151,6 @@ public class ControlAsistenciaActivity extends BaseActivity<ControlAsistenciaVie
     public void actualizarDatosCambiadosTabla() {
         adapter.notifyDataSetChanged();
     }
-    //adapter.setAllItems(rowHeaderList, columnHeaderList, cellsList);
-    //adapter.setAllItems(rowHeaderList, columnHeaderList, getListaCeldas());
 
     private void initAdapter() {
         adapter = new AsistenciaAdapter(this);
@@ -159,7 +158,6 @@ public class ControlAsistenciaActivity extends BaseActivity<ControlAsistenciaVie
         table.setIgnoreSelectionColors(false);
         table.setHasFixedWidth(false);
         table.setIgnoreSelectionColors(true);
-//        presenter.onListAdapter();
         table.setTableViewListener(this);
 
     }
@@ -168,8 +166,17 @@ public class ControlAsistenciaActivity extends BaseActivity<ControlAsistenciaVie
     public void onCellClicked(@NonNull RecyclerView.ViewHolder holder, int column, int row) {
         AsistenciaUi asistenciaUi = (AsistenciaUi) table.getAdapter().getCellItem(column, row);
         List<CeldasAsistencia> celdasList = adapter.getCellRowItems(row);
+        presenter.onClickCeldas(holder, asistenciaUi, celdasList);
 
-       /* if (clickColumn == true) {
+
+        /*Log.d(TAG, "getCellItemViewType : " + adapter.getCellItemViewType(column)+
+                ""+"getColumnHeaderItem : " + adapter.getColumnHeaderItem(column)
+
+        );*/
+
+
+
+        /* if (clickColumn == true) {
             if (holder instanceof CeldasAsistenciaAlumnoPuntualHolder ||
                     holder instanceof CeldasAsistenciaAlumnoTardeHolder ||
                     holder instanceof CeldasAsistenciaAlumnoJustificadoHolder ||
@@ -184,7 +191,7 @@ public class ControlAsistenciaActivity extends BaseActivity<ControlAsistenciaVie
         } else {
             Toast.makeText(getApplicationContext(), "Seleccione todos los items primero ", Toast.LENGTH_SHORT).show();
         }*/
-        presenter.onClickCeldas(holder,asistenciaUi,celdasList);
+
 
 
         /*if (clickColumn == true) {
@@ -280,7 +287,7 @@ public class ControlAsistenciaActivity extends BaseActivity<ControlAsistenciaVie
         }*/
 
         List<CeldasAsistencia> celdasColumnaList = adapter.getCellColumnItems(p_nXPosition);
-        presenter.onClickColumnaCabecera(holder,celdasColumnaList);
+        presenter.onClickColumnaCabecera(holder, celdasColumnaList);
 
     }
 
@@ -339,12 +346,12 @@ public class ControlAsistenciaActivity extends BaseActivity<ControlAsistenciaVie
         int id = item.getItemId();
         switch (id) {
             case R.id.menu_guardar_entrada:
-                Toast.makeText(getApplicationContext(),"Registro Guardados de Entrada",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Registro Guardados de Entrada", Toast.LENGTH_SHORT).show();
                 Log.d(TAG, "menu_guardar_entrada:");
                 presenter.onGuardarEntrada();
                 break;
             case R.id.menu_guardar_salida:
-                Toast.makeText(getApplicationContext(),"Registro Guardados de Salida",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Registro Guardados de Salida", Toast.LENGTH_SHORT).show();
                 Log.d(TAG, "menu_guardar_salida:");
                 break;
             default:
@@ -358,7 +365,7 @@ public class ControlAsistenciaActivity extends BaseActivity<ControlAsistenciaVie
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if(firebaseAuth.getCurrentUser() == null){
+        if (firebaseAuth.getCurrentUser() == null) {
             finish();
             startActivity(new Intent(this, LoginActivity.class));
         }

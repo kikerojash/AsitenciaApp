@@ -73,6 +73,7 @@ public class ControlAsistenciaPresenterImpl extends BaseActivityPresenterImpl<Co
         columnHeaderList = new ArrayList<>();
         cellsList = new ArrayList<>();
         rowHeaderList = new ArrayList<>();
+
         columnHeaderList.addAll(cursoUi.getMotivosAsistenciaUiList());
         rowHeaderList.addAll(cursoUi.getAlumnosUiList());
         cellsList.addAll(getCellListForSortingTest());
@@ -140,62 +141,41 @@ public class ControlAsistenciaPresenterImpl extends BaseActivityPresenterImpl<Co
     }
 
 
-    List<CeldasAsistencia> celdasColumnaListPresente;
-    List<CeldasAsistencia> celdasColumnaListas = new ArrayList<>();
-
     boolean clickColumn = false;
 
+
     @Override
-    public void onClickColumnaCabecera(@NonNull RecyclerView.ViewHolder holder, List<CeldasAsistencia> celdasColumnaList) {
+    public void onClickColumnaCabecera(@NonNull RecyclerView.ViewHolder holder, List<CeldasAsistencia> clickColumnaList) {
         if (clickColumn == false) {
             if (holder instanceof ColumnaTipoPresenteHolder) {
                 clickColumn = true;
-                this.celdasColumnaListPresente = celdasColumnaList;
-                Log.d(TAG, "celdasList : " + celdasColumnaList.size());
-                for (CeldasAsistencia celdasAsistencia : celdasColumnaList) {
+                for (CeldasAsistencia celdasAsistencia : clickColumnaList) {
                     AsistenciaUi asistencia = (AsistenciaUi) celdasAsistencia;
+                    asistencia.setTipoAsistencia("PUNTUAL");
                     asistencia.setPintar(true);
                 }
             }
             if (view != null) view.actualizarDatosCambiadosTabla();
-
         } else {
             Log.d(TAG, "no hacer nada");
         }
     }
 
     @Override
-    public void onClickCeldas(@NonNull RecyclerView.ViewHolder holder, AsistenciaUi asistenciaUi, List<CeldasAsistencia> celdasColumnaList) {
-        /*if (clickColumn == true) {
-            if (holder instanceof CeldasAsistenciaAlumnoPuntualHolder ||
-                    holder instanceof CeldasAsistenciaAlumnoTardeHolder ||
-                    holder instanceof CeldasAsistenciaAlumnoJustificadoHolder ||
-                    holder instanceof CeldasAsistenciaAlumnoFaltoHolder) {
-                pintandoCeldas(asistenciaUi, celdasColumnaList);
-            }
-            if (view != null) view.actualizarDatosCambiadosTabla();
-        } else {
-        }*/
-
+    public void onClickCeldas(@NonNull RecyclerView.ViewHolder holder, AsistenciaUi asistenciaUi, List<CeldasAsistencia> clickCeldasList) {
         if (clickColumn == true) {
+            int posicion = clickCeldasList.indexOf(asistenciaUi);
+            Log.d(TAG, "onCellClicked : " + posicion);
             if (holder instanceof CeldasAsistenciaAlumnoPuntualHolder) {
-                Log.d(TAG, "CeldasAsistenciaAlumnoPuntualHolder");
                 asistenciaUi.setTipoAsistencia("PUNTUAL");
-                pintandoCeldas(asistenciaUi, celdasColumnaList);
+                pintandoCeldas(asistenciaUi, clickCeldasList);
             } else if (holder instanceof CeldasAsistenciaAlumnoTardeHolder) {
                 asistenciaUi.setTipoAsistencia("TARDE");
-                pintandoCeldas(asistenciaUi, celdasColumnaList);
-                Log.d(TAG, "CeldasAsistenciaAlumnoTardeHolder");
-            } else if (holder instanceof CeldasAsistenciaAlumnoJustificadoHolder) {
-                asistenciaUi.setTipoAsistencia("JUSTIFICADO");
-                pintandoCeldas(asistenciaUi, celdasColumnaList);
-                Log.d(TAG, "CeldasAsistenciaAlumnoJustificadoHolder");
+                pintandoCeldas(asistenciaUi, clickCeldasList);
             } else if (holder instanceof CeldasAsistenciaAlumnoFaltoHolder) {
-                Log.d(TAG, "CeldasAsistenciaAlumnoFaltoHolder");
                 asistenciaUi.setTipoAsistencia("FALTO");
-                pintandoCeldas(asistenciaUi, celdasColumnaList);
+                pintandoCeldas(asistenciaUi, clickCeldasList);
             }
-            this.celdasColumnaListas = celdasColumnaList;
             if (view != null) view.actualizarDatosCambiadosTabla();
         } else {
             //Toast.makeText(getApplicationContext(), "Seleccione todos los items primero ", Toast.LENGTH_SHORT).show();
@@ -204,32 +184,7 @@ public class ControlAsistenciaPresenterImpl extends BaseActivityPresenterImpl<Co
 
     @Override
     public void onGuardarEntrada() {
-        List<AsistenciaUi> asistenciaUiList = new ArrayList<>();
 
-
-        for (CeldasAsistencia celdasAsistencia : celdasColumnaListPresente) {
-            AsistenciaUi asistencia = (AsistenciaUi) celdasAsistencia;
-            if (asistencia.isPintar()) {
-                Log.d(TAG, "celdasColumnaListPresente: " + asistencia.isPintar());
-                asistenciaUiList.add(asistencia);
-            }
-           /* Log.d(TAG, "onGuardarEntrada : Alumno:  / " + asistencia.getAlumnosUi().getNombre() +
-                    " / onGuardarEntrada : TipoAsistencia " + asistencia.getTipoAsistencia() +
-                    " / onGuardarEntrada : Extras : " + asistencia.getJustificacion());*/
-        }
-
-        for (CeldasAsistencia celdasAsistencia : celdasColumnaListas) {
-            AsistenciaUi asistencia = (AsistenciaUi) celdasAsistencia;
-            if (asistencia.isPintar()) {
-                asistenciaUiList.add(asistencia);
-                Log.d(TAG, "celdasColumnaListas: " + asistencia.isPintar());
-            }
-        }
-        int count = 0;
-        for (AsistenciaUi asistenciaUi : asistenciaUiList) {
-            count++;
-            Log.d(TAG, "LISTANUEVA :  " + asistenciaUi.isPintar()+" / count " +count );
-        }
     }
 
     private void pintandoCeldas(AsistenciaUi asistenciaUi, List<CeldasAsistencia> celdasList) {
