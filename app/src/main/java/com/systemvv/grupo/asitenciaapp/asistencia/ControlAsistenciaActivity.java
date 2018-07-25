@@ -165,62 +165,12 @@ public class ControlAsistenciaActivity extends BaseActivity<ControlAsistenciaVie
     @Override
     public void onCellClicked(@NonNull RecyclerView.ViewHolder holder, int column, int row) {
         AsistenciaUi asistenciaUi = (AsistenciaUi) table.getAdapter().getCellItem(column, row);
+
         List<CeldasAsistencia> celdasList = adapter.getCellRowItems(row);
         presenter.onClickCeldas(holder, asistenciaUi, celdasList);
 
 
-        /*Log.d(TAG, "getCellItemViewType : " + adapter.getCellItemViewType(column)+
-                ""+"getColumnHeaderItem : " + adapter.getColumnHeaderItem(column)
-
-        );*/
-
-
-
-        /* if (clickColumn == true) {
-            if (holder instanceof CeldasAsistenciaAlumnoPuntualHolder ||
-                    holder instanceof CeldasAsistenciaAlumnoTardeHolder ||
-                    holder instanceof CeldasAsistenciaAlumnoJustificadoHolder ||
-                    holder instanceof CeldasAsistenciaAlumnoFaltoHolder) {
-                AsistenciaUi asistenciaUi = (AsistenciaUi) table.getAdapter().getCellItem(column, row);
-                List<CeldasAsistencia> celdasList = adapter.getCellRowItems(row);
-
-                pintandoCeldas(asistenciaUi, celdasList);
-                AlumnosUi alumnosUi = asistenciaUi.getAlumnosUi();
-            }
-            adapter.notifyDataSetChanged();
-        } else {
-            Toast.makeText(getApplicationContext(), "Seleccione todos los items primero ", Toast.LENGTH_SHORT).show();
-        }*/
-
-
-
-        /*if (clickColumn == true) {
-            List<CeldasAsistencia> celdasList = adapter.getCellRowItems(row);
-            AsistenciaUi asistenciaUi = (AsistenciaUi) table.getAdapter().getCellItem(column, row);
-            if (holder instanceof CeldasAsistenciaAlumnoPuntualHolder) {
-                pintandoCeldas(asistenciaUi, celdasList);
-                AlumnosUi alumnosUi = asistenciaUi.getAlumnosUi();
-                Log.d(TAG, "alumnosUiPuntual : " + alumnosUi.getNombre());
-            } else if (holder instanceof CeldasAsistenciaAlumnoTardeHolder) {
-                AlumnosUi alumnosUi = asistenciaUi.getAlumnosUi();
-                Log.d(TAG, "alumnosUiTarde : " + alumnosUi.getNombre());
-                pintandoCeldas(asistenciaUi, celdasList);
-            } else if (holder instanceof CeldasAsistenciaAlumnoJustificadoHolder) {
-                AlumnosUi alumnosUi = asistenciaUi.getAlumnosUi();
-                Log.d(TAG, "alumnosUiTardeJustificada : " + alumnosUi.getTipoAsistencia());
-                pintandoCeldas(asistenciaUi, celdasList);
-            } else if (holder instanceof CeldasAsistenciaAlumnoFaltoHolder) {
-                AlumnosUi alumnosUi = asistenciaUi.getAlumnosUi();
-                Log.d(TAG, "alumnosUiFalto : " + alumnosUi.getTipoAsistencia());
-                pintandoCeldas(asistenciaUi, celdasList);
-            }
-            adapter.notifyDataSetChanged();
-        } else {
-            Toast.makeText(getApplicationContext(), "Seleccione todos los items primero ", Toast.LENGTH_SHORT).show();
-        }*/
-
     }
-
     private void pintandoCeldas(AsistenciaUi asistenciaUi, List<CeldasAsistencia> celdasList) {
         for (int i = 0; i < celdasList.size(); i++) {
             AsistenciaUi asistencia = (AsistenciaUi) celdasList.get(i);
@@ -231,13 +181,11 @@ public class ControlAsistenciaActivity extends BaseActivity<ControlAsistenciaVie
         }
         asistenciaUi.setPintar(true);
     }
-
     private void remplazarItem(AsistenciaUi asistenciaAnterior, AsistenciaUi asistenciaNueva) {
         asistenciaAnterior.setPintar(false);
         asistenciaNueva.setPintar(true);
         adapter.notifyDataSetChanged();
     }
-
     @Override
     public void onCellLongPressed(@NonNull RecyclerView.ViewHolder holder, int column, int row) {
         /* Do What you want
@@ -264,27 +212,11 @@ public class ControlAsistenciaActivity extends BaseActivity<ControlAsistenciaVie
             }
         }*/
     }
-
-
-    boolean clickColumn = false;
-
     @Override
     public void onColumnHeaderClicked(@NonNull RecyclerView.ViewHolder holder, int p_nXPosition) {
-       /* if (clickColumn == false) {
-            if (holder instanceof ColumnaTipoPresenteHolder) {
-                clickColumn = true;
-                List<CeldasAsistencia> celdasColumnaList = adapter.getCellColumnItems(p_nXPosition);
-                Log.d(TAG, "celdasList : " + celdasColumnaList.size());
-                for (CeldasAsistencia celdasAsistencia : celdasColumnaList) {
-                    AsistenciaUi asistencia = (AsistenciaUi) celdasAsistencia;
-                    asistencia.setPintar(true);
-                }
 
-            }
-            adapter.notifyDataSetChanged();
-        } else {
-            Log.d(TAG, "no hacer nada");
-        }*/
+
+        //List<CeldasAsistencia> celdasColumnaList = adapter.getCellColumnItems(p_nXPosition);
 
         List<CeldasAsistencia> celdasColumnaList = adapter.getCellColumnItems(p_nXPosition);
         presenter.onClickColumnaCabecera(holder, celdasColumnaList);
