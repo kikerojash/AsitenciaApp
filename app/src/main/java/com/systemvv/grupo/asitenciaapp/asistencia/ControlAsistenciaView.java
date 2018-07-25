@@ -16,4 +16,6 @@ public interface ControlAsistenciaView extends BaseActivityView<ControlAsistenci
 
     void actualizarDatosCambiadosTabla();
 
+    void mostrarMensaje(String mensaje);
+
 }

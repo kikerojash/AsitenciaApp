@@ -15,6 +15,7 @@ public interface ControlAsistenciaPresenter extends BaseActivityPresenter<Contro
 
     void onClickCeldas(@NonNull RecyclerView.ViewHolder holder, AsistenciaUi asistenciaUi,List<CeldasAsistencia> clickCeldasList);
 
-
     void onGuardarEntrada();
+
+    void onGuardarSalida();
 }

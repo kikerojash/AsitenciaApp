@@ -17,6 +17,10 @@ public class AsistenciaUi extends CeldasAsistencia {
     public boolean pintar;
     public TipoAsistencia tipasistencia;
 
+    public String fecha;
+    public String horaInicioCurso;
+    public String horaFinCurso;
+
 
     public AsistenciaUi() {
     }
@@ -76,5 +80,29 @@ public class AsistenciaUi extends CeldasAsistencia {
 
     public void setTipasistencia(TipoAsistencia tipasistencia) {
         this.tipasistencia = tipasistencia;
+    }
+
+    public String getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(String fecha) {
+        this.fecha = fecha;
+    }
+
+    public String getHoraInicioCurso() {
+        return horaInicioCurso;
+    }
+
+    public void setHoraInicioCurso(String horaInicioCurso) {
+        this.horaInicioCurso = horaInicioCurso;
+    }
+
+    public String getHoraFinCurso() {
+        return horaFinCurso;
+    }
+
+    public void setHoraFinCurso(String horaFinCurso) {
+        this.horaFinCurso = horaFinCurso;
     }
 }

@@ -12,6 +12,12 @@
     <string name="titulo_activity_hijos">Mis Hijos</string>
 
 
+
+    <string name="validacion_mensaje_guardar">Solo Falta Guardar Hora Salida </string>
+    <string name="validacion_mensaje_guardar_correcto">Registros Asistencias Guardados Correctos!</string>
+    <string name="validacion_mensaje_guardar_hora_fin">Guarde primero el Registro!</string>
+    <string name="validacion_mensaje_guardar_hora_fin_correctos">Fecha Fin Guardado Correctamente!</string>
+
     <string-array name="array_name">
         <item>Prioridad Baja</item>
         <item>Prioridad Media</item>

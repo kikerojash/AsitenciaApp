@@ -7,28 +7,34 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
 
+import com.systemvv.grupo.asitenciaapp.R;
 import com.systemvv.grupo.asitenciaapp.asistencia.adapter.estructura.CeldasAsistencia;
 import com.systemvv.grupo.asitenciaapp.asistencia.adapter.estructura.ColumnaCabeceraAsistencia;
 import com.systemvv.grupo.asitenciaapp.asistencia.adapter.estructura.FilaCabeceraAsistencia;
 import com.systemvv.grupo.asitenciaapp.asistencia.adapter.holder.celdas.CeldasAsistenciaAlumnoFaltoHolder;
-import com.systemvv.grupo.asitenciaapp.asistencia.adapter.holder.celdas.CeldasAsistenciaAlumnoJustificadoHolder;
 import com.systemvv.grupo.asitenciaapp.asistencia.adapter.holder.celdas.CeldasAsistenciaAlumnoPuntualHolder;
 import com.systemvv.grupo.asitenciaapp.asistencia.adapter.holder.celdas.CeldasAsistenciaAlumnoTardeHolder;
 import com.systemvv.grupo.asitenciaapp.asistencia.adapter.holder.columnas.ColumnaTipoPresenteHolder;
-import com.systemvv.grupo.asitenciaapp.asistencia.entidad.Alumnos;
-import com.systemvv.grupo.asitenciaapp.asistencia.entidad.Asistencia;
-import com.systemvv.grupo.asitenciaapp.asistencia.entidad.MotivoAsistencia;
+
+import com.systemvv.grupo.asitenciaapp.asistencia.useCase.GuardarAsistenciaLista;
+import com.systemvv.grupo.asitenciaapp.asistencia.useCase.GuardarAsistenciaListaHoraFin;
+import com.systemvv.grupo.asitenciaapp.asistencia.useCase.ObtenerListaAsistencia;
+import com.systemvv.grupo.asitenciaapp.asistencia.useCase.ValidarFechaRegistroAsistencia;
+import com.systemvv.grupo.asitenciaapp.base.UseCase;
 import com.systemvv.grupo.asitenciaapp.base.UseCaseHandler;
 import com.systemvv.grupo.asitenciaapp.base.activity.BaseActivityPresenterImpl;
 import com.systemvv.grupo.asitenciaapp.cursos.entidad.AlumnosUi;
 import com.systemvv.grupo.asitenciaapp.cursos.entidad.AsistenciaUi;
 import com.systemvv.grupo.asitenciaapp.cursos.entidad.CursoUi;
 import com.systemvv.grupo.asitenciaapp.cursos.entidad.MotivosAsistenciaUi;
+import com.systemvv.grupo.asitenciaapp.fire.entidad.Asistencia;
 
 import org.parceler.Parcels;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.Calendar;
 import java.util.List;
 
 public class ControlAsistenciaPresenterImpl extends BaseActivityPresenterImpl<ControlAsistenciaView> implements ControlAsistenciaPresenter {
@@ -41,8 +47,18 @@ public class ControlAsistenciaPresenterImpl extends BaseActivityPresenterImpl<Co
 
     CursoUi cursoUi;
 
-    public ControlAsistenciaPresenterImpl(UseCaseHandler handler, Resources res) {
+    /*Caso de Uso*/
+    private GuardarAsistenciaLista guardarAsistenciaLista;
+    private ValidarFechaRegistroAsistencia validarFechaRegistroAsistencia;
+    private ObtenerListaAsistencia obtenerListaAsistencia;
+    private GuardarAsistenciaListaHoraFin guardarAsistenciaListaHoraFin;
+
+    public ControlAsistenciaPresenterImpl(UseCaseHandler handler, Resources res, GuardarAsistenciaLista guardarAsistenciaLista, ValidarFechaRegistroAsistencia validarFechaRegistroAsistencia, ObtenerListaAsistencia obtenerListaAsistencia, GuardarAsistenciaListaHoraFin guardarAsistenciaListaHoraFin) {
         super(handler, res);
+        this.guardarAsistenciaLista = guardarAsistenciaLista;
+        this.validarFechaRegistroAsistencia = validarFechaRegistroAsistencia;
+        this.obtenerListaAsistencia = obtenerListaAsistencia;
+        this.guardarAsistenciaListaHoraFin = guardarAsistenciaListaHoraFin;
 
     }
 
@@ -73,7 +89,6 @@ public class ControlAsistenciaPresenterImpl extends BaseActivityPresenterImpl<Co
         columnHeaderList = new ArrayList<>();
         cellsList = new ArrayList<>();
         rowHeaderList = new ArrayList<>();
-
         columnHeaderList.addAll(cursoUi.getMotivosAsistenciaUiList());
         rowHeaderList.addAll(cursoUi.getAlumnosUiList());
         cellsList.addAll(getCellListForSortingTest());
@@ -81,9 +96,13 @@ public class ControlAsistenciaPresenterImpl extends BaseActivityPresenterImpl<Co
     }
 
     List<AsistenciaUi> guardandoListasAsistencias;
+
     @Override
     public void onCreate() {
         initVistas();
+        DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+        String date = df.format(Calendar.getInstance().getTime());
+        // validarExisteFecha(date);
         celdasAsistenciasColumnaPresentes = new ArrayList<>();
         celdasAsistencias = new ArrayList<>();
         guardandoListasAsistencias = new ArrayList<>();
@@ -140,6 +159,7 @@ public class ControlAsistenciaPresenterImpl extends BaseActivityPresenterImpl<Co
 
 
     List<CeldasAsistencia> celdasAsistenciasColumnaPresentes;
+
     @Override
     public void onClickColumnaCabecera(@NonNull RecyclerView.ViewHolder holder, List<CeldasAsistencia> clickColumnaList) {
         if (clickColumn == false) {
@@ -184,8 +204,16 @@ public class ControlAsistenciaPresenterImpl extends BaseActivityPresenterImpl<Co
     @Override
     public void onGuardarEntrada() {
         List<AsistenciaUi> guardandoListasAsistencias = new ArrayList<>();
+
+        DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+        DateFormat dfHours = new SimpleDateFormat("HH:mm aaa");
+        String date = df.format(Calendar.getInstance().getTime());
+        String horaInicioCurso = dfHours.format(Calendar.getInstance().getTime());
+
         for (CeldasAsistencia celdasAsistencia : celdasAsistencias) {
             AsistenciaUi asistenciaUi = (AsistenciaUi) celdasAsistencia;
+            asistenciaUi.setHoraInicioCurso(horaInicioCurso);
+            asistenciaUi.setFecha(date);
             if (asistenciaUi.isPintar()) {
                 Log.d(TAG, "celdasAsistencias : " + asistenciaUi.getTipoAsistencia() +
                         " celdasAsistencias : " + asistenciaUi.getAlumnosUi().getNombre());
@@ -193,8 +221,10 @@ public class ControlAsistenciaPresenterImpl extends BaseActivityPresenterImpl<Co
                 continue;
             }
         }
-        for(CeldasAsistencia celdasAsistencia : celdasAsistenciasColumnaPresentes){
+        for (CeldasAsistencia celdasAsistencia : celdasAsistenciasColumnaPresentes) {
             AsistenciaUi asistenciaUi = (AsistenciaUi) celdasAsistencia;
+            asistenciaUi.setHoraInicioCurso(horaInicioCurso);
+            asistenciaUi.setFecha(date);
             if (asistenciaUi.isPintar()) {
                 Log.d(TAG, "celdasAsistenciasColumnaPresentes : " + asistenciaUi.getTipoAsistencia() +
                         " celdasAsistenciasColumnaPresentes : " + asistenciaUi.getAlumnosUi().getNombre());
@@ -202,8 +232,94 @@ public class ControlAsistenciaPresenterImpl extends BaseActivityPresenterImpl<Co
                 continue;
             }
         }
-        Log.d(TAG,"CONTADORFINAL : "+guardandoListasAsistencias.size());
+        Log.d(TAG, "CONTADORFINAL : " + guardandoListasAsistencias.size());
+        validarExisteFecha(date, guardandoListasAsistencias);
+        //initGuardarListaAsistencia(guardandoListasAsistencias);
+    }
 
+    private void validarExisteFecha(String date, final List<AsistenciaUi> guardandoListasAsistencias) {
+        handler.execute(validarFechaRegistroAsistencia, new ValidarFechaRegistroAsistencia.RequestValues(date),
+                new UseCase.UseCaseCallback<ValidarFechaRegistroAsistencia.ResponseValue>() {
+                    @Override
+                    public void onSuccess(ValidarFechaRegistroAsistencia.ResponseValue response) {
+                        if (response.isaBoolean()) {
+                            Log.d(TAG, "SOLO FALTA REGISTRAR HORA DE FIN");
+                            if (view != null)
+                                view.mostrarMensaje(res.getString(R.string.validacion_mensaje_guardar));
+                        } else {
+                            initGuardarListaAsistencia(guardandoListasAsistencias);
+                        }
+                    }
+
+                    @Override
+                    public void onError() {
+
+                    }
+                });
+    }
+
+    @Override
+    public void onGuardarSalida() {
+        DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+        String date = df.format(Calendar.getInstance().getTime());
+        handler.execute(obtenerListaAsistencia, new ObtenerListaAsistencia.RequestValues(date),
+                new UseCase.UseCaseCallback<ObtenerListaAsistencia.ResponseValue>() {
+                    @Override
+                    public void onSuccess(ObtenerListaAsistencia.ResponseValue response) {
+                        if (response.getAsistenciaList() == null) {
+                            if (view != null)
+                                view.mostrarMensaje(res.getString(R.string.validacion_mensaje_guardar_hora_fin));
+                        } else {
+                            actualizarHoraFinAsistenciaLista(response.getAsistenciaList());
+                        }
+                    }
+
+                    @Override
+                    public void onError() {
+
+                    }
+                });
+    }
+
+    private void actualizarHoraFinAsistenciaLista(List<Asistencia> asistenciaList) {
+
+        handler.execute(guardarAsistenciaListaHoraFin, new GuardarAsistenciaListaHoraFin.RequestValues(asistenciaList),
+                new UseCase.UseCaseCallback<GuardarAsistenciaListaHoraFin.ResponseValue>() {
+                    @Override
+                    public void onSuccess(GuardarAsistenciaListaHoraFin.ResponseValue response) {
+                        if (response.isaBoolean()) {
+                           /* if (view != null)
+                                view.mostrarMensaje(res.getString(R.string.validacion_mensaje_guardar_hora_fin_correctos));*/
+                        } else {
+                            Log.d(TAG, "ALGO PASO PAPU");
+                        }
+                    }
+
+                    @Override
+                    public void onError() {
+
+                    }
+                });
+    }
+
+
+    private void initGuardarListaAsistencia(List<AsistenciaUi> guardandoListasAsistencias) {
+        handler.execute(guardarAsistenciaLista, new GuardarAsistenciaLista.ResquestValues(guardandoListasAsistencias),
+                new UseCase.UseCaseCallback<GuardarAsistenciaLista.ResponseValue>() {
+                    @Override
+                    public void onSuccess(GuardarAsistenciaLista.ResponseValue response) {
+                        if (response.isaBoolean()) {
+                            if (view != null)
+                                view.mostrarMensaje(res.getString(R.string.validacion_mensaje_guardar_correcto));
+                            Log.d(TAG, "REGISTROS GUARDADOS CORRECTAMENTE");
+                        }
+                    }
+
+                    @Override
+                    public void onError() {
+                        Log.d(TAG, "onError");
+                    }
+                });
     }
 
     private void pintandoCeldas(AsistenciaUi asistenciaUi, List<CeldasAsistencia> celdasList) {

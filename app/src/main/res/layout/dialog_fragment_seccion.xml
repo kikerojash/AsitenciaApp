@@ -87,7 +87,7 @@
             android:id="@+id/spnGrado"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:popupBackground="#3b5998" />
+            android:popupBackground="#62bbec"/>
     </LinearLayout>
 
 
@@ -121,7 +121,7 @@
             android:id="@+id/spnSeccion"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:popupBackground="#3b5998" />
+            android:popupBackground="#62bbec" />
     </LinearLayout>
 
 
