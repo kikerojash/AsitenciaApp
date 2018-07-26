@@ -29,6 +29,8 @@ public class ReporteIncidenciasFragment extends BaseFragment<ReporteIncidenciasV
     RecyclerView recyclerView;
     @BindView(R.id.mensajeVacio)
     TextView textViewVacio;
+    @BindView(R.id.progressBar)
+    ProgressBar progressBar;
     ReporteIncidenciasAdapter reporteIncidenciasAdapter;
 
     public ReporteIncidenciasFragment() {
@@ -78,7 +80,7 @@ public class ReporteIncidenciasFragment extends BaseFragment<ReporteIncidenciasV
 
     @Override
     protected ProgressBar getProgressBar() {
-        return null;
+        return progressBar;
     }
 
     @Override

@@ -22,10 +22,11 @@ public class ControlAsistenciaRemote implements ControlAsistenciaDataSource {
     }
 
     @Override
-    public void onGuardarAsistenciaLista(List<AsistenciaUi> asistenciaUiList, ObjectCallbackSuccess<Boolean> callbackSuccess) {
+    public void onGuardarAsistenciaLista(List<AsistenciaUi> asistenciaUiList,final ObjectCallbackSuccess<Boolean> callbackSuccess) {
         fireStore.guardarListaAsistenciaAlumnos(convertAsistenciaLista(asistenciaUiList), new FireCallback<Boolean>() {
             @Override
             public void onSuccess(Boolean sucess) {
+                if(sucess){callbackSuccess.guardarAsistenciaGrupal(true);}
                 //booleanObjectCallbackSuccess.registroCorrecto(sucess);
             }
         });
@@ -75,9 +76,9 @@ public class ControlAsistenciaRemote implements ControlAsistenciaDataSource {
         List<Asistencia> asistenciasList = new ArrayList<>();
         for (AsistenciaUi asistenciaUi : asistenciaUiList) {
             Asistencia asistencia = new Asistencia();
-            asistencia.setFechaRegistroAsistencia(asistenciaUi.getFecha());
-            asistencia.setHoraInicioCurso(asistenciaUi.getHoraInicioCurso());
-            asistencia.setTipoAsistencia(asistenciaUi.getTipoAsistencia());
+            asistencia.setAsi_fecha(asistenciaUi.getFecha());
+            asistencia.setAsi_hora_inicio(asistenciaUi.getHoraInicioCurso());
+            asistencia.setAsi_tipo_asistencia(asistenciaUi.getTipoAsistencia());
             asistencia.setAlu_id_alumno(asistenciaUi.getAlumnosUi().getNombre());
             asistenciasList.add(asistencia);
         }

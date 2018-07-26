@@ -1,7 +1,14 @@
 package com.systemvv.grupo.asitenciaapp.asistencia.dialog;
 
-import com.systemvv.grupo.asitenciaapp.base.BasePresenter;
-import com.systemvv.grupo.asitenciaapp.base.fragment.BaseFragmentPresenter;
 
-public interface IncidenciaPresenter extends BaseFragmentPresenter<IncidenciaView> {
+import android.os.Bundle;
+
+public interface IncidenciaPresenter extends com.systemvv.grupo.asitenciaapp.base.BasePresenter {
+
+    void onBtnAceptar(String mensajeIncidencia);
+
+    void onSeleccionSpinnerIncidencia(String nivelIncidencia);
+
+    void onExtras(Bundle bundle);
+
 }

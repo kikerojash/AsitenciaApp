@@ -11,8 +11,8 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.systemvv.grupo.asitenciaapp.fire.entidad.Asistencia;
+import com.systemvv.grupo.asitenciaapp.fire.entidad.Incidencia;
 import com.systemvv.grupo.asitenciaapp.utils.Constantes;
-
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -28,6 +28,7 @@ public class FireStore extends Fire {
 
     public void guardarListaAsistenciaAlumnos(List<Asistencia> asistenciaUiList, final FireCallback<Boolean> postFirePostsCallback) {
         Log.d(TAG, "guardarListaAsistenciaAlumnos");
+
         for (Asistencia asistencia : asistenciaUiList) {
             Map<String, Object> postValues = asistencia.toMap();
             mFirestore.collection(Constantes.NODO_ASISTENCIA)
@@ -36,11 +37,13 @@ public class FireStore extends Fire {
                         @Override
                         public void onSuccess(DocumentReference documentReference) {
                             String keyAsistencia = documentReference.getId();
+                            postFirePostsCallback.onSuccess(true);
                             Log.d(TAG, "DocumentSnapshot successfully written! : " + keyAsistencia);
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception e) {
+
                     Log.d(TAG, "DocumentSnapshot successfully written!");
                 }
             });
@@ -49,7 +52,7 @@ public class FireStore extends Fire {
 
     public void validarFechaRegistroAsistencia(String fecha, final FireCallback<Boolean> postFirePostsCallback) {
         mFirestore.collection(Constantes.NODO_ASISTENCIA)
-                .whereEqualTo("fechaRegistroAsistencia", fecha)
+                .whereEqualTo("asi_fecha", fecha)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -82,10 +85,9 @@ public class FireStore extends Fire {
                 });
     }
 
-
     public void onObtenerAsistenciaLista(String fecha, final FireCallback<List<Asistencia>> listFireCallback) {
         mFirestore.collection(Constantes.NODO_ASISTENCIA)
-                .whereEqualTo("fechaRegistroAsistencia", fecha)
+                .whereEqualTo("asi_fecha", fecha)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -95,7 +97,7 @@ public class FireStore extends Fire {
                             List<Asistencia> asistenciaList = new ArrayList<>();
                             for (DocumentSnapshot doc : task.getResult()) {
                                 Asistencia e = doc.toObject(Asistencia.class);
-                                e.setKeyAsistencia(doc.getId());
+                                e.setAsi_id_asistencia(doc.getId());
                                 asistenciaList.add(e);
                                 count++;
                             }
@@ -119,20 +121,13 @@ public class FireStore extends Fire {
                 });
     }
 
-
-
     public void guardarListaAsistenciaHoraFin(List<Asistencia> asistenciaUiList, final FireCallback<Boolean> postFirePostsCallback) {
-
         DateFormat dfHours = new SimpleDateFormat("HH:mm aaa");
         String horaInicioCurso = dfHours.format(Calendar.getInstance().getTime());
-
-
         for(Asistencia asistencia : asistenciaUiList){
-            DocumentReference docRef = mFirestore.collection(Constantes.NODO_ASISTENCIA).document(asistencia.getKeyAsistencia());
-
+            DocumentReference docRef = mFirestore.collection(Constantes.NODO_ASISTENCIA).document(asistencia.getAsi_id_asistencia());
             Map<String, Object> updates = new HashMap<>();
-
-            updates.put("horaFinCurso", horaInicioCurso);
+            updates.put("asi_hora_fin", horaInicioCurso);
             docRef.update(updates).addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
@@ -143,12 +138,25 @@ public class FireStore extends Fire {
                     }
                 }
             });
-
-
         }
+    }
 
 
-
-
+    public void registrarIncidencia(Incidencia incidencia, final FireCallback<Boolean> postFirePostsCallback ){
+        Map<String, Object> postValues = incidencia.toMap();
+        mFirestore.collection(Constantes.NODO_INCIDENCIA)
+                .add(postValues)
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @Override
+                    public void onSuccess(DocumentReference documentReference) {
+                        String keyIncidencia = documentReference.getId();
+                        Log.d(TAG, "DocumentSnapshot successfully written! : " + keyIncidencia);
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.d(TAG, "DocumentSnapshot successfully written!");
+            }
+        });
     }
 }

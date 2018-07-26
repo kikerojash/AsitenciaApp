@@ -17,10 +17,12 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.google.firebase.auth.FirebaseAuth;
 import com.systemvv.grupo.asitenciaapp.R;
 import com.systemvv.grupo.asitenciaapp.base.UseCaseHandler;
 import com.systemvv.grupo.asitenciaapp.base.UseCaseThreadPoolScheduler;
 import com.systemvv.grupo.asitenciaapp.base.activity.BaseActivity;
+import com.systemvv.grupo.asitenciaapp.login.LoginActivity;
 import com.systemvv.grupo.asitenciaapp.padre.cursoHijos.CursoHijosActivity;
 import com.systemvv.grupo.asitenciaapp.padre.entidad.Cursos;
 import com.systemvv.grupo.asitenciaapp.padre.reporteAsistencia.listaReporteAsistencia.ReporteAsistenciaFragment;
@@ -58,6 +60,8 @@ public class ReportesActivity extends BaseActivity<ReportesView, ReportesPresent
     CircleImageView circleImageView;
     @BindView(R.id.collapsing_toolbar)
     CollapsingToolbarLayout collapsingToolbarLayout;
+    //firebase auth object
+    private FirebaseAuth firebaseAuth;
 
     @Override
     protected String getTag() {
@@ -88,6 +92,8 @@ public class ReportesActivity extends BaseActivity<ReportesView, ReportesPresent
     protected void setContentView() {
         setContentView(R.layout.activity_reporte_asistencia);
         ButterKnife.bind(this);
+        //initializing firebase authentication object
+        firebaseAuth = FirebaseAuth.getInstance();
         setupToolbar();
     }
 
@@ -102,10 +108,14 @@ public class ReportesActivity extends BaseActivity<ReportesView, ReportesPresent
         return null;
     }
 
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-       // initViewAdapter();
+        if (firebaseAuth.getCurrentUser() == null) {
+            finish();
+            startActivity(new Intent(this, LoginActivity.class));
+        }
     }
 
     private void initViewAdapter(Cursos cursos) {
@@ -172,5 +182,7 @@ public class ReportesActivity extends BaseActivity<ReportesView, ReportesPresent
         }
         return super.onOptionsItemSelected(item);
     }
+
+
 
 }

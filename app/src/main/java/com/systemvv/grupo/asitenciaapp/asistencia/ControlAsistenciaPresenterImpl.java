@@ -310,8 +310,9 @@ public class ControlAsistenciaPresenterImpl extends BaseActivityPresenterImpl<Co
                     public void onSuccess(GuardarAsistenciaLista.ResponseValue response) {
                         if (response.isaBoolean()) {
                             if (view != null)
-                                view.mostrarMensaje(res.getString(R.string.validacion_mensaje_guardar_correcto));
-                            Log.d(TAG, "REGISTROS GUARDADOS CORRECTAMENTE");
+                                view.mostrarMensaje(res.getString(R.string.validacion_mensaje_guardar_correcto));return;
+                         //   Log.d(TAG, "REGISTROS GUARDADOS CORRECTAMENTE");
+
                         }
                     }
 

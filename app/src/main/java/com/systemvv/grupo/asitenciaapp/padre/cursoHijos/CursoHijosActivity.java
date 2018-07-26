@@ -2,6 +2,7 @@ package com.systemvv.grupo.asitenciaapp.padre.cursoHijos;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,11 +12,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ProgressBar;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.systemvv.grupo.asitenciaapp.base.UseCaseHandler;
 import com.systemvv.grupo.asitenciaapp.base.UseCaseThreadPoolScheduler;
 import com.systemvv.grupo.asitenciaapp.base.activity.BaseActivity;
 import com.systemvv.grupo.asitenciaapp.R;
 import com.systemvv.grupo.asitenciaapp.cursos.adapter.decarador.ItemDecarador;
+import com.systemvv.grupo.asitenciaapp.login.LoginActivity;
 import com.systemvv.grupo.asitenciaapp.padre.cursoHijos.adapter.CursoHijosAdapter;
 import com.systemvv.grupo.asitenciaapp.padre.cursoHijos.listener.CursoHijosListener;
 import com.systemvv.grupo.asitenciaapp.padre.entidad.Cursos;
@@ -41,6 +44,8 @@ public class CursoHijosActivity extends BaseActivity<CursoHijosView, CursoHijosP
     CursoHijosAdapter adapter;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
+    //firebase auth object
+    private FirebaseAuth firebaseAuth;
 
     @Override
     protected String getTag() {
@@ -71,6 +76,8 @@ public class CursoHijosActivity extends BaseActivity<CursoHijosView, CursoHijosP
     protected void setContentView() {
         setContentView(R.layout.activity_curso_hijos);
         ButterKnife.bind(this);
+        //initializing firebase authentication object
+        firebaseAuth = FirebaseAuth.getInstance();
         initVistas();
         setupToolbar();
 
@@ -124,5 +131,14 @@ public class CursoHijosActivity extends BaseActivity<CursoHijosView, CursoHijosP
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (firebaseAuth.getCurrentUser() == null) {
+            finish();
+            startActivity(new Intent(this, LoginActivity.class));
+        }
     }
 }

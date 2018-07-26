@@ -63,6 +63,7 @@ public class LoginPresenterImpl extends BaseActivityPresenterImpl<LoginView> imp
     }
 
     private void initAutenticacion(String usuario, String clave) {
+       // if (view!=null)view.initVistaPadre(usuario,clave);
         if(view!=null)view.initAutenticacion(usuario,clave);
     }
 

@@ -138,6 +138,7 @@ public class InstitutoActivity extends BaseActivity<InstitutoView, InstitutoPres
                 break;
             default:
                 Log.d(TAG, "default:");
+                finish();
                 onBackPressed();
                 break;
         }

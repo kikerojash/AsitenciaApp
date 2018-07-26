@@ -2,6 +2,7 @@ package com.systemvv.grupo.asitenciaapp.padre;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -11,10 +12,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ProgressBar;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.systemvv.grupo.asitenciaapp.R;
 import com.systemvv.grupo.asitenciaapp.base.UseCaseHandler;
 import com.systemvv.grupo.asitenciaapp.base.UseCaseThreadPoolScheduler;
 import com.systemvv.grupo.asitenciaapp.base.activity.BaseActivity;
+import com.systemvv.grupo.asitenciaapp.login.LoginActivity;
 import com.systemvv.grupo.asitenciaapp.padre.adapter.HijosAdapter;
 import com.systemvv.grupo.asitenciaapp.padre.cursoHijos.CursoHijosActivity;
 import com.systemvv.grupo.asitenciaapp.padre.entidad.Hijos;
@@ -28,7 +31,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class HijosActivity extends BaseActivity<HijosView, HijosPresenter> implements HijosView,HijosListener {
+public class HijosActivity extends BaseActivity<HijosView, HijosPresenter> implements HijosView, HijosListener {
     public static final String TAG = HijosActivity.class.getSimpleName();
     @BindView(R.id.progressBar)
     ProgressBar progressBar;
@@ -37,6 +40,9 @@ public class HijosActivity extends BaseActivity<HijosView, HijosPresenter> imple
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     HijosAdapter hijosAdapter;
+    //firebase auth object
+    private FirebaseAuth firebaseAuth;
+
 
     @Override
     protected String getTag() {
@@ -67,12 +73,14 @@ public class HijosActivity extends BaseActivity<HijosView, HijosPresenter> imple
     protected void setContentView() {
         setContentView(R.layout.activity_hijos);
         ButterKnife.bind(this);
+        //initializing firebase authentication object
+        firebaseAuth = FirebaseAuth.getInstance();
         initVistas();
         setupToolbar();
     }
 
     private void initVistas() {
-        hijosAdapter = new HijosAdapter(new ArrayList<Hijos>(),this);
+        hijosAdapter = new HijosAdapter(new ArrayList<Hijos>(), this);
         reciclador.setLayoutManager(new LinearLayoutManager(this));
         reciclador.setHasFixedSize(true);
         reciclador.setAdapter(hijosAdapter);
@@ -90,7 +98,7 @@ public class HijosActivity extends BaseActivity<HijosView, HijosPresenter> imple
 
     @Override
     public void onClickItemHijo(Hijos hijos) {
-        Log.d(TAG,"onClickItemHijo : " + hijos.getNombre());
+        Log.d(TAG, "onClickItemHijo : " + hijos.getNombre());
         Intent intent = new Intent(this, CursoHijosActivity.class);
         Bundle bundle = new Bundle();
         bundle.putParcelable("hijos", Parcels.wrap(hijos));
@@ -103,12 +111,19 @@ public class HijosActivity extends BaseActivity<HijosView, HijosPresenter> imple
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
-    @Override
+    /*@Override
     public boolean onCreateOptionsMenu(Menu menu) {
         return super.onCreateOptionsMenu(menu);
+    }*/
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_padre, menu);
+        //return super.onCreateOptionsMenu(menu);
+        return true;
     }
 
-    @Override
+
+    /*@Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
@@ -116,5 +131,34 @@ public class HijosActivity extends BaseActivity<HijosView, HijosPresenter> imple
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }*/
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        switch (id) {
+            case R.id.menu_opcion_desconectar:
+                firebaseAuth.signOut();
+                finish();
+                startActivity(new Intent(this, LoginActivity.class));
+                break;
+            default:
+                Log.d(TAG, "default:");
+                finish();
+                onBackPressed();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (firebaseAuth.getCurrentUser() == null) {
+            finish();
+            startActivity(new Intent(this, LoginActivity.class));
+        }
+    }
+
 }

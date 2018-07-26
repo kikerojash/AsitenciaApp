@@ -18,6 +18,8 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.systemvv.grupo.asitenciaapp.MainActivity;
 import com.systemvv.grupo.asitenciaapp.R;
+import com.systemvv.grupo.asitenciaapp.base.UseCaseHandler;
+import com.systemvv.grupo.asitenciaapp.base.UseCaseThreadPoolScheduler;
 import com.systemvv.grupo.asitenciaapp.cursos.CursoActivity;
 import com.systemvv.grupo.asitenciaapp.seleccionarInstituto.entidad.InstitutoUi;
 import com.systemvv.grupo.asitenciaapp.seleccionarInstituto.entidad.SeccionUi;
@@ -31,7 +33,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class SeccionDialog extends DialogFragment {
+public class SeccionDialog extends DialogFragment implements SeccionView, AdapterView.OnItemSelectedListener {
     public static final String TAG = SeccionDialog.class.getSimpleName();
 
     @BindView(R.id.imageView2)
@@ -46,6 +48,8 @@ public class SeccionDialog extends DialogFragment {
    /*@BindView(R.id.btnAceptar)
     Button buttonAceptar;*/
 
+    private SeccionPresenter presenter;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,6 +62,7 @@ public class SeccionDialog extends DialogFragment {
     public void onStart() {
         super.onStart();
         initVistas();
+        presenter.onStart();
     }
 
     private void initVistas() {
@@ -96,6 +101,8 @@ public class SeccionDialog extends DialogFragment {
     private String seccionSelected = "";
 
     private void initSpinerValidacion() {
+        /*spinnerSeccion.setOnItemSelectedListener(this);
+        spinnerGrado.setOnItemSelectedListener(this);*/
         spinnerSeccion.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -126,8 +133,14 @@ public class SeccionDialog extends DialogFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.dialog_fragment_seccion, container, false);
         ButterKnife.bind(this, v);
+        initPresenter();
         this.getDialog().requestWindowFeature(STYLE_NO_TITLE);
         return v;
+    }
+
+    private void initPresenter() {
+        presenter = new SeccionPresenterImpl(new UseCaseHandler(new UseCaseThreadPoolScheduler()));
+        setPresenter(presenter);
     }
 
     @OnClick(R.id.btnAceptar)
@@ -141,10 +154,32 @@ public class SeccionDialog extends DialogFragment {
     private void initActivityAsistencia() {
         Intent intent = new Intent(getActivity(), CursoActivity.class);
         Bundle bundle = new Bundle();
-        bundle.putParcelable("instituto",Parcels.wrap(institutoUi));
+        bundle.putParcelable("instituto", Parcels.wrap(institutoUi));
         intent.putExtra("gradoSelected", gradoSelected);
         intent.putExtra("seccionSelected", seccionSelected);
         intent.putExtras(bundle);
         startActivity(intent);
+    }
+
+    @Override
+    public void setPresenter(SeccionPresenter presenter) {
+        presenter.attachView(this);
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        switch (parent.getId()) {
+            case R.id.spnGrado:
+               // presenter.onSeleccionSpinnerGrado();
+                // presenter.onSeleccionSpinnerIncidencia(spinnerIncidencias.getSelectedItem().toString());
+                break;
+            case R.id.spnSeccion:
+                break;
+        }
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
     }
 }

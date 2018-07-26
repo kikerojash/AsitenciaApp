@@ -5,13 +5,12 @@ import com.google.firebase.firestore.Exclude;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Asistencia {
-
-    private String asi_id_asistencia;
-    private String asi_hora_inicio;
-    private String asi_hora_fin;
-    private String asi_tipo_asistencia;
-    private String asi_fecha;
+public class Incidencia {
+    private String inc_id_incidencia;
+    private String inc_prioridad;
+    private String inc_descripcion;
+    private String inc_fecha;
+    private long timeStamp;
     private String alu_id_alumno;
     private String cur_id_curso;
     private String sec_id_seccion;
@@ -19,48 +18,47 @@ public class Asistencia {
     private String ins_id_institucion;
     private String gra_id_grado;
 
-
-    public Asistencia() {
+    public Incidencia() {
     }
 
-    public String getAsi_id_asistencia() {
-        return asi_id_asistencia;
+    public String getInc_id_incidencia() {
+        return inc_id_incidencia;
     }
 
-    public void setAsi_id_asistencia(String asi_id_asistencia) {
-        this.asi_id_asistencia = asi_id_asistencia;
+    public void setInc_id_incidencia(String inc_id_incidencia) {
+        this.inc_id_incidencia = inc_id_incidencia;
     }
 
-    public String getAsi_hora_inicio() {
-        return asi_hora_inicio;
+    public String getInc_prioridad() {
+        return inc_prioridad;
     }
 
-    public void setAsi_hora_inicio(String asi_hora_inicio) {
-        this.asi_hora_inicio = asi_hora_inicio;
+    public void setInc_prioridad(String inc_prioridad) {
+        this.inc_prioridad = inc_prioridad;
     }
 
-    public String getAsi_hora_fin() {
-        return asi_hora_fin;
+    public String getInc_descripcion() {
+        return inc_descripcion;
     }
 
-    public void setAsi_hora_fin(String asi_hora_fin) {
-        this.asi_hora_fin = asi_hora_fin;
+    public void setInc_descripcion(String inc_descripcion) {
+        this.inc_descripcion = inc_descripcion;
     }
 
-    public String getAsi_tipo_asistencia() {
-        return asi_tipo_asistencia;
+    public String getInc_fecha() {
+        return inc_fecha;
     }
 
-    public void setAsi_tipo_asistencia(String asi_tipo_asistencia) {
-        this.asi_tipo_asistencia = asi_tipo_asistencia;
+    public void setInc_fecha(String inc_fecha) {
+        this.inc_fecha = inc_fecha;
     }
 
-    public String getAsi_fecha() {
-        return asi_fecha;
+    public long getTimeStamp() {
+        return timeStamp;
     }
 
-    public void setAsi_fecha(String asi_fecha) {
-        this.asi_fecha = asi_fecha;
+    public void setTimeStamp(long timeStamp) {
+        this.timeStamp = timeStamp;
     }
 
     public String getAlu_id_alumno() {
@@ -111,16 +109,15 @@ public class Asistencia {
         this.gra_id_grado = gra_id_grado;
     }
 
-
     @Exclude
     public Map<String, Object> toMap() {
         HashMap<String, Object> result = new HashMap<>();
-       // result.put("asi_id_asistencia", asi_id_asistencia);
-        result.put("asi_hora_inicio", asi_hora_inicio);
-        result.put("asi_hora_fin",asi_hora_fin);
-        result.put("asi_tipo_asistencia", asi_tipo_asistencia);
-        result.put("asi_fecha", asi_fecha);
-        result.put("alu_id_alumno",alu_id_alumno);
+        //result.put("inc_id_incidencia", inc_id_incidencia);
+        result.put("inc_prioridad", inc_prioridad);
+        result.put("inc_descripcion",inc_descripcion);
+        result.put("inc_fecha", inc_fecha);
+        result.put("timeStamp", timeStamp);
+        result.put("alu_id_alumno", alu_id_alumno);
         result.put("cur_id_curso",cur_id_curso);
         result.put("sec_id_seccion",sec_id_seccion);
         result.put("prd_id_periodo",prd_id_periodo);
