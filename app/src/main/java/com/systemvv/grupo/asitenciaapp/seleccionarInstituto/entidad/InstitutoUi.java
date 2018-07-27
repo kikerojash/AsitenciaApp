@@ -10,6 +10,7 @@ public class InstitutoUi {
     public String image;
     public String cede;
     public String direccion;
+    public String keyUsuario;
     public List<SeccionUi> seccionList;
 
     public InstitutoUi() {
@@ -61,5 +62,13 @@ public class InstitutoUi {
 
     public void setSeccionList(List<SeccionUi> seccionList) {
         this.seccionList = seccionList;
+    }
+
+    public String getKeyUsuario() {
+        return keyUsuario;
+    }
+
+    public void setKeyUsuario(String keyUsuario) {
+        this.keyUsuario = keyUsuario;
     }
 }

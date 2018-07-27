@@ -10,6 +10,7 @@ import com.systemvv.grupo.asitenciaapp.cursos.entidad.AlumnosUi;
 import com.systemvv.grupo.asitenciaapp.cursos.entidad.AsistenciaUi;
 import com.systemvv.grupo.asitenciaapp.cursos.entidad.CursoUi;
 import com.systemvv.grupo.asitenciaapp.cursos.entidad.MotivosAsistenciaUi;
+import com.systemvv.grupo.asitenciaapp.seleccionarInstituto.dialogSeccion.entidad.SeccionUi;
 import com.systemvv.grupo.asitenciaapp.seleccionarInstituto.entidad.InstitutoUi;
 
 import org.parceler.Parcels;
@@ -36,16 +37,18 @@ public class CursoPresenterImpl extends BaseActivityPresenterImpl<CursoView> imp
 
     int gradoSelected;
     String seccionSelected;
-    InstitutoUi institutoUi;
+  //  InstitutoUi institutoUi;
+    SeccionUi seccionUi;
 
     @Override
     public void setExtras(Bundle extras) {
         super.setExtras(extras);
         if (extras == null) return;
-        this.gradoSelected = extras.getInt("gradoSelected", 0);
-        seccionSelected = extras.getString("seccionSelected");
-        institutoUi = Parcels.unwrap(extras.getParcelable("instituto"));
-        Log.d(TAG, "institutoUi : " + institutoUi.getNombre() + " / seccionSelected " + seccionSelected + " / " + gradoSelected);
+       /* this.gradoSelected = extras.getInt("gradoSelected", 0);
+        seccionSelected = extras.getString("seccionSelected");*/
+        //institutoUi = Parcels.unwrap(extras.getParcelable("instituto"));
+        this.seccionUi= Parcels.unwrap(extras.getParcelable("seccionUi"));
+        Log.d(TAG, "institutoUi : " + seccionUi.getInstitutoUi().getNombre() );
     }
 
     @Override
@@ -208,11 +211,11 @@ public class CursoPresenterImpl extends BaseActivityPresenterImpl<CursoView> imp
 
 
         /*Lista Cursos*/
-        CursoUi cursoMatematica = new CursoUi("Matematica", seccionSelected, gradoSelected, "https://lh4.googleusercontent.com/-BM1HpAOAH8s/VN0opWfgsNI/AAAAAAAAAVc/xbsgs7KRG_o/w984-h209-no/162_bookshelf_brown.jpg", institutoUi, alumnosUiList, motivosAsistenciaUis,asistenciaUiLista);
-        CursoUi cursoReligion = new CursoUi("Religion", seccionSelected, gradoSelected, "https://lh4.googleusercontent.com/-JVP8B-wKf-o/VN0omKitxJI/AAAAAAAAAUQ/TbGF8BU0OVs/w984-h209-no/149_world_googleblue.jpg", institutoUi, alumnosUiList, motivosAsistenciaUis,asistenciaUiLista);
-        CursoUi cursoPersonaSocial = new CursoUi("Persona Social", seccionSelected, gradoSelected, "https://lh6.googleusercontent.com/-7Ww0toY0P1s/VN0op12wi-I/AAAAAAAAAVs/GUcBQ4yvdPw/w984-h209-no/164_windows_ltblue.jpg", institutoUi, alumnosUiList, motivosAsistenciaUis,asistenciaUiLista);
-        CursoUi cursoRazonaMiento = new CursoUi("Computación", seccionSelected, gradoSelected, "https://lh6.googleusercontent.com/-VZ0OG0lXwVk/VN0or214CJI/AAAAAAAAAWg/aZZDUTx3M2E/w984-h209-no/23_piano.jpg", institutoUi, alumnosUiList, motivosAsistenciaUis,asistenciaUiLista);
-        CursoUi cursoComunicacion = new CursoUi("Comunicación", seccionSelected, gradoSelected, "https://lh5.googleusercontent.com/-Fu7AEy1bRQs/VN0ojktkA4I/AAAAAAAAATE/73rXQ2D-iR0/w984-h209-no/13_drops.jpg", institutoUi, alumnosUiList, motivosAsistenciaUis,asistenciaUiLista);
+        CursoUi cursoMatematica = new CursoUi("Matematica", seccionSelected, gradoSelected, "https://lh4.googleusercontent.com/-BM1HpAOAH8s/VN0opWfgsNI/AAAAAAAAAVc/xbsgs7KRG_o/w984-h209-no/162_bookshelf_brown.jpg", null, alumnosUiList, motivosAsistenciaUis,asistenciaUiLista);
+        CursoUi cursoReligion = new CursoUi("Religion", seccionSelected, gradoSelected, "https://lh4.googleusercontent.com/-JVP8B-wKf-o/VN0omKitxJI/AAAAAAAAAUQ/TbGF8BU0OVs/w984-h209-no/149_world_googleblue.jpg", null, alumnosUiList, motivosAsistenciaUis,asistenciaUiLista);
+        CursoUi cursoPersonaSocial = new CursoUi("Persona Social", seccionSelected, gradoSelected, "https://lh6.googleusercontent.com/-7Ww0toY0P1s/VN0op12wi-I/AAAAAAAAAVs/GUcBQ4yvdPw/w984-h209-no/164_windows_ltblue.jpg", null, alumnosUiList, motivosAsistenciaUis,asistenciaUiLista);
+        CursoUi cursoRazonaMiento = new CursoUi("Computación", seccionSelected, gradoSelected, "https://lh6.googleusercontent.com/-VZ0OG0lXwVk/VN0or214CJI/AAAAAAAAAWg/aZZDUTx3M2E/w984-h209-no/23_piano.jpg", null, alumnosUiList, motivosAsistenciaUis,asistenciaUiLista);
+        CursoUi cursoComunicacion = new CursoUi("Comunicación", seccionSelected, gradoSelected, "https://lh5.googleusercontent.com/-Fu7AEy1bRQs/VN0ojktkA4I/AAAAAAAAATE/73rXQ2D-iR0/w984-h209-no/13_drops.jpg", null, alumnosUiList, motivosAsistenciaUis,asistenciaUiLista);
 
         cursoUiList.add(cursoMatematica);
         cursoUiList.add(cursoReligion);

@@ -1,8 +1,12 @@
 package com.systemvv.grupo.asitenciaapp.seleccionarInstituto.dialogSeccion;
 
+import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,8 +25,15 @@ import com.systemvv.grupo.asitenciaapp.R;
 import com.systemvv.grupo.asitenciaapp.base.UseCaseHandler;
 import com.systemvv.grupo.asitenciaapp.base.UseCaseThreadPoolScheduler;
 import com.systemvv.grupo.asitenciaapp.cursos.CursoActivity;
+import com.systemvv.grupo.asitenciaapp.fire.FireStore;
+import com.systemvv.grupo.asitenciaapp.seleccionarInstituto.dialogSeccion.adapter.SeccionAdapter;
+import com.systemvv.grupo.asitenciaapp.seleccionarInstituto.dialogSeccion.dataSource.SeccionRepository;
+import com.systemvv.grupo.asitenciaapp.seleccionarInstituto.dialogSeccion.dataSource.remote.SeccionRemote;
+import com.systemvv.grupo.asitenciaapp.seleccionarInstituto.dialogSeccion.entidad.SeccionUi;
+import com.systemvv.grupo.asitenciaapp.seleccionarInstituto.dialogSeccion.listener.ItemListener;
+import com.systemvv.grupo.asitenciaapp.seleccionarInstituto.dialogSeccion.useCase.ObtenerListaSeccion;
 import com.systemvv.grupo.asitenciaapp.seleccionarInstituto.entidad.InstitutoUi;
-import com.systemvv.grupo.asitenciaapp.seleccionarInstituto.entidad.SeccionUi;
+
 
 import org.parceler.Parcels;
 
@@ -33,40 +44,45 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class SeccionDialog extends DialogFragment implements SeccionView, AdapterView.OnItemSelectedListener {
+public class SeccionDialog extends DialogFragment implements SeccionView,ItemListener{
     public static final String TAG = SeccionDialog.class.getSimpleName();
 
     @BindView(R.id.imageView2)
     ImageView imageView;
     @BindView(R.id.textViewNombre)
     TextView textViewNombre;
-    @BindView(R.id.spnGrado)
+    /*@BindView(R.id.spnGrado)
     Spinner spinnerGrado;
     @BindView(R.id.spnSeccion)
-    Spinner spinnerSeccion;
-    InstitutoUi institutoUi;
+    Spinner spinnerSeccion;*/
+    //InstitutoUi institutoUi;
    /*@BindView(R.id.btnAceptar)
     Button buttonAceptar;*/
 
+    @BindView(R.id.reciclador)
+    RecyclerView reciclador;
+
+    private SeccionAdapter seccionAdapter;
     private SeccionPresenter presenter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Bundle bundle = getArguments();
+       /* Bundle bundle = getArguments();
         this.institutoUi = Parcels.unwrap(bundle.getParcelable("example"));
-        Log.d(TAG, "SeccionDialog : " + institutoUi.getNombre());
+        Log.d(TAG, "SeccionDialog : " + institutoUi.getNombre());*/
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        initVistas();
+        //initVistas();
         presenter.onStart();
     }
 
     private void initVistas() {
-        textViewNombre.setText(institutoUi.getNombre());
+
+       /* textViewNombre.setText(institutoUi.getNombre());
         Glide.with(this).load(institutoUi.getImage()).into(imageView);
         // spinnerGrado.setOnItemSelectedListener(this);
         // spinnerSeccion.setOnItemSelectedListener(this);
@@ -85,15 +101,15 @@ public class SeccionDialog extends DialogFragment implements SeccionView, Adapte
                 android.R.layout.simple_spinner_item,
                 spinnerArray
         );
-        spinnerGrado.setAdapter(adapter);
+        //spinnerGrado.setAdapter(adapter);
 
         ArrayAdapter<String> adapterString = new ArrayAdapter<String>(
                 getActivity(),
                 android.R.layout.simple_spinner_item,
                 spinnerArrayString
         );
-        spinnerSeccion.setAdapter(adapterString);
-        initSpinerValidacion();
+        //spinnerSeccion.setAdapter(adapterString);
+        initSpinerValidacion();*/
 
     }
 
@@ -103,7 +119,7 @@ public class SeccionDialog extends DialogFragment implements SeccionView, Adapte
     private void initSpinerValidacion() {
         /*spinnerSeccion.setOnItemSelectedListener(this);
         spinnerGrado.setOnItemSelectedListener(this);*/
-        spinnerSeccion.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+      /*  spinnerSeccion.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 seccionSelected = institutoUi.getSeccionList().get(position).getSeccion();
@@ -126,35 +142,38 @@ public class SeccionDialog extends DialogFragment implements SeccionView, Adapte
             public void onNothingSelected(AdapterView<?> parent) {
                 Log.d(TAG, "spnGrado::onNothingSelected");
             }
-        });
+        });*/
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.dialog_fragment_seccion, container, false);
         ButterKnife.bind(this, v);
         initPresenter();
+       // initVistas();
         this.getDialog().requestWindowFeature(STYLE_NO_TITLE);
         return v;
     }
 
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        presenter.onExtras(getArguments());
+    }
+
     private void initPresenter() {
-        presenter = new SeccionPresenterImpl(new UseCaseHandler(new UseCaseThreadPoolScheduler()));
+        SeccionRepository repository = new SeccionRepository(new SeccionRemote(new FireStore()));
+        presenter = new SeccionPresenterImpl(new UseCaseHandler(new UseCaseThreadPoolScheduler()),
+                new ObtenerListaSeccion(repository));
         setPresenter(presenter);
     }
 
-    @OnClick(R.id.btnAceptar)
-    public void onClick(View view) {
-        if (gradoSelected > 0 && seccionSelected.toString().length() > 0) {
-            initActivityAsistencia();
-            dismiss();
-        }
-    }
 
     private void initActivityAsistencia() {
         Intent intent = new Intent(getActivity(), CursoActivity.class);
         Bundle bundle = new Bundle();
-        bundle.putParcelable("instituto", Parcels.wrap(institutoUi));
+        ///bundle.putParcelable("instituto", Parcels.wrap(institutoUi));
         intent.putExtra("gradoSelected", gradoSelected);
         intent.putExtra("seccionSelected", seccionSelected);
         intent.putExtras(bundle);
@@ -166,20 +185,31 @@ public class SeccionDialog extends DialogFragment implements SeccionView, Adapte
         presenter.attachView(this);
     }
 
+
     @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        switch (parent.getId()) {
-            case R.id.spnGrado:
-               // presenter.onSeleccionSpinnerGrado();
-                // presenter.onSeleccionSpinnerIncidencia(spinnerIncidencias.getSelectedItem().toString());
-                break;
-            case R.id.spnSeccion:
-                break;
-        }
+    public void onClickItem(SeccionUi seccionUi) {
+
+        Log.d(TAG,"onClickItem");
+        Intent intent = new Intent(getActivity(), CursoActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("seccionUi", Parcels.wrap(seccionUi));
+        intent.putExtras(bundle);
+        startActivity(intent);
+        dismiss();
     }
 
     @Override
-    public void onNothingSelected(AdapterView<?> parent) {
+    public void initVistas(InstitutoUi institutoUi) {
+        textViewNombre.setText(institutoUi.getNombre());
+        Glide.with(this).load(institutoUi.getImage()).into(imageView);
+        seccionAdapter = new SeccionAdapter(new ArrayList<SeccionUi>(),this);
+        reciclador.setLayoutManager(new LinearLayoutManager(getActivity()));
+        reciclador.setHasFixedSize(true);
+        reciclador.setAdapter(seccionAdapter);
+    }
 
+    @Override
+    public void mostrarLista(List<SeccionUi> seccionUiList) {
+        seccionAdapter.mostrarListaSeccion(seccionUiList);
     }
 }

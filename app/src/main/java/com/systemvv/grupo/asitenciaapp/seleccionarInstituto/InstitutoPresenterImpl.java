@@ -4,10 +4,12 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.systemvv.grupo.asitenciaapp.base.UseCase;
 import com.systemvv.grupo.asitenciaapp.base.UseCaseHandler;
 import com.systemvv.grupo.asitenciaapp.base.activity.BaseActivityPresenterImpl;
 import com.systemvv.grupo.asitenciaapp.seleccionarInstituto.entidad.InstitutoUi;
 import com.systemvv.grupo.asitenciaapp.seleccionarInstituto.entidad.SeccionUi;
+import com.systemvv.grupo.asitenciaapp.seleccionarInstituto.useCase.ObtenerInstitutoLista;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,8 +18,11 @@ public class InstitutoPresenterImpl extends BaseActivityPresenterImpl<InstitutoV
 
     public static final String TAG = InstitutoPresenterImpl.class.getSimpleName();
 
-    public InstitutoPresenterImpl(UseCaseHandler handler, Resources res) {
+    private ObtenerInstitutoLista obtenerInstitutoLista;
+
+    public InstitutoPresenterImpl(UseCaseHandler handler, Resources res, ObtenerInstitutoLista obtenerInstitutoLista) {
         super(handler, res);
+        this.obtenerInstitutoLista = obtenerInstitutoLista;
     }
 
     @Override
@@ -42,7 +47,29 @@ public class InstitutoPresenterImpl extends BaseActivityPresenterImpl<InstitutoV
     @Override
     public void onStart() {
         super.onStart();
-        if (view!=null)view.mostrarListaInstitutos(insertDataStatica());
+        String keyUser = "asdfgh";
+        mostrarListaInstitutos(keyUser);
+         // if (view != null) view.mostrarListaInstitutos(insertDataStatica());
+    }
+
+    private void mostrarListaInstitutos(String keyUser) {
+        if(view!=null)view.mostrarProgressBar();
+        handler.execute(obtenerInstitutoLista, new ObtenerInstitutoLista.RequestValues(keyUser),
+                new UseCase.UseCaseCallback<ObtenerInstitutoLista.ResponseValue>() {
+                    @Override
+                    public void onSuccess(ObtenerInstitutoLista.ResponseValue response) {
+                        if (view != null){
+                            //view.mostrarListaInstitutos(response.getInstitutoUiList());
+                            view.mostrarListaInstitutos(insertDataStatica());
+                            view.ocultarProgressBar();
+                        }
+                    }
+
+                    @Override
+                    public void onError() {
+
+                    }
+                });
     }
 
     private List<InstitutoUi> insertDataStatica() {

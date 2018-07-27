@@ -19,11 +19,15 @@ import com.systemvv.grupo.asitenciaapp.R;
 import com.systemvv.grupo.asitenciaapp.base.UseCaseHandler;
 import com.systemvv.grupo.asitenciaapp.base.UseCaseThreadPoolScheduler;
 import com.systemvv.grupo.asitenciaapp.base.activity.BaseActivity;
+import com.systemvv.grupo.asitenciaapp.fire.FireStore;
 import com.systemvv.grupo.asitenciaapp.login.LoginActivity;
 import com.systemvv.grupo.asitenciaapp.seleccionarInstituto.adapter.InstitutoAdapter;
+import com.systemvv.grupo.asitenciaapp.seleccionarInstituto.dataSource.InstitutoRepository;
+import com.systemvv.grupo.asitenciaapp.seleccionarInstituto.dataSource.remote.InstitutoRemote;
 import com.systemvv.grupo.asitenciaapp.seleccionarInstituto.dialogSeccion.SeccionDialog;
 import com.systemvv.grupo.asitenciaapp.seleccionarInstituto.entidad.InstitutoUi;
 import com.systemvv.grupo.asitenciaapp.seleccionarInstituto.listener.InstitutoListener;
+import com.systemvv.grupo.asitenciaapp.seleccionarInstituto.useCase.ObtenerInstitutoLista;
 
 import org.parceler.Parcels;
 
@@ -58,7 +62,10 @@ public class InstitutoActivity extends BaseActivity<InstitutoView, InstitutoPres
 
     @Override
     protected InstitutoPresenter getPresenter() {
-        return new InstitutoPresenterImpl(new UseCaseHandler(new UseCaseThreadPoolScheduler()), getResources());
+        InstitutoRepository institutoRepository = new InstitutoRepository(new InstitutoRemote(new FireStore()));
+        return new InstitutoPresenterImpl(new UseCaseHandler(new UseCaseThreadPoolScheduler()),
+                getResources(),
+                new ObtenerInstitutoLista(institutoRepository));
     }
 
     @Override
@@ -106,7 +113,8 @@ public class InstitutoActivity extends BaseActivity<InstitutoView, InstitutoPres
     @Override
     public void onClickInstituto(InstitutoUi institutoUi) {
         Log.d(TAG, "onClickInstituto : " + institutoUi.getNombre());
-
+        String keyUser = "asdfgh";
+        institutoUi.setKeyUsuario(keyUser);
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         Fragment prev = getFragmentManager().findFragmentByTag("dialog");
         if (prev != null) {
