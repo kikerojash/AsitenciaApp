@@ -4,14 +4,15 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.systemvv.grupo.asitenciaapp.base.UseCase;
 import com.systemvv.grupo.asitenciaapp.base.UseCaseHandler;
 import com.systemvv.grupo.asitenciaapp.base.activity.BaseActivityPresenterImpl;
 import com.systemvv.grupo.asitenciaapp.cursos.entidad.AlumnosUi;
 import com.systemvv.grupo.asitenciaapp.cursos.entidad.AsistenciaUi;
 import com.systemvv.grupo.asitenciaapp.cursos.entidad.CursoUi;
 import com.systemvv.grupo.asitenciaapp.cursos.entidad.MotivosAsistenciaUi;
+import com.systemvv.grupo.asitenciaapp.cursos.useCase.ObtenerCursoLista;
 import com.systemvv.grupo.asitenciaapp.seleccionarInstituto.dialogSeccion.entidad.SeccionUi;
-import com.systemvv.grupo.asitenciaapp.seleccionarInstituto.entidad.InstitutoUi;
 
 import org.parceler.Parcels;
 
@@ -19,10 +20,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CursoPresenterImpl extends BaseActivityPresenterImpl<CursoView> implements CursoPresenter {
+
     public static final String TAG = CursoPresenterImpl.class.getSimpleName();
 
-    public CursoPresenterImpl(UseCaseHandler handler, Resources res) {
+
+    private ObtenerCursoLista obtenerCursoLista;
+
+    public CursoPresenterImpl(UseCaseHandler handler, Resources res, ObtenerCursoLista obtenerCursoLista) {
         super(handler, res);
+        this.obtenerCursoLista = obtenerCursoLista;
     }
 
     @Override
@@ -37,7 +43,7 @@ public class CursoPresenterImpl extends BaseActivityPresenterImpl<CursoView> imp
 
     int gradoSelected;
     String seccionSelected;
-  //  InstitutoUi institutoUi;
+    //  InstitutoUi institutoUi;
     SeccionUi seccionUi;
 
     @Override
@@ -47,14 +53,30 @@ public class CursoPresenterImpl extends BaseActivityPresenterImpl<CursoView> imp
        /* this.gradoSelected = extras.getInt("gradoSelected", 0);
         seccionSelected = extras.getString("seccionSelected");*/
         //institutoUi = Parcels.unwrap(extras.getParcelable("instituto"));
-        this.seccionUi= Parcels.unwrap(extras.getParcelable("seccionUi"));
-        Log.d(TAG, "institutoUi : " + seccionUi.getInstitutoUi().getNombre() );
+        this.seccionUi = Parcels.unwrap(extras.getParcelable("seccionUi"));
+        Log.d(TAG, "institutoUi : " + seccionUi.getInstitutoUi().getKeyUsuario());
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        if (view != null) view.mostrarListaCursos(getCursoList());
+        initListCursos(seccionUi);
+        // if (view != null) view.mostrarListaCursos(getCursoList());
+    }
+
+    private void initListCursos(SeccionUi seccionUi) {
+        handler.execute(obtenerCursoLista, new ObtenerCursoLista.RequestValues(seccionUi),
+                new UseCase.UseCaseCallback<ObtenerCursoLista.ResponseValue>() {
+                    @Override
+                    public void onSuccess(ObtenerCursoLista.ResponseValue response) {
+                        if (view != null) view.mostrarListaCursos(response.getCursoUiList());
+                    }
+
+                    @Override
+                    public void onError() {
+
+                    }
+                });
     }
 
     private List<CursoUi> getCursoList() {
@@ -180,9 +202,6 @@ public class CursoPresenterImpl extends BaseActivityPresenterImpl<CursoView> imp
         alumnosUiList.add(alumnoRobertol);
 
 
-
-
-
         MotivosAsistenciaUi motivosAsistenciaFaltoUi = new MotivosAsistenciaUi();
         motivosAsistenciaFaltoUi.setTipoMotivo(MotivosAsistenciaUi.TIPO_ASISTENCIA_FALTO);
 
@@ -191,7 +210,6 @@ public class CursoPresenterImpl extends BaseActivityPresenterImpl<CursoView> imp
 
         asistenciaFalto.setTipoAsistencia("Falto");
         asistenciaFalto.setPintar(false);
-
 
 
         AlumnosUi alumnoUltimo = new AlumnosUi(10, "Juan Pepito", "Perez Soza", "http://ilumina2photo.es/wp-content/uploads/2016/02/sesion-fotos-ni%C3%B1os-playa-barcelona-infantil-reportaje-fotografia-costa-ni%C3%B1o-ni%C3%B1a-aire-libre-2.jpg", asistenciaFalto);
@@ -211,11 +229,11 @@ public class CursoPresenterImpl extends BaseActivityPresenterImpl<CursoView> imp
 
 
         /*Lista Cursos*/
-        CursoUi cursoMatematica = new CursoUi("Matematica", seccionSelected, gradoSelected, "https://lh4.googleusercontent.com/-BM1HpAOAH8s/VN0opWfgsNI/AAAAAAAAAVc/xbsgs7KRG_o/w984-h209-no/162_bookshelf_brown.jpg", null, alumnosUiList, motivosAsistenciaUis,asistenciaUiLista);
-        CursoUi cursoReligion = new CursoUi("Religion", seccionSelected, gradoSelected, "https://lh4.googleusercontent.com/-JVP8B-wKf-o/VN0omKitxJI/AAAAAAAAAUQ/TbGF8BU0OVs/w984-h209-no/149_world_googleblue.jpg", null, alumnosUiList, motivosAsistenciaUis,asistenciaUiLista);
-        CursoUi cursoPersonaSocial = new CursoUi("Persona Social", seccionSelected, gradoSelected, "https://lh6.googleusercontent.com/-7Ww0toY0P1s/VN0op12wi-I/AAAAAAAAAVs/GUcBQ4yvdPw/w984-h209-no/164_windows_ltblue.jpg", null, alumnosUiList, motivosAsistenciaUis,asistenciaUiLista);
-        CursoUi cursoRazonaMiento = new CursoUi("Computación", seccionSelected, gradoSelected, "https://lh6.googleusercontent.com/-VZ0OG0lXwVk/VN0or214CJI/AAAAAAAAAWg/aZZDUTx3M2E/w984-h209-no/23_piano.jpg", null, alumnosUiList, motivosAsistenciaUis,asistenciaUiLista);
-        CursoUi cursoComunicacion = new CursoUi("Comunicación", seccionSelected, gradoSelected, "https://lh5.googleusercontent.com/-Fu7AEy1bRQs/VN0ojktkA4I/AAAAAAAAATE/73rXQ2D-iR0/w984-h209-no/13_drops.jpg", null, alumnosUiList, motivosAsistenciaUis,asistenciaUiLista);
+        CursoUi cursoMatematica = new CursoUi("Matematica", seccionSelected, gradoSelected, "https://lh4.googleusercontent.com/-BM1HpAOAH8s/VN0opWfgsNI/AAAAAAAAAVc/xbsgs7KRG_o/w984-h209-no/162_bookshelf_brown.jpg", null, alumnosUiList, motivosAsistenciaUis, asistenciaUiLista);
+        CursoUi cursoReligion = new CursoUi("Religion", seccionSelected, gradoSelected, "https://lh4.googleusercontent.com/-JVP8B-wKf-o/VN0omKitxJI/AAAAAAAAAUQ/TbGF8BU0OVs/w984-h209-no/149_world_googleblue.jpg", null, alumnosUiList, motivosAsistenciaUis, asistenciaUiLista);
+        CursoUi cursoPersonaSocial = new CursoUi("Persona Social", seccionSelected, gradoSelected, "https://lh6.googleusercontent.com/-7Ww0toY0P1s/VN0op12wi-I/AAAAAAAAAVs/GUcBQ4yvdPw/w984-h209-no/164_windows_ltblue.jpg", null, alumnosUiList, motivosAsistenciaUis, asistenciaUiLista);
+        CursoUi cursoRazonaMiento = new CursoUi("Computación", seccionSelected, gradoSelected, "https://lh6.googleusercontent.com/-VZ0OG0lXwVk/VN0or214CJI/AAAAAAAAAWg/aZZDUTx3M2E/w984-h209-no/23_piano.jpg", null, alumnosUiList, motivosAsistenciaUis, asistenciaUiLista);
+        CursoUi cursoComunicacion = new CursoUi("Comunicación", seccionSelected, gradoSelected, "https://lh5.googleusercontent.com/-Fu7AEy1bRQs/VN0ojktkA4I/AAAAAAAAATE/73rXQ2D-iR0/w984-h209-no/13_drops.jpg", null, alumnosUiList, motivosAsistenciaUis, asistenciaUiLista);
 
         cursoUiList.add(cursoMatematica);
         cursoUiList.add(cursoReligion);

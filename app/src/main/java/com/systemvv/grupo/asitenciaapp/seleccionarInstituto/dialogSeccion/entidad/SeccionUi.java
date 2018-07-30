@@ -4,6 +4,8 @@ import com.systemvv.grupo.asitenciaapp.seleccionarInstituto.entidad.InstitutoUi;
 
 import org.parceler.Parcel;
 
+import java.util.Objects;
+
 @Parcel
 public class SeccionUi {
 
@@ -46,4 +48,24 @@ public class SeccionUi {
     public void setInstitutoUi(InstitutoUi institutoUi) {
         this.institutoUi = institutoUi;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        SeccionUi that = (SeccionUi) o;
+
+        return grado.equals(that.grado) &&
+                seccion.equals(that.seccion);
+    }
+
+    @Override
+        public int hashCode() {
+            int result=17;
+            //result=31*result+age;
+            result=31*result+(grado!=null ? grado.hashCode():0);
+            return result;
+        }
+
 }

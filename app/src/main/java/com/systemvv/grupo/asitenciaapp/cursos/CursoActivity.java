@@ -18,8 +18,12 @@ import com.systemvv.grupo.asitenciaapp.base.UseCaseHandler;
 import com.systemvv.grupo.asitenciaapp.base.UseCaseThreadPoolScheduler;
 import com.systemvv.grupo.asitenciaapp.base.activity.BaseActivity;
 import com.systemvv.grupo.asitenciaapp.cursos.adapter.CursoAdapter;
+import com.systemvv.grupo.asitenciaapp.cursos.dataSource.CursoRepository;
+import com.systemvv.grupo.asitenciaapp.cursos.dataSource.remote.CursoRemote;
 import com.systemvv.grupo.asitenciaapp.cursos.entidad.CursoUi;
 import com.systemvv.grupo.asitenciaapp.cursos.listener.CursoListener;
+import com.systemvv.grupo.asitenciaapp.cursos.useCase.ObtenerCursoLista;
+import com.systemvv.grupo.asitenciaapp.fire.FireStore;
 import com.systemvv.grupo.asitenciaapp.login.LoginActivity;
 
 import org.parceler.Parcels;
@@ -55,7 +59,11 @@ public class CursoActivity extends BaseActivity<CursoView, CursoPresenter> imple
 
     @Override
     protected CursoPresenter getPresenter() {
-        return new CursoPresenterImpl(new UseCaseHandler(new UseCaseThreadPoolScheduler()), getResources());
+
+        CursoRepository cursoRepository = new CursoRepository(new CursoRemote(new FireStore()));
+        return new CursoPresenterImpl(new UseCaseHandler(new UseCaseThreadPoolScheduler()),
+                getResources(),
+                new ObtenerCursoLista(cursoRepository));
     }
 
     @Override
