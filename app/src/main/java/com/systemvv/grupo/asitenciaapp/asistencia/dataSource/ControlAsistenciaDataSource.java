@@ -1,6 +1,8 @@
 package com.systemvv.grupo.asitenciaapp.asistencia.dataSource;
 
+import com.systemvv.grupo.asitenciaapp.asistencia.entidad.Alumnos;
 import com.systemvv.grupo.asitenciaapp.cursos.entidad.AsistenciaUi;
+import com.systemvv.grupo.asitenciaapp.cursos.entidad.CursoUi;
 import com.systemvv.grupo.asitenciaapp.fire.entidad.Asistencia;
 
 import java.util.List;
@@ -18,4 +20,6 @@ public interface ControlAsistenciaDataSource {
     void onObtenerAsistenciaLista(String fecha, ObjectCallbackSuccess<List<Asistencia>> listObjectCallbackSuccess);
 
     void onValidarFechaRegistroAsistencia(String fecha, ObjectCallbackSuccess<Boolean> callbackSuccess);
+
+    void onObtenerAlumnosLista(CursoUi cursoUi , ObjectCallbackSuccess<List<Alumnos>> listObjectCallbackSuccess);
 }

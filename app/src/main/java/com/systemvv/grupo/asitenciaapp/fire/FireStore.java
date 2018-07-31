@@ -13,6 +13,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.systemvv.grupo.asitenciaapp.asistencia.entidad.Alumnos;
 import com.systemvv.grupo.asitenciaapp.cursos.entidad.CursoUi;
 import com.systemvv.grupo.asitenciaapp.fire.entidad.Asistencia;
 import com.systemvv.grupo.asitenciaapp.fire.entidad.Incidencia;
@@ -224,7 +225,7 @@ public class FireStore extends Fire {
                             }
 
 
-                           List<SeccionUi> seccionUiList2 = new ArrayList<>(new LinkedHashSet<>(seccionUiList));
+                            List<SeccionUi> seccionUiList2 = new ArrayList<>(new LinkedHashSet<>(seccionUiList));
 
 
                             listFireCallback.onSuccess(seccionUiList2);
@@ -258,6 +259,7 @@ public class FireStore extends Fire {
                                 String seccion_nombre = (String) document.get("seccion_nombre");*/
 
                                 CursoUi cursoUi = new CursoUi();
+                                cursoUi.setKeyCurso("qwerty");
                                 cursoUi.setNombre(curso_nombre);
                                 cursoUi.setGradoSelected(Integer.parseInt(seccionUi.getGrado()));
                                 cursoUi.setSeccionSelected(seccionUi.getSeccion());
@@ -275,4 +277,66 @@ public class FireStore extends Fire {
                     }
                 });
     }
+
+    public void onObtenerListaAlumnos(final CursoUi cursoUi, final FireCallback<List<Alumnos>> listFireCallback) {
+        String keyCurso = cursoUi.getKeyCurso();
+        String grado = String.valueOf(cursoUi.getGradoSelected());
+        String seccion = cursoUi.getSeccionSelected();
+
+        mFirestore.collection(Constantes.NODO_INSTITUTO_PERIODO_GRADO_CURSO_ALUMNO)
+                .whereEqualTo("institucion_periodo_grado_curso_cur_id_curso", keyCurso)
+                .whereEqualTo("institucion_periodo_grado_curso_prd_id_periodo", "18")
+                .whereEqualTo("institucion_periodo_grado_curso_gra_id_grado", grado)
+                .whereEqualTo("institucion_periodo_grado_curso_sec_id_seccion", seccion)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                        //    final List<Alumnos> alumnosList = new ArrayList<>();
+                           // final Alumnos alumnos = new Alumnos();
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+
+                                String keyAlumno = (String) document.get("alumno_alu_id_alumno");
+                                mFirestore.collection(Constantes.NODO_ALUMNOS)
+                                        .whereEqualTo("keyAlumno", keyAlumno)
+                                        .get()
+                                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                                final List<Alumnos> alumnosList = new ArrayList<>();
+                                                if (task.isSuccessful()) {
+                                                  //  Alumnos alumnos = new Alumnos();
+
+                                                    for (QueryDocumentSnapshot document : task.getResult()) {
+                                                        String per_nombre = (String) document.get("per_nombre");
+                                                        String per_apellido = (String) document.get("per_nombre");
+                                                        String foto = (String) document.get("foto");
+
+                                                        Log.d(TAG, "task.isSuccessful() "
+                                                                + per_nombre + " / " +
+                                                                per_apellido);
+                                                        Alumnos alumnos = new Alumnos();
+                                                        alumnos.setNombre(per_nombre);
+                                                        alumnos.setApellido(per_apellido);
+                                                        alumnos.setFoto(foto);
+                                                        alumnosList.add(alumnos);
+                                                        Log.d(TAG, "ASDASDSADD " + document.getId() + " => " + document.getData());
+
+                                                    }
+                                                    listFireCallback.onSuccess(alumnosList);
+
+                                                }
+                                            }
+                                        });
+                            }
+                          //  listFireCallback.onSuccess(alumnosList);
+                        } else {
+                            Log.d(TAG, "Error getting documents: ", task.getException());
+                            listFireCallback.onSuccess(null);
+                        }
+                    }
+                });
+    }
+
 }

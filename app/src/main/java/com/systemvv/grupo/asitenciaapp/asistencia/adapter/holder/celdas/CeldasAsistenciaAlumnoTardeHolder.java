@@ -6,6 +6,7 @@ import android.widget.TextView;
 
 import com.evrencoskun.tableview.adapter.recyclerview.holder.AbstractViewHolder;
 import com.systemvv.grupo.asitenciaapp.R;
+import com.systemvv.grupo.asitenciaapp.asistencia.entidad.Asistencia;
 import com.systemvv.grupo.asitenciaapp.cursos.entidad.AsistenciaUi;
 
 import butterknife.BindView;
@@ -17,14 +18,14 @@ public class CeldasAsistenciaAlumnoTardeHolder extends AbstractViewHolder {
     TextView textViewDatos;
     @BindView(R.id.root)
     ConstraintLayout fondo;
-    AsistenciaUi asistenciaUi;
+    Asistencia asistenciaUi;
 
     public CeldasAsistenciaAlumnoTardeHolder(View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);
     }
 
-    public void bind(AsistenciaUi asistencia) {
+    public void bind(Asistencia asistencia) {
         this.asistenciaUi = asistencia;
         textViewDatos.setText("X");
         fondo.getLayoutParams().width = ConstraintLayout.LayoutParams.MATCH_PARENT;
@@ -34,10 +35,6 @@ public class CeldasAsistenciaAlumnoTardeHolder extends AbstractViewHolder {
         } else {
             fondo.setBackgroundColor(itemView.getResources().getColor(R.color.md_white_1000));
         }
-    }
-
-    public AsistenciaUi obtenerAsistencia(){
-        return asistenciaUi;
     }
 
     private void validacionPintar(AsistenciaUi asistencia) {

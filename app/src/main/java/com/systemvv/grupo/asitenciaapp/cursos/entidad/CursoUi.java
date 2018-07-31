@@ -8,6 +8,7 @@ import java.util.List;
 
 @Parcel
 public class CursoUi {
+    public String keyCurso;
     public String nombre;
     public String seccionSelected;
     public int gradoSelected;
@@ -87,6 +88,14 @@ public class CursoUi {
 //        this.alumnosUiList = alumnosUiList;
 //    }
 
+
+    public String getKeyCurso() {
+        return keyCurso;
+    }
+
+    public void setKeyCurso(String keyCurso) {
+        this.keyCurso = keyCurso;
+    }
 
     public String getNombre() {
         return nombre;

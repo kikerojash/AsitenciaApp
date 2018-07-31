@@ -3,7 +3,10 @@ package com.systemvv.grupo.asitenciaapp.asistencia.dataSource.remote;
 
 
 import com.systemvv.grupo.asitenciaapp.asistencia.dataSource.ControlAsistenciaDataSource;
+import com.systemvv.grupo.asitenciaapp.asistencia.entidad.Alumnos;
+import com.systemvv.grupo.asitenciaapp.asistencia.entidad.MotivoAsistencia;
 import com.systemvv.grupo.asitenciaapp.cursos.entidad.AsistenciaUi;
+import com.systemvv.grupo.asitenciaapp.cursos.entidad.CursoUi;
 import com.systemvv.grupo.asitenciaapp.fire.FireCallback;
 import com.systemvv.grupo.asitenciaapp.fire.FireStore;
 import com.systemvv.grupo.asitenciaapp.fire.entidad.Asistencia;
@@ -70,6 +73,19 @@ public class ControlAsistenciaRemote implements ControlAsistenciaDataSource {
             }
         });
     }
+
+    @Override
+    public void onObtenerAlumnosLista(CursoUi cursoUi, final ObjectCallbackSuccess<List<Alumnos>> listObjectCallbackSuccess) {
+        fireStore.onObtenerListaAlumnos(cursoUi, new FireCallback<List<Alumnos>>() {
+            @Override
+            public void onSuccess(List<Alumnos> sucess) {
+                listObjectCallbackSuccess.guardarAsistenciaGrupal(sucess);
+            }
+        });
+    }
+
+
+
 
 
     private List<Asistencia> convertAsistenciaLista(List<AsistenciaUi> asistenciaUiList) {

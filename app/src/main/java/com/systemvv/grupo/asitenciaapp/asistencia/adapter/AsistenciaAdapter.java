@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import com.systemvv.grupo.asitenciaapp.R;
 import com.evrencoskun.tableview.adapter.AbstractTableAdapter;
 import com.evrencoskun.tableview.adapter.recyclerview.holder.AbstractViewHolder;
@@ -19,6 +20,9 @@ import com.systemvv.grupo.asitenciaapp.asistencia.adapter.holder.columnas.Column
 import com.systemvv.grupo.asitenciaapp.asistencia.adapter.holder.columnas.ColumnaTipoPresenteHolder;
 import com.systemvv.grupo.asitenciaapp.asistencia.adapter.holder.columnas.ColumnaTipoTardeHolder;
 import com.systemvv.grupo.asitenciaapp.asistencia.adapter.holder.filas.FilasAsistenciaAlumnosHolder;
+import com.systemvv.grupo.asitenciaapp.asistencia.entidad.Alumnos;
+import com.systemvv.grupo.asitenciaapp.asistencia.entidad.Asistencia;
+import com.systemvv.grupo.asitenciaapp.asistencia.entidad.MotivoAsistencia;
 import com.systemvv.grupo.asitenciaapp.cursos.entidad.AlumnosUi;
 import com.systemvv.grupo.asitenciaapp.cursos.entidad.AsistenciaUi;
 import com.systemvv.grupo.asitenciaapp.cursos.entidad.MotivosAsistenciaUi;
@@ -50,7 +54,7 @@ public class AsistenciaAdapter extends AbstractTableAdapter<ColumnaCabeceraAsist
     @Override
     public int getColumnHeaderItemViewType(int position) {
         ColumnaCabeceraAsistencia columnaCabecera = mColumnHeaderItems.get(position);
-        if (columnaCabecera instanceof MotivosAsistenciaUi) {
+        /*if (columnaCabecera instanceof MotivosAsistenciaUi) {
             MotivosAsistenciaUi tipoAsistencia = (MotivosAsistenciaUi) columnaCabecera;
             if (tipoAsistencia == null) return 0;
             if (tipoAsistencia.getTipoMotivo() == MotivosAsistenciaUi.TIPO_ASISTENCIA_PUNTUAL) {
@@ -60,6 +64,17 @@ public class AsistenciaAdapter extends AbstractTableAdapter<ColumnaCabeceraAsist
             } else if (tipoAsistencia.getTipoMotivo() == MotivosAsistenciaUi.TIPO_ASISTENCIA_FALTO) {
                 return COLUMNAS_SELECTOR_TIPO_ASISTENCIA_FALTO;
             }
+        }*/
+        if (columnaCabecera instanceof MotivoAsistencia) {
+            MotivoAsistencia motivoAsistencia = (MotivoAsistencia) columnaCabecera;
+            if (motivoAsistencia == null) return 0;
+            if (motivoAsistencia.getTipoMotivo() == MotivosAsistenciaUi.TIPO_ASISTENCIA_PUNTUAL) {
+                return COLUMNAS_SELECTOR_TIPO_ASISTENCIA_PRESENTE;
+            } else if (motivoAsistencia.getTipoMotivo() == MotivosAsistenciaUi.TIPO_ASISTENCIA_TARDE) {
+                return COLUMNAS_SELECTOR_TIPO_ASISTENCIA_TARDE;
+            } else if (motivoAsistencia.getTipoMotivo() == MotivosAsistenciaUi.TIPO_ASISTENCIA_FALTO) {
+                return COLUMNAS_SELECTOR_TIPO_ASISTENCIA_FALTO;
+            }
         }
         return 0;
     }
@@ -67,7 +82,10 @@ public class AsistenciaAdapter extends AbstractTableAdapter<ColumnaCabeceraAsist
     @Override
     public int getRowHeaderItemViewType(int position) {
         FilaCabeceraAsistencia filaCabecera = mRowHeaderItems.get(position);
-        if (filaCabecera instanceof AlumnosUi) {
+        /*if (filaCabecera instanceof AlumnosUi) {
+            return FILAS_ALUMNO;
+        }*/
+        if (filaCabecera instanceof Alumnos) {
             return FILAS_ALUMNO;
         }
         return 0;
@@ -78,38 +96,34 @@ public class AsistenciaAdapter extends AbstractTableAdapter<ColumnaCabeceraAsist
         int cantidad = mCellItems.size();
         if (cantidad != 0) {
             CeldasAsistencia cell = mCellItems.get(0).get(position);
-            if (cell instanceof AsistenciaUi) {
-                AsistenciaUi asistenciaUi = (AsistenciaUi) cell;
-
+            if (cell instanceof Asistencia) {
+                Asistencia asistenciaUi = (Asistencia) cell;
                 if (asistenciaUi.getJustificacion() == TIPO_ASISTENCIA_CELDAS_ALUMNOS_PUNTUAL) {
-                    Log.d(TAG,"TIPO_ASISTENCIA_CELDAS_ALUMNOS_PUNTUAL : " );
+                    Log.d(TAG, "TIPO_ASISTENCIA_CELDAS_ALUMNOS_PUNTUAL : ");
                     return TIPO_ASISTENCIA_CELDAS_ALUMNOS_PUNTUAL;
                 } else if (asistenciaUi.getJustificacion() == TIPO_ASISTENCIA_CELDAS_ALUMNOS_TARDE) {
-                    Log.d(TAG,"TIPO_ASISTENCIA_CELDAS_ALUMNOS_TARDE : " );
+                    Log.d(TAG, "TIPO_ASISTENCIA_CELDAS_ALUMNOS_TARDE : ");
                     return TIPO_ASISTENCIA_CELDAS_ALUMNOS_TARDE;
                 } else if (asistenciaUi.getJustificacion() == TIPO_ASISTENCIA_CELDAS_ALUMNOS_FALTO) {
-                    Log.d(TAG,"TIPO_ASISTENCIA_CELDAS_ALUMNOS_FALTO : " );
+                    Log.d(TAG, "TIPO_ASISTENCIA_CELDAS_ALUMNOS_FALTO : ");
                     return TIPO_ASISTENCIA_CELDAS_ALUMNOS_FALTO;
                 }
-
-               /* AlumnosUi alumnosUi = asistenciaUi.getAlumnosUi();
-                Log.d(TAG,"getCellItemViewTypeTipo : "+alumnosUi.getTipoAsistencia()
-                +"AlumnoNombre: " +alumnosUi.getNombre());
-                if (alumnosUi == null) return 0;
-                if (alumnosUi.getTipoAsistencia() == TIPO_ASISTENCIA_CELDAS_ALUMNOS_PUNTUAL) {
-                    Log.d(TAG,"TIPO_ASISTENCIA_CELDAS_ALUMNOS_PUNTUAL : " );
-                    return TIPO_ASISTENCIA_CELDAS_ALUMNOS_PUNTUAL;
-                } else if (alumnosUi.getTipoAsistencia() == TIPO_ASISTENCIA_CELDAS_ALUMNOS_TARDE) {
-                    Log.d(TAG,"TIPO_ASISTENCIA_CELDAS_ALUMNOS_TARDE : " );
-                    return TIPO_ASISTENCIA_CELDAS_ALUMNOS_TARDE;
-                } else if (alumnosUi.getTipoAsistencia() == TIPO_ASISTENCIA_CELDAS_ALUMNOS_TARDE_JUSTIFICADO) {
-                    Log.d(TAG,"TIPO_ASISTENCIA_CELDAS_ALUMNOS_TARDE_JUSTIFICADO : " );
-                    return TIPO_ASISTENCIA_CELDAS_ALUMNOS_TARDE_JUSTIFICADO;
-                } else if (alumnosUi.getTipoAsistencia() == TIPO_ASISTENCIA_CELDAS_ALUMNOS_FALTO) {
-                    Log.d(TAG,"TIPO_ASISTENCIA_CELDAS_ALUMNOS_FALTO : " );
-                    return TIPO_ASISTENCIA_CELDAS_ALUMNOS_FALTO;
-                }*/
             }
+
+
+            /*if (cell instanceof AsistenciaUi) {
+                AsistenciaUi asistenciaUi = (AsistenciaUi) cell;
+                if (asistenciaUi.getJustificacion() == TIPO_ASISTENCIA_CELDAS_ALUMNOS_PUNTUAL) {
+                    Log.d(TAG, "TIPO_ASISTENCIA_CELDAS_ALUMNOS_PUNTUAL : ");
+                    return TIPO_ASISTENCIA_CELDAS_ALUMNOS_PUNTUAL;
+                } else if (asistenciaUi.getJustificacion() == TIPO_ASISTENCIA_CELDAS_ALUMNOS_TARDE) {
+                    Log.d(TAG, "TIPO_ASISTENCIA_CELDAS_ALUMNOS_TARDE : ");
+                    return TIPO_ASISTENCIA_CELDAS_ALUMNOS_TARDE;
+                } else if (asistenciaUi.getJustificacion() == TIPO_ASISTENCIA_CELDAS_ALUMNOS_FALTO) {
+                    Log.d(TAG, "TIPO_ASISTENCIA_CELDAS_ALUMNOS_FALTO : ");
+                    return TIPO_ASISTENCIA_CELDAS_ALUMNOS_FALTO;
+                }
+            }*/
         }
         return 0;
     }
@@ -138,7 +152,7 @@ public class AsistenciaAdapter extends AbstractTableAdapter<ColumnaCabeceraAsist
 
     @Override
     public void onBindCellViewHolder(AbstractViewHolder holder, Object cellItemModel, int columnPosition, int rowPosition) {
-        if (holder instanceof CeldasAsistenciaAlumnoPuntualHolder && cellItemModel instanceof AsistenciaUi) {
+       /* if (holder instanceof CeldasAsistenciaAlumnoPuntualHolder && cellItemModel instanceof AsistenciaUi) {
             AsistenciaUi asistencia = (AsistenciaUi) cellItemModel;
             CeldasAsistenciaAlumnoPuntualHolder puntualHolder = (CeldasAsistenciaAlumnoPuntualHolder) holder;
             puntualHolder.bind(asistencia);
@@ -152,6 +166,20 @@ public class AsistenciaAdapter extends AbstractTableAdapter<ColumnaCabeceraAsist
             justificadoHolder.bind(asistencia);
         } else if (holder instanceof CeldasAsistenciaAlumnoFaltoHolder && cellItemModel instanceof AsistenciaUi) {
             AsistenciaUi asistencia = (AsistenciaUi) cellItemModel;
+            CeldasAsistenciaAlumnoFaltoHolder faltoHolder = (CeldasAsistenciaAlumnoFaltoHolder) holder;
+            faltoHolder.bind(asistencia);
+        }*/
+
+        if (holder instanceof CeldasAsistenciaAlumnoPuntualHolder && cellItemModel instanceof Asistencia) {
+            Asistencia asistencia = (Asistencia) cellItemModel;
+            CeldasAsistenciaAlumnoPuntualHolder puntualHolder = (CeldasAsistenciaAlumnoPuntualHolder) holder;
+            puntualHolder.bind(asistencia);
+        } else if (holder instanceof CeldasAsistenciaAlumnoTardeHolder && cellItemModel instanceof Asistencia) {
+            Asistencia asistencia = (Asistencia) cellItemModel;
+            CeldasAsistenciaAlumnoTardeHolder tardeHolder = (CeldasAsistenciaAlumnoTardeHolder) holder;
+            tardeHolder.bind(asistencia);
+        }  else if (holder instanceof CeldasAsistenciaAlumnoFaltoHolder && cellItemModel instanceof Asistencia) {
+            Asistencia asistencia = (Asistencia) cellItemModel;
             CeldasAsistenciaAlumnoFaltoHolder faltoHolder = (CeldasAsistenciaAlumnoFaltoHolder) holder;
             faltoHolder.bind(asistencia);
         }
@@ -179,7 +207,7 @@ public class AsistenciaAdapter extends AbstractTableAdapter<ColumnaCabeceraAsist
 
     @Override
     public void onBindColumnHeaderViewHolder(AbstractViewHolder holder, Object columnHeaderItemModel, int columnPosition) {
-        if (holder instanceof ColumnaTipoPresenteHolder && columnHeaderItemModel instanceof MotivosAsistenciaUi) {
+      /*  if (holder instanceof ColumnaTipoPresenteHolder && columnHeaderItemModel instanceof MotivosAsistenciaUi) {
             MotivosAsistenciaUi motivosAsistenciaUi = (MotivosAsistenciaUi) columnHeaderItemModel;
             ColumnaTipoPresenteHolder puntualHolder = (ColumnaTipoPresenteHolder) holder;
             puntualHolder.bind(motivosAsistenciaUi);
@@ -189,6 +217,20 @@ public class AsistenciaAdapter extends AbstractTableAdapter<ColumnaCabeceraAsist
             tardeHolder.bind(motivosAsistenciaUi);
         } else if (holder instanceof ColumnaTipoFaltoHolder && columnHeaderItemModel instanceof MotivosAsistenciaUi) {
             MotivosAsistenciaUi motivosAsistenciaUi = (MotivosAsistenciaUi) columnHeaderItemModel;
+            ColumnaTipoFaltoHolder faltoHolder = (ColumnaTipoFaltoHolder) holder;
+            faltoHolder.bind(motivosAsistenciaUi);
+        }*/
+
+        if (holder instanceof ColumnaTipoPresenteHolder && columnHeaderItemModel instanceof MotivoAsistencia) {
+            MotivoAsistencia motivosAsistenciaUi = (MotivoAsistencia) columnHeaderItemModel;
+            ColumnaTipoPresenteHolder puntualHolder = (ColumnaTipoPresenteHolder) holder;
+            puntualHolder.bind(motivosAsistenciaUi);
+        } else if (holder instanceof ColumnaTipoTardeHolder && columnHeaderItemModel instanceof MotivoAsistencia) {
+            MotivoAsistencia motivosAsistenciaUi = (MotivoAsistencia) columnHeaderItemModel;
+            ColumnaTipoTardeHolder tardeHolder = (ColumnaTipoTardeHolder) holder;
+            tardeHolder.bind(motivosAsistenciaUi);
+        } else if (holder instanceof ColumnaTipoFaltoHolder && columnHeaderItemModel instanceof MotivoAsistencia) {
+            MotivoAsistencia motivosAsistenciaUi = (MotivoAsistencia) columnHeaderItemModel;
             ColumnaTipoFaltoHolder faltoHolder = (ColumnaTipoFaltoHolder) holder;
             faltoHolder.bind(motivosAsistenciaUi);
         }
@@ -210,8 +252,14 @@ public class AsistenciaAdapter extends AbstractTableAdapter<ColumnaCabeceraAsist
 
     @Override
     public void onBindRowHeaderViewHolder(AbstractViewHolder holder, Object rowHeaderItemModel, int rowPosition) {
-        if (holder instanceof FilasAsistenciaAlumnosHolder && rowHeaderItemModel instanceof AlumnosUi) {
+        /*if (holder instanceof FilasAsistenciaAlumnosHolder && rowHeaderItemModel instanceof AlumnosUi) {
             AlumnosUi alumnosUi = (AlumnosUi) rowHeaderItemModel;
+            FilasAsistenciaAlumnosHolder alumnosHolder = (FilasAsistenciaAlumnosHolder) holder;
+            alumnosHolder.bind(alumnosUi);
+        }*/
+
+        if (holder instanceof FilasAsistenciaAlumnosHolder && rowHeaderItemModel instanceof Alumnos) {
+            Alumnos alumnosUi = (Alumnos) rowHeaderItemModel;
             FilasAsistenciaAlumnosHolder alumnosHolder = (FilasAsistenciaAlumnosHolder) holder;
             alumnosHolder.bind(alumnosUi);
         }

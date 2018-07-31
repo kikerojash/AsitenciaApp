@@ -36,6 +36,7 @@ import com.systemvv.grupo.asitenciaapp.asistencia.dataSource.remote.ControlAsist
 import com.systemvv.grupo.asitenciaapp.asistencia.dialog.IncidenciaDialog;
 import com.systemvv.grupo.asitenciaapp.asistencia.useCase.GuardarAsistenciaLista;
 import com.systemvv.grupo.asitenciaapp.asistencia.useCase.GuardarAsistenciaListaHoraFin;
+import com.systemvv.grupo.asitenciaapp.asistencia.useCase.ObtenerListaAlumnos;
 import com.systemvv.grupo.asitenciaapp.asistencia.useCase.ObtenerListaAsistencia;
 import com.systemvv.grupo.asitenciaapp.asistencia.useCase.ValidarFechaRegistroAsistencia;
 import com.systemvv.grupo.asitenciaapp.base.UseCaseHandler;
@@ -101,7 +102,8 @@ public class ControlAsistenciaActivity extends BaseActivity<ControlAsistenciaVie
                 new GuardarAsistenciaLista(repository),
                 new ValidarFechaRegistroAsistencia(repository),
                 new ObtenerListaAsistencia(repository),
-                new GuardarAsistenciaListaHoraFin(repository));
+                new GuardarAsistenciaListaHoraFin(repository),
+                new ObtenerListaAlumnos(repository));
     }
 
     @Override

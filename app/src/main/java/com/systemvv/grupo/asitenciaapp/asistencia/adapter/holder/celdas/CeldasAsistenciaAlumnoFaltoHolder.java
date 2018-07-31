@@ -6,6 +6,7 @@ import android.widget.TextView;
 
 import com.evrencoskun.tableview.adapter.recyclerview.holder.AbstractViewHolder;
 import com.systemvv.grupo.asitenciaapp.R;
+import com.systemvv.grupo.asitenciaapp.asistencia.entidad.Asistencia;
 import com.systemvv.grupo.asitenciaapp.cursos.entidad.AsistenciaUi;
 
 import butterknife.BindView;
@@ -23,7 +24,7 @@ public class CeldasAsistenciaAlumnoFaltoHolder extends AbstractViewHolder {
         ButterKnife.bind(this, itemView);
     }
 
-    public void bind(AsistenciaUi asistencia) {
+    public void bind(Asistencia asistencia) {
         asistencia.setJustificacion(4);
         textViewDatos.setText("X");
         fondo.getLayoutParams().width = ConstraintLayout.LayoutParams.MATCH_PARENT;

@@ -1,6 +1,8 @@
 package com.systemvv.grupo.asitenciaapp.asistencia.entidad;
 
-public class Asistencia {
+import com.systemvv.grupo.asitenciaapp.asistencia.adapter.estructura.CeldasAsistencia;
+
+public class Asistencia extends CeldasAsistencia {
 
     public enum TipoAsistencia {ASISTENCIA_TARDE, ASISTENCIA_TARDE_JUSTIFICADA, ASISTENCIA_FALTO, ASISTENCIA_FALTO_JUSTIFICADA}
 

@@ -6,6 +6,7 @@ import android.widget.TextView;
 
 import com.evrencoskun.tableview.adapter.recyclerview.holder.AbstractViewHolder;
 import com.systemvv.grupo.asitenciaapp.R;
+import com.systemvv.grupo.asitenciaapp.asistencia.entidad.MotivoAsistencia;
 import com.systemvv.grupo.asitenciaapp.cursos.entidad.MotivosAsistenciaUi;
 
 import butterknife.BindView;
@@ -22,7 +23,7 @@ public class ColumnaTipoFaltoHolder extends AbstractViewHolder {
         ButterKnife.bind(this,itemView);
     }
 
-    public void bind(MotivosAsistenciaUi motivosAsistenciaUi) {
+    public void bind(MotivoAsistencia motivosAsistenciaUi) {
         textViewTitulo.setText("Ausente");
         fondo.setBackgroundColor(itemView.getResources().getColor(R.color.md_red_A400));
       //  fondo.getLayoutParams().width = ConstraintLayout.LayoutParams.MATCH_PARENT;

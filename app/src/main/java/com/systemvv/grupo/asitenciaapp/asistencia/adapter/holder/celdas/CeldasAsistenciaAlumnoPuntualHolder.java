@@ -6,6 +6,7 @@ import android.widget.TextView;
 
 import com.evrencoskun.tableview.adapter.recyclerview.holder.AbstractViewHolder;
 import com.systemvv.grupo.asitenciaapp.R;
+import com.systemvv.grupo.asitenciaapp.asistencia.entidad.Asistencia;
 import com.systemvv.grupo.asitenciaapp.cursos.entidad.AsistenciaUi;
 
 import butterknife.BindView;
@@ -16,14 +17,14 @@ public class CeldasAsistenciaAlumnoPuntualHolder extends AbstractViewHolder {
     TextView textViewDatos;
     @BindView(R.id.root)
     ConstraintLayout fondo;
-    AsistenciaUi asistenciaUi;
+    Asistencia asistenciaUi;
 
     public CeldasAsistenciaAlumnoPuntualHolder(View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);
     }
 
-    public void bind(AsistenciaUi asistencia) {
+    public void bind(Asistencia asistencia) {
         this.asistenciaUi = asistencia;
         textViewDatos.setText("X");
         fondo.getLayoutParams().width = ConstraintLayout.LayoutParams.MATCH_PARENT;
@@ -34,7 +35,7 @@ public class CeldasAsistenciaAlumnoPuntualHolder extends AbstractViewHolder {
         }
     }
 
-    public AsistenciaUi obtenerAsistencia(){
+    /*public AsistenciaUi obtenerAsistencia(){
         return asistenciaUi;
-    }
+    }*/
 }

@@ -1,7 +1,9 @@
 package com.systemvv.grupo.asitenciaapp.asistencia.dataSource;
 
 import com.systemvv.grupo.asitenciaapp.asistencia.dataSource.remote.ControlAsistenciaRemote;
+import com.systemvv.grupo.asitenciaapp.asistencia.entidad.Alumnos;
 import com.systemvv.grupo.asitenciaapp.cursos.entidad.AsistenciaUi;
+import com.systemvv.grupo.asitenciaapp.cursos.entidad.CursoUi;
 import com.systemvv.grupo.asitenciaapp.fire.entidad.Asistencia;
 
 import java.util.List;
@@ -32,5 +34,10 @@ public class ControlAsistenciaRepository implements ControlAsistenciaDataSource 
     @Override
     public void onValidarFechaRegistroAsistencia(String fecha, ObjectCallbackSuccess<Boolean> callbackSuccess) {
         asistenciaRemote.onValidarFechaRegistroAsistencia(fecha,callbackSuccess);
+    }
+
+    @Override
+    public void onObtenerAlumnosLista(CursoUi cursoUi, ObjectCallbackSuccess<List<Alumnos>> listObjectCallbackSuccess) {
+        asistenciaRemote.onObtenerAlumnosLista(cursoUi, listObjectCallbackSuccess);
     }
 }

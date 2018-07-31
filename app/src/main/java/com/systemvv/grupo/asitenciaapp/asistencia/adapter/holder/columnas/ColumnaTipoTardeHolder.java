@@ -6,6 +6,7 @@ import android.widget.TextView;
 
 import com.evrencoskun.tableview.adapter.recyclerview.holder.AbstractViewHolder;
 import com.systemvv.grupo.asitenciaapp.R;
+import com.systemvv.grupo.asitenciaapp.asistencia.entidad.MotivoAsistencia;
 import com.systemvv.grupo.asitenciaapp.cursos.entidad.MotivosAsistenciaUi;
 
 import butterknife.BindView;
@@ -22,7 +23,7 @@ public class ColumnaTipoTardeHolder extends AbstractViewHolder {
         ButterKnife.bind(this,itemView);
     }
 
-    public void bind(MotivosAsistenciaUi motivosAsistenciaUi) {
+    public void bind(MotivoAsistencia motivosAsistenciaUi) {
         textViewTitulo.setText("Tardanza");
         fondo.setBackgroundColor(itemView.getResources().getColor(R.color.md_yellow_900));
       //  fondo.getLayoutParams().width = ConstraintLayout.LayoutParams.MATCH_PARENT;

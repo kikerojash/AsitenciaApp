@@ -8,6 +8,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.evrencoskun.tableview.adapter.recyclerview.holder.AbstractViewHolder;
 import com.systemvv.grupo.asitenciaapp.R;
+import com.systemvv.grupo.asitenciaapp.asistencia.entidad.Alumnos;
 import com.systemvv.grupo.asitenciaapp.cursos.entidad.AlumnosUi;
 
 import butterknife.BindView;
@@ -29,7 +30,7 @@ public class FilasAsistenciaAlumnosHolder extends AbstractViewHolder {
         ButterKnife.bind(this, itemView);
     }
 
-    public void bind(AlumnosUi alumnosUi) {
+    public void bind(Alumnos alumnosUi) {
         textViewNombre.setText(alumnosUi.getNombre());
         textViewApellidos.setText(alumnosUi.getApellido());
         validacionEstadosaludAlumno(alumnosUi.getTipoPadecimiento());
