@@ -83,12 +83,14 @@ public class ControlAsistenciaPresenterImpl extends BaseActivityPresenterImpl<Co
         super.setExtras(extras);
         if (extras == null) return;
         this.cursoUi = Parcels.unwrap(extras.getParcelable("cursoUi"));
+        initTablaInstancia();
     }
 
     @Override
     public void onStart() {
         super.onStart();
         if (view != null) view.mostrarInformacionBasica(cursoUi);
+        // initView();
     }
 
  /*   private void initVistas() {
@@ -104,22 +106,36 @@ public class ControlAsistenciaPresenterImpl extends BaseActivityPresenterImpl<Co
     List<AsistenciaUi> guardandoListasAsistencias;
 
     List<Alumnos> alumnosList;
+    List<MotivoAsistencia> motivoAsistenciaList;
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.d(TAG, "ReSumeealumnosList :" + alumnosList.size() + " asdasd " + motivoAsistenciaList.size());
+
+        if (view != null) view.mostrarListaTablas(columnHeaderList, rowHeaderList, cellsList);
+    }
+
+    private void initTablaInstancia() {
+        columnHeaderList = new ArrayList<>();
+        cellsList = new ArrayList<>();
+        rowHeaderList = new ArrayList<>();
+        celdasAsistenciasColumnaPresentes = new ArrayList<>();
+        celdasAsistencias = new ArrayList<>();
+        guardandoListasAsistencias = new ArrayList<>();
+
+        alumnosList = new ArrayList<>();
+        initObtenerListaAlumnos(cursoUi);
+        initObtenerListaMotivosAsistencia();
+    }
 
     @Override
     public void onCreate() {
         // initVistas();
 
+        Log.d(TAG, "onCreatealumnosList :" + alumnosList.size() + " asdasd " + motivoAsistenciaList.size());
 
-        columnHeaderList = new ArrayList<>();
-        cellsList = new ArrayList<>();
-        rowHeaderList = new ArrayList<>();
-        alumnosList = new ArrayList<>();
 
-        celdasAsistenciasColumnaPresentes = new ArrayList<>();
-        celdasAsistencias = new ArrayList<>();
-        guardandoListasAsistencias = new ArrayList<>();
-
-        initObtenerListaAlumnos(cursoUi);
 //        columnHeaderList.addAll(motivoAsistenciaList());
 //        rowHeaderList.addAll(alumnosList);
 //        cellsList.addAll(getCellListForSortingTest());
@@ -135,7 +151,23 @@ public class ControlAsistenciaPresenterImpl extends BaseActivityPresenterImpl<Co
         //if (view != null) view.mostrarListaTablas(columnHeaderList, rowHeaderList, cellsList);
     }
 
-   // List<MotivoAsistencia> motivoAsistencias;
+    private void initObtenerListaMotivosAsistencia() {
+        motivoAsistenciaList = new ArrayList<>();
+        motivoAsistenciaList.addAll(motivoAsistenciaList());
+    }
+
+    private void initView() {
+
+        Log.d(TAG, "OnstartalumnosList :" + alumnosList.size() + " asdasd " + motivoAsistenciaList.size());
+
+
+        columnHeaderList.addAll(motivoAsistenciaList);
+        rowHeaderList.addAll(alumnosList);
+        cellsList.addAll(getCellListForSortingTest());
+
+    }
+
+    // List<MotivoAsistencia> motivoAsistencias;
 
     private List<MotivoAsistencia> motivoAsistenciaList() {
         List<MotivoAsistencia> motivoAsistencias = new ArrayList<>();
@@ -156,16 +188,19 @@ public class ControlAsistenciaPresenterImpl extends BaseActivityPresenterImpl<Co
     }
 
     private void initObtenerListaAlumnos(CursoUi cursoUi) {
+//        alumnosList = new ArrayList<>();
         handler.execute(obtenerListaAlumnos, new ObtenerListaAlumnos.RequestValues(cursoUi),
                 new UseCase.UseCaseCallback<ObtenerListaAlumnos.ResponseValue>() {
                     @Override
                     public void onSuccess(ObtenerListaAlumnos.ResponseValue response) {
-                        alumnosList = response.getAlumnosList();
+                        Log.d(TAG, "onSuccess : " + response.getAlumnosList().size());
+                        /*for (Alumnos alumnos : response.getAlumnosList()) {
+                            alumnosList.add(alumnos);
+                        }*/
+                        alumnosList.addAll(response.getAlumnosList());
 
-                        columnHeaderList.addAll(motivoAsistenciaList());
-                        rowHeaderList.addAll(alumnosList);
-                        cellsList.addAll(getCellListForSortingTest());
-                        if (view != null) view.mostrarListaTablas(columnHeaderList, rowHeaderList, cellsList);
+                        if(alumnosList.size()>0)initLoading(alumnosList);
+                        Log.d(TAG, "onSuccessalumnosList : " + alumnosList.size());
                     }
 
                     @Override
@@ -173,7 +208,26 @@ public class ControlAsistenciaPresenterImpl extends BaseActivityPresenterImpl<Co
 
                     }
                 });
+        validateLlega(alumnosList);
     }
+
+    private void initLoading(List<Alumnos> alumnosList) {
+        Log.d(TAG,"initLoading :" + alumnosList.size());
+    }
+
+    private void validateLlega(List<Alumnos> alumnosList) {
+        if(alumnosList.size()>0){
+            Log.d(TAG,"MAYO > 0");
+            Log.d(TAG, "alumnosList :" + alumnosList.size() + " asdasd " + motivoAsistenciaList.size());
+        }else{
+            Log.d(TAG,"MAYO < 0");
+        }
+        /*columnHeaderList.addAll(motivoAsistenciaList);
+        rowHeaderList.addAll(alumnosList);
+        cellsList.addAll(getCellListForSortingTest());
+        if (view != null) view.mostrarListaTablas(columnHeaderList, rowHeaderList, cellsList);*/
+    }
+
 
 //    private List<List<CeldasAsistencia>> getCellListForSortingTest() {
 //        List<List<CeldasAsistencia>> list = new ArrayList<>();
@@ -228,7 +282,7 @@ public class ControlAsistenciaPresenterImpl extends BaseActivityPresenterImpl<Co
             Log.d(TAG, "alumnosUi : " + alumnosUi.getNombre());
             List<CeldasAsistencia> cellList = new ArrayList<>();
             Log.d(TAG, "motivoAsistencias : " + motivoAsistenciaList().size());
-            for (int j = 0; j < motivoAsistenciaList().size(); j++) {
+            for (int j = 0; j < motivoAsistenciaList.size(); j++) {
                 MotivoAsistencia motivosAsistenciaUi = motivoAsistenciaList().get(j);
 
                 //Log.d(TAG, "MotivoAsistencia : " + motivosAsistenciaUi.getAsistenciaUiList().size());
@@ -281,7 +335,7 @@ public class ControlAsistenciaPresenterImpl extends BaseActivityPresenterImpl<Co
 
     @Override
     public void onClickColumnaCabecera(@NonNull RecyclerView.ViewHolder holder, List<CeldasAsistencia> clickColumnaList) {
-        if (clickColumn == false) {
+      /*  if (clickColumn == false) {
             if (holder instanceof ColumnaTipoPresenteHolder) {
                 clickColumn = true;
 
@@ -296,14 +350,14 @@ public class ControlAsistenciaPresenterImpl extends BaseActivityPresenterImpl<Co
             if (view != null) view.actualizarDatosCambiadosTabla();
         } else {
             Log.d(TAG, "no hacer nada");
-        }
+        }*/
     }
 
     List<CeldasAsistencia> celdasAsistencias;
 
     @Override
     public void onClickCeldas(@NonNull RecyclerView.ViewHolder holder, AsistenciaUi asistenciaUi, List<CeldasAsistencia> clickCeldasList) {
-        if (clickColumn == true) {
+       /* if (clickColumn == true) {
             if (holder instanceof CeldasAsistenciaAlumnoPuntualHolder) {
                 asistenciaUi.setTipoAsistencia("PUNTUAL");
                 pintandoCeldas(asistenciaUi, clickCeldasList);
@@ -317,12 +371,12 @@ public class ControlAsistenciaPresenterImpl extends BaseActivityPresenterImpl<Co
             if (view != null) view.actualizarDatosCambiadosTabla();
         } else {
             //Toast.makeText(getApplicationContext(), "Seleccione todos los items primero ", Toast.LENGTH_SHORT).show();
-        }
+        }*/
     }
 
     @Override
     public void onGuardarEntrada() {
-        List<AsistenciaUi> guardandoListasAsistencias = new ArrayList<>();
+        /*List<AsistenciaUi> guardandoListasAsistencias = new ArrayList<>();
 
         DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
         DateFormat dfHours = new SimpleDateFormat("HH:mm aaa");
@@ -352,7 +406,7 @@ public class ControlAsistenciaPresenterImpl extends BaseActivityPresenterImpl<Co
             }
         }
         Log.d(TAG, "CONTADORFINAL : " + guardandoListasAsistencias.size());
-        validarExisteFecha(date, guardandoListasAsistencias);
+        validarExisteFecha(date, guardandoListasAsistencias);*/
         //initGuardarListaAsistencia(guardandoListasAsistencias);
     }
 
@@ -443,7 +497,7 @@ public class ControlAsistenciaPresenterImpl extends BaseActivityPresenterImpl<Co
     }
 
     private void pintandoCeldas(AsistenciaUi asistenciaUi, List<CeldasAsistencia> celdasList) {
-        celdasAsistencias.addAll(celdasList);
+       /*celdasAsistencias.addAll(celdasList);
         for (int i = 0; i < celdasList.size(); i++) {
             AsistenciaUi asistencia = (AsistenciaUi) celdasList.get(i);
             if (asistencia.isPintar()) {
@@ -451,7 +505,7 @@ public class ControlAsistenciaPresenterImpl extends BaseActivityPresenterImpl<Co
                 return;
             }
         }
-        asistenciaUi.setPintar(true);
+        asistenciaUi.setPintar(true);*/
     }
 
     private void remplazarItem(AsistenciaUi asistenciaAnterior, AsistenciaUi asistenciaNueva) {

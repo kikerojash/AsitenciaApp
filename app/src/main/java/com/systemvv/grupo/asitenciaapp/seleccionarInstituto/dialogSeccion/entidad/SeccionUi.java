@@ -9,10 +9,10 @@ import java.util.Objects;
 @Parcel
 public class SeccionUi {
 
-    private String keySeccion;
-    private String grado;
-    private String seccion;
-    private InstitutoUi institutoUi;
+     String keySeccion;
+     String grado;
+     String seccion;
+     InstitutoUi institutoUi;
 
     public SeccionUi() {
     }

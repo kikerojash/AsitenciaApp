@@ -2,15 +2,25 @@ package com.systemvv.grupo.asitenciaapp.asistencia.entidad;
 
 import com.systemvv.grupo.asitenciaapp.asistencia.adapter.estructura.FilaCabeceraAsistencia;
 
+import java.util.List;
+
 public class Alumnos extends FilaCabeceraAsistencia {
 
-    public int conteo;
-    public String nombre;
-    public String apellido;
-    public String foto;
+    public enum AlumnoMotivoAsistenciaColumna {COLUMNA_PRESENTE, COLUMNA_TARDE, COLUMNA_FALTO,COLUMNA_DEFECTO}
 
-    public int tipoAsistencia;
-    public int tipoPadecimiento;
+    private int conteo;
+    private String nombre;
+    private String apellido;
+    private String foto;
+
+    private int tipoAsistencia;
+    private int tipoPadecimiento;
+
+    private AlumnoMotivoAsistenciaColumna alumnoMotivoAsistenciaColumna;
+
+    private Asistencia asistencia;
+    private List<MotivoAsistencia> motivoAsistenciaList;
+    private MotivoAsistencia motivoAsistencia;
 
 
     public Alumnos() {
@@ -21,6 +31,7 @@ public class Alumnos extends FilaCabeceraAsistencia {
         this.nombre = nombre;
         this.apellido = apellido;
         this.foto = foto;
+       // alumnoMotivoAsistenciaColumna = AlumnoMotivoAsistenciaColumna.COLUMNA_PRESENTE;
 
     }
 
@@ -70,5 +81,37 @@ public class Alumnos extends FilaCabeceraAsistencia {
 
     public void setTipoPadecimiento(int tipoPadecimiento) {
         this.tipoPadecimiento = tipoPadecimiento;
+    }
+
+    public AlumnoMotivoAsistenciaColumna getAlumnoMotivoAsistenciaColumna() {
+        return alumnoMotivoAsistenciaColumna;
+    }
+
+    public void setAlumnoMotivoAsistenciaColumna(AlumnoMotivoAsistenciaColumna alumnoMotivoAsistenciaColumna) {
+        this.alumnoMotivoAsistenciaColumna = alumnoMotivoAsistenciaColumna;
+    }
+
+    public Asistencia getAsistencia() {
+        return asistencia;
+    }
+
+    public void setAsistencia(Asistencia asistencia) {
+        this.asistencia = asistencia;
+    }
+
+    public List<MotivoAsistencia> getMotivoAsistenciaList() {
+        return motivoAsistenciaList;
+    }
+
+    public void setMotivoAsistenciaList(List<MotivoAsistencia> motivoAsistenciaList) {
+        this.motivoAsistenciaList = motivoAsistenciaList;
+    }
+
+    public MotivoAsistencia getMotivoAsistencia() {
+        return motivoAsistencia;
+    }
+
+    public void setMotivoAsistencia(MotivoAsistencia motivoAsistencia) {
+        this.motivoAsistencia = motivoAsistencia;
     }
 }

@@ -298,7 +298,7 @@ public class FireStore extends Fire {
                             for (QueryDocumentSnapshot document : task.getResult()) {
 
                                 String keyAlumno = (String) document.get("alumno_alu_id_alumno");
-                                mFirestore.collection(Constantes.NODO_ALUMNOS)
+                              /*  mFirestore.collection(Constantes.NODO_ALUMNOS)
                                         .whereEqualTo("keyAlumno", keyAlumno)
                                         .get()
                                         .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -320,6 +320,8 @@ public class FireStore extends Fire {
                                                         alumnos.setNombre(per_nombre);
                                                         alumnos.setApellido(per_apellido);
                                                         alumnos.setFoto(foto);
+                                                        alumnos.setTipoAsistencia(1);//Presente
+                                                        alumnos.setAlumnoMotivoAsistenciaColumna(Alumnos.AlumnoMotivoAsistenciaColumna.COLUMNA_PRESENTE);
                                                         alumnosList.add(alumnos);
                                                         Log.d(TAG, "ASDASDSADD " + document.getId() + " => " + document.getData());
 
@@ -328,7 +330,7 @@ public class FireStore extends Fire {
 
                                                 }
                                             }
-                                        });
+                                        });*/
                             }
                           //  listFireCallback.onSuccess(alumnosList);
                         } else {

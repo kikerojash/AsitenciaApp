@@ -88,7 +88,6 @@ public class CursoPresenterImpl extends BaseActivityPresenterImpl<CursoView> imp
 
         List<AsistenciaUi> asistenciaUiListPuntuales = new ArrayList<>();
         List<AsistenciaUi> asistenciaUiListTardes = new ArrayList<>();
-        List<AsistenciaUi> asistenciaUiListTardeJustificado = new ArrayList<>();
         List<AsistenciaUi> asistenciaUiListFaltaron = new ArrayList<>();
 
         List<MotivosAsistenciaUi> motivosAsistenciaUis = new ArrayList<>();
@@ -187,14 +186,7 @@ public class CursoPresenterImpl extends BaseActivityPresenterImpl<CursoView> imp
 
 
 
-      /*  MotivosAsistenciaUi motivosAsistenciaTardeJustificadoUi = new MotivosAsistenciaUi();
-        motivosAsistenciaTardeJustificadoUi.setTipoMotivo(MotivosAsistenciaUi.TIPO_ASISTENCIA_TARDE_JUSTIFICADO);
 
-        AsistenciaUi asistenciaTardeJustificado = new AsistenciaUi();
-        asistenciaTardeJustificado.setJustificacion(MotivosAsistenciaUi.TIPO_ASISTENCIA_TARDE_JUSTIFICADO);
-      //  asistenciaTardeJustificado.setTipasistencia(AsistenciaUi.TipoAsistencia.ASISTENCIA_TARDE);
-        asistenciaTardeJustificado.setTipoAsistencia("Justificado");
-        asistenciaTardeJustificado.setPintar(false);*/
 
         AlumnosUi alumnoRobertol = new AlumnosUi(9, "Roberto Manuel", "Perez Soza", "http://ilumina2photo.es/wp-content/uploads/2016/02/fotografo-infantil-barcelona-reportaje-fotos-ni%C3%B1os-campo-sesion-fotografica-estudio-profesional-008.jpg", null);
         alumnoRobertol.setTipoPadecimiento(0);

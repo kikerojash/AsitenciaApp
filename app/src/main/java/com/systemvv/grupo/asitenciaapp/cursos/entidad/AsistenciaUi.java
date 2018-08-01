@@ -6,20 +6,20 @@ import com.systemvv.grupo.asitenciaapp.asistencia.adapter.estructura.CeldasAsist
 import org.parceler.Parcel;
 
 @Parcel
-public class AsistenciaUi extends CeldasAsistencia {
+public class AsistenciaUi  {
 
     public enum TipoAsistencia {ASISTENCIA_TARDE, ASISTENCIA_TARDE_JUSTIFICADA, ASISTENCIA_FALTO, ASISTENCIA_FALTO_JUSTIFICADA}
 
-    public String tipoAsistencia;
-    public int justificacion;
-    public MotivosAsistenciaUi motivosAsistenciaUi;
-    public AlumnosUi alumnosUi;
-    public boolean pintar;
-    public TipoAsistencia tipasistencia;
+     String tipoAsistencia;
+     int justificacion;
+     MotivosAsistenciaUi motivosAsistenciaUi;
+     AlumnosUi alumnosUi;
+     boolean pintar;
+     TipoAsistencia tipasistencia;
 
-    public String fecha;
-    public String horaInicioCurso;
-    public String horaFinCurso;
+     String fecha;
+     String horaInicioCurso;
+     String horaFinCurso;
 
 
     public AsistenciaUi() {

@@ -54,6 +54,7 @@ public class AsistenciaAdapter extends AbstractTableAdapter<ColumnaCabeceraAsist
     @Override
     public int getColumnHeaderItemViewType(int position) {
         ColumnaCabeceraAsistencia columnaCabecera = mColumnHeaderItems.get(position);
+        Log.d(TAG,"mColumnHeaderItems : "+ mColumnHeaderItems.size());
         /*if (columnaCabecera instanceof MotivosAsistenciaUi) {
             MotivosAsistenciaUi tipoAsistencia = (MotivosAsistenciaUi) columnaCabecera;
             if (tipoAsistencia == null) return 0;
@@ -68,11 +69,11 @@ public class AsistenciaAdapter extends AbstractTableAdapter<ColumnaCabeceraAsist
         if (columnaCabecera instanceof MotivoAsistencia) {
             MotivoAsistencia motivoAsistencia = (MotivoAsistencia) columnaCabecera;
             if (motivoAsistencia == null) return 0;
-            if (motivoAsistencia.getTipoMotivo() == MotivosAsistenciaUi.TIPO_ASISTENCIA_PUNTUAL) {
+            if (motivoAsistencia.getTipoMotivo() == MotivoAsistencia.TIPO_ASISTENCIA_PUNTUAL) {
                 return COLUMNAS_SELECTOR_TIPO_ASISTENCIA_PRESENTE;
-            } else if (motivoAsistencia.getTipoMotivo() == MotivosAsistenciaUi.TIPO_ASISTENCIA_TARDE) {
+            } else if (motivoAsistencia.getTipoMotivo() == MotivoAsistencia.TIPO_ASISTENCIA_TARDE) {
                 return COLUMNAS_SELECTOR_TIPO_ASISTENCIA_TARDE;
-            } else if (motivoAsistencia.getTipoMotivo() == MotivosAsistenciaUi.TIPO_ASISTENCIA_FALTO) {
+            } else if (motivoAsistencia.getTipoMotivo() == MotivoAsistencia.TIPO_ASISTENCIA_FALTO) {
                 return COLUMNAS_SELECTOR_TIPO_ASISTENCIA_FALTO;
             }
         }

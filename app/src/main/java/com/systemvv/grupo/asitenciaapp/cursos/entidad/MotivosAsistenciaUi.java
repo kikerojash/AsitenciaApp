@@ -8,16 +8,16 @@ import org.parceler.Parcel;
 import java.util.List;
 
 @Parcel
-public class MotivosAsistenciaUi extends ColumnaCabeceraAsistencia {
+public class MotivosAsistenciaUi  {
 
     public static final int TIPO_ASISTENCIA_PUNTUAL = 1;
     public static final int TIPO_ASISTENCIA_TARDE = 2;
     public static final int TIPO_ASISTENCIA_TARDE_JUSTIFICADO = 3;
     public static final int TIPO_ASISTENCIA_FALTO = 4;
 
-    public int tipoMotivo;
-    public String justificacion;
-    public List<AsistenciaUi> asistenciaUiList;
+     int tipoMotivo;
+     String justificacion;
+     List<AsistenciaUi> asistenciaUiList;
 
 
     public MotivosAsistenciaUi() {

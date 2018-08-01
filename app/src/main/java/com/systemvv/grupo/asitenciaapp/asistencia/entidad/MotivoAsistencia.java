@@ -6,6 +6,13 @@ import java.util.List;
 
 public class MotivoAsistencia  extends ColumnaCabeceraAsistencia {
 
+
+    public static final int TIPO_ASISTENCIA_PUNTUAL = 1;
+    public static final int TIPO_ASISTENCIA_TARDE = 2;
+    public static final int TIPO_ASISTENCIA_TARDE_JUSTIFICADO = 3;
+    public static final int TIPO_ASISTENCIA_FALTO = 4;
+
+
     public int tipoMotivo;
     public String justificacion;
     public List<Asistencia> asistenciaUiList;

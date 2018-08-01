@@ -28,7 +28,7 @@ public class CeldasAsistenciaAlumnoTardeHolder extends AbstractViewHolder {
     public void bind(Asistencia asistencia) {
         this.asistenciaUi = asistencia;
         textViewDatos.setText("X");
-        fondo.getLayoutParams().width = ConstraintLayout.LayoutParams.MATCH_PARENT;
+        fondo.getLayoutParams().width = ConstraintLayout.LayoutParams.WRAP_CONTENT;
        // validacionPintar(asistencia);
         if (asistencia.isPintar()) {
             fondo.setBackgroundColor(itemView.getResources().getColor(R.color.md_orange_500));

@@ -6,15 +6,15 @@ import org.parceler.Parcel;
 
 @Parcel
 //public class AlumnosUi extends AsistenciaColumnaCabecera {
-public class AlumnosUi extends FilaCabeceraAsistencia {
-    public int conteo;
-    public String nombre;
-    public String apellido;
-    public String foto;
-    public AsistenciaUi asistenciaUi;
-    public MotivosAsistenciaUi motivosAsistenciaUi;
-    public int tipoAsistencia;
-    public int tipoPadecimiento;
+public class AlumnosUi  {
+     int conteo;
+     String nombre;
+     String apellido;
+     String foto;
+     AsistenciaUi asistenciaUi;
+     MotivosAsistenciaUi motivosAsistenciaUi;
+     int tipoAsistencia;
+     int tipoPadecimiento;
 
 
     public AlumnosUi() {

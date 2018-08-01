@@ -4,11 +4,11 @@ import org.parceler.Parcel;
 
 @Parcel
 public class Incidencias {
-    private int conteo;
-    private String nombreIncidencias;
-    private String fecha;
-    private String hora;
-    private int gradoIncidencia;
+     int conteo;
+     String nombreIncidencias;
+     String fecha;
+     String hora;
+     int gradoIncidencia;
 
     public Incidencias() {
     }

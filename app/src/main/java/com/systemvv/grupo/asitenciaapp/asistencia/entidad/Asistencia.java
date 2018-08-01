@@ -17,14 +17,14 @@ public class Asistencia extends CeldasAsistencia {
     public Asistencia() {
     }
 
-    public Asistencia(String tipoAsistencia, int justificacion, MotivoAsistencia motivosAsistenciaUi, Alumnos alumnosUi) {
+   /* public Asistencia(String tipoAsistencia, int justificacion, MotivoAsistencia motivosAsistenciaUi, Alumnos alumnosUi) {
         this.tipoAsistencia = tipoAsistencia;
         this.justificacion = justificacion;
         this.motivosAsistenciaUi = motivosAsistenciaUi;
         this.alumnosUi = alumnosUi;
         this.tipasistencia = TipoAsistencia.ASISTENCIA_TARDE;
 
-    }
+    }*/
 
     public String getTipoAsistencia() {
         return tipoAsistencia;

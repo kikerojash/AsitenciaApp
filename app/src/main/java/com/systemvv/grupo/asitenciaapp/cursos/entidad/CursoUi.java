@@ -8,15 +8,15 @@ import java.util.List;
 
 @Parcel
 public class CursoUi {
-    public String keyCurso;
-    public String nombre;
-    public String seccionSelected;
-    public int gradoSelected;
-    public String foto;
-    public InstitutoUi institutoUi;
-    public List<AlumnosUi> alumnosUiList;
-    public List<MotivosAsistenciaUi> motivosAsistenciaUiList;
-    public List<AsistenciaUi> asistenciaUis;
+     String keyCurso;
+     String nombre;
+     String seccionSelected;
+     int gradoSelected;
+     String foto;
+     InstitutoUi institutoUi;
+     List<AlumnosUi> alumnosUiList;
+     List<MotivosAsistenciaUi> motivosAsistenciaUiList;
+     List<AsistenciaUi> asistenciaUis;
 
     public CursoUi() {
     }

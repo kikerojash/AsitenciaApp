@@ -5,15 +5,15 @@ import org.parceler.Parcel;
 import java.util.List;
 @Parcel
 public class Hijos {
-    private String id;
-    private String nombre;
-    private String apellido;
-    private String edad;
-    private String nombreInstituto;
-    private String grado;
-    private String seccion;
-    private String foto;
-    private List<Cursos> cursosList;
+     String id;
+     String nombre;
+     String apellido;
+     String edad;
+     String nombreInstituto;
+     String grado;
+     String seccion;
+     String foto;
+     List<Cursos> cursosList;
 
     public Hijos() {
     }

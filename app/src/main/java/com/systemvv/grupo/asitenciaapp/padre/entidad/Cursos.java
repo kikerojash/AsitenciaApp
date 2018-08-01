@@ -6,13 +6,13 @@ import java.util.List;
 
 @Parcel
 public class Cursos {
-    private String id;
-    private String nombreCurso;
-    private String horario;
-    private String nombreProfesor;
-    private String fotoCurso;
-    private Hijos hijos;
-    private List<Incidencias> incidenciasList;
+     String id;
+     String nombreCurso;
+     String horario;
+     String nombreProfesor;
+     String fotoCurso;
+     Hijos hijos;
+     List<Incidencias> incidenciasList;
 
     public Cursos() {
     }
