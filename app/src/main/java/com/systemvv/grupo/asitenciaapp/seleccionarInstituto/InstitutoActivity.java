@@ -14,7 +14,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ProgressBar;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 import com.systemvv.grupo.asitenciaapp.R;
 import com.systemvv.grupo.asitenciaapp.base.UseCaseHandler;
 import com.systemvv.grupo.asitenciaapp.base.UseCaseThreadPoolScheduler;
@@ -162,5 +165,13 @@ public class InstitutoActivity extends BaseActivity<InstitutoView, InstitutoPres
             //starting login activity
             startActivity(new Intent(this, LoginActivity.class));
         }
+
+        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(InstitutoActivity.this,  new OnSuccessListener<InstanceIdResult>() {
+            @Override
+            public void onSuccess(InstanceIdResult instanceIdResult) {
+                String newToken = instanceIdResult.getToken();
+                Log.e("newToken",newToken);
+            }
+        });
     }
 }
