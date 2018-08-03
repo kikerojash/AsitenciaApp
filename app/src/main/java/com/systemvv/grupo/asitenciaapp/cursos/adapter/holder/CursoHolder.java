@@ -28,6 +28,8 @@ public class CursoHolder extends RecyclerView.ViewHolder implements View.OnClick
     TextView textViewAlumnosContar;
     @BindView(R.id.cardviewCurso)
     CardView cardViewCursos;
+    @BindView(R.id.textViewHoraInicioFin)
+    TextView textViewHoraInicioFin;
     CursoListener listener;
     CursoUi cursoUi;
 
@@ -40,11 +42,12 @@ public class CursoHolder extends RecyclerView.ViewHolder implements View.OnClick
     public void bind(CursoUi cursoUi, CursoListener listener) {
         this.listener = listener;
         this.cursoUi = cursoUi;
-        if(cursoUi.getInstitutoUi().getNombre()==null)return;
+        if (cursoUi.getInstitutoUi().getNombre() == null) return;
         textViewNombreCurso.setText(cursoUi.getNombre());
         textViewInstituto.setText(cursoUi.getInstitutoUi().getNombre());
         textViewGradoSeccion.setText("Grado : " + cursoUi.getGradoSelected() + " Sección : " + cursoUi.getSeccionSelected());
-        //textViewAlumnosContar.setText(cursoUi.getAlumnosUiList().size() + "");
+        textViewHoraInicioFin.setText(cursoUi.getHoraInicio()+ "-"+cursoUi.getHoraFin());
+        textViewAlumnosContar.setText(cursoUi.getConteoAlumnos());
         Glide.with(itemView.getContext()).load(cursoUi.getFoto()).into(imageViewFondo);
     }
 

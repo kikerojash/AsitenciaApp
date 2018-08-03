@@ -91,6 +91,20 @@ public class ControlAsistenciaRemote implements ControlAsistenciaDataSource {
         });
     }
 
+    @Override
+    public void onObtenerInformacionAlumnos(List<Alumnos> alumnosList, final ObjectCallbackSuccess<Alumnos> listObjectCallbackSuccess) {
+        //List<Alumnos> alumnosList1 = new ArrayList<>();
+        fireStore.onObtenerInformacionAlumnos(alumnosList, new FireCallback<Alumnos>() {
+            @Override
+            public void onSuccess(Alumnos sucess) {
+
+                Log.d(TAG, "sucess " + sucess.getNombre());
+                ///alumnosList1.add(sucess);
+                listObjectCallbackSuccess.guardarAsistenciaGrupal(sucess);
+            }
+        });
+    }
+
     private void actualizandoListaAlumnos(List<Alumnos> alumnosList) {
         for (Alumnos alumnos : alumnosList) {
             Log.d(TAG, "actualizandoListaAlumnos :" + alumnos.getAlumnoMotivoAsistenciaColumna().name());

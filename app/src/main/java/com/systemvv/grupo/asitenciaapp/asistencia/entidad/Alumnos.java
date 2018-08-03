@@ -6,9 +6,10 @@ import java.util.List;
 
 public class Alumnos extends FilaCabeceraAsistencia {
 
-    public enum AlumnoMotivoAsistenciaColumna {COLUMNA_PRESENTE, COLUMNA_TARDE, COLUMNA_FALTO,COLUMNA_DEFECTO}
+    public enum AlumnoMotivoAsistenciaColumna {COLUMNA_PRESENTE, COLUMNA_TARDE, COLUMNA_FALTO, COLUMNA_DEFECTO}
 
     private int conteo;
+    private String keyAlumno;
     private String nombre;
     private String apellido;
     private String foto;
@@ -31,8 +32,16 @@ public class Alumnos extends FilaCabeceraAsistencia {
         this.nombre = nombre;
         this.apellido = apellido;
         this.foto = foto;
-       // alumnoMotivoAsistenciaColumna = AlumnoMotivoAsistenciaColumna.COLUMNA_PRESENTE;
+        // alumnoMotivoAsistenciaColumna = AlumnoMotivoAsistenciaColumna.COLUMNA_PRESENTE;
 
+    }
+
+    public String getKeyAlumno() {
+        return keyAlumno;
+    }
+
+    public void setKeyAlumno(String keyAlumno) {
+        this.keyAlumno = keyAlumno;
     }
 
     public int getConteo() {

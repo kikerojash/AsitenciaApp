@@ -115,9 +115,8 @@ public class InstitutoActivity extends BaseActivity<InstitutoView, InstitutoPres
 
     @Override
     public void onClickInstituto(InstitutoUi institutoUi) {
-        Log.d(TAG, "onClickInstituto : " + institutoUi.getNombre());
-        String keyUser = "asdfgh";
-        institutoUi.setKeyUsuario(keyUser);
+        Log.d(TAG, "onClickInstituto : " + institutoUi.getKeyUsuario());
+
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         Fragment prev = getFragmentManager().findFragmentByTag("dialog");
         if (prev != null) {

@@ -16,8 +16,8 @@ public class SeccionRemote implements SeccionDataSource {
     }
 
     @Override
-    public void onObtenerListaSeccion(String keyDocente, final CallBackResult<List<SeccionUi>> listCallBackResult) {
-        fireStore.onObtenerListaSeccionGrado(keyDocente, new FireCallback<List<SeccionUi>>() {
+    public void onObtenerListaSeccion(String keyPeriodo,String keyProfesor, final CallBackResult<List<SeccionUi>> listCallBackResult) {
+        fireStore.onObtenerListaSeccionGrado(keyPeriodo,keyProfesor, new FireCallback<List<SeccionUi>>() {
             @Override
             public void onSuccess(List<SeccionUi> sucess) {
                 listCallBackResult.onCallResult(sucess);

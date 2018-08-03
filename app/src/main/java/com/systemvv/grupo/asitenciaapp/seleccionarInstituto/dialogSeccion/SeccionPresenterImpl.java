@@ -38,16 +38,19 @@ public class SeccionPresenterImpl implements SeccionPresenter {
     @Override
     public void onStart() {
         Log.d(TAG, "OnStart");
-        if(view!=null)view.initVistas(institutoUi);
+        if (view != null) view.initVistas(institutoUi);
         initListSeccion();
     }
 
     private void initListSeccion() {
-        String keyUser = institutoUi.getKeyUsuario();
-        handler.execute(obtenerListaSeccion, new ObtenerListaSeccion.RequestValues(keyUser), new UseCase.UseCaseCallback<ObtenerListaSeccion.ResponseValue>() {
+        // String keyUser = institutoUi.getKeyUsuario();
+        String keyPeriodo = institutoUi.getKeyPeriodo();
+        String keyProfesor = institutoUi.getKeyUsuario();
+        Log.d(TAG, "keyPeriodo " + keyPeriodo + "/ keyUser " + institutoUi.getKeyUsuario());
+        handler.execute(obtenerListaSeccion, new ObtenerListaSeccion.RequestValues(keyPeriodo, keyProfesor), new UseCase.UseCaseCallback<ObtenerListaSeccion.ResponseValue>() {
             @Override
             public void onSuccess(ObtenerListaSeccion.ResponseValue response) {
-                for(SeccionUi seccionUi : response.getSeccionUiList()){
+                for (SeccionUi seccionUi : response.getSeccionUiList()) {
                     seccionUi.setInstitutoUi(institutoUi);
                 }
                 if (view != null) view.mostrarLista(response.getSeccionUiList());
@@ -90,6 +93,7 @@ public class SeccionPresenterImpl implements SeccionPresenter {
     @Override
     public void onExtras(Bundle bundle) {
         this.institutoUi = Parcels.unwrap(bundle.getParcelable("example"));
+        Log.d(TAG, "onExtras : " + institutoUi.getNombre());
         if (view != null) view.initVistas(institutoUi);
     }
 

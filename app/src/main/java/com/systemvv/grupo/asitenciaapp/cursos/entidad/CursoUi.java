@@ -8,15 +8,18 @@ import java.util.List;
 
 @Parcel
 public class CursoUi {
-     String keyCurso;
-     String nombre;
-     String seccionSelected;
-     int gradoSelected;
-     String foto;
-     InstitutoUi institutoUi;
-     List<AlumnosUi> alumnosUiList;
-     List<MotivosAsistenciaUi> motivosAsistenciaUiList;
-     List<AsistenciaUi> asistenciaUis;
+    String keyCurso;
+    String nombre;
+    String horaInicio;
+    String horaFin;
+    String seccionSelected;
+    int gradoSelected;
+    String conteoAlumnos;
+    String foto;
+    InstitutoUi institutoUi;
+    List<AlumnosUi> alumnosUiList;
+    List<MotivosAsistenciaUi> motivosAsistenciaUiList;
+    List<AsistenciaUi> asistenciaUis;
 
     public CursoUi() {
     }
@@ -159,5 +162,29 @@ public class CursoUi {
 
     public void setAsistenciaUis(List<AsistenciaUi> asistenciaUis) {
         this.asistenciaUis = asistenciaUis;
+    }
+
+    public String getHoraInicio() {
+        return horaInicio;
+    }
+
+    public void setHoraInicio(String horaInicio) {
+        this.horaInicio = horaInicio;
+    }
+
+    public String getHoraFin() {
+        return horaFin;
+    }
+
+    public void setHoraFin(String horaFin) {
+        this.horaFin = horaFin;
+    }
+
+    public String getConteoAlumnos() {
+        return conteoAlumnos;
+    }
+
+    public void setConteoAlumnos(String conteoAlumnos) {
+        this.conteoAlumnos = conteoAlumnos;
     }
 }

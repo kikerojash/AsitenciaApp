@@ -6,12 +6,13 @@ import java.util.List;
 
 @Parcel
 public class InstitutoUi {
-     String nombre;
-     String image;
-     String cede;
-     String direccion;
-     String keyUsuario;
-     List<SeccionUi> seccionList;
+    String nombre;
+    String image;
+    String cede;
+    String direccion;
+    String keyUsuario;
+    String keyPeriodo;
+    List<SeccionUi> seccionList;
 
     public InstitutoUi() {
     }
@@ -70,5 +71,13 @@ public class InstitutoUi {
 
     public void setKeyUsuario(String keyUsuario) {
         this.keyUsuario = keyUsuario;
+    }
+
+    public String getKeyPeriodo() {
+        return keyPeriodo;
+    }
+
+    public void setKeyPeriodo(String keyPeriodo) {
+        this.keyPeriodo = keyPeriodo;
     }
 }

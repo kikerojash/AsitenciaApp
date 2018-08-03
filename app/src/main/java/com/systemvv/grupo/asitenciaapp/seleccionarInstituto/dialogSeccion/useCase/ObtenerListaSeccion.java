@@ -17,7 +17,7 @@ public class ObtenerListaSeccion extends UseCase<ObtenerListaSeccion.RequestValu
 
     @Override
     protected void executeUseCase(RequestValues requestValues) {
-        repository.onObtenerListaSeccion(requestValues.getKeyDocente(), new SeccionDataSource.CallBackResult<List<SeccionUi>>() {
+        repository.onObtenerListaSeccion(requestValues.getKeyPeriodo(),requestValues.getKeyProfesor(), new SeccionDataSource.CallBackResult<List<SeccionUi>>() {
             @Override
             public void onCallResult(List<SeccionUi> resultado) {
                 getUseCaseCallback().onSuccess(new ResponseValue(resultado));
@@ -26,14 +26,20 @@ public class ObtenerListaSeccion extends UseCase<ObtenerListaSeccion.RequestValu
     }
 
     public static final class RequestValues implements UseCase.RequestValues {
-        private String keyDocente;
+        private String keyPeriodo;
+        private String keyProfesor;
 
-        public RequestValues(String keyDocente) {
-            this.keyDocente = keyDocente;
+        public RequestValues(String keyPeriodo, String keyProfesor) {
+            this.keyPeriodo = keyPeriodo;
+            this.keyProfesor = keyProfesor;
         }
 
-        public String getKeyDocente() {
-            return keyDocente;
+        public String getKeyPeriodo() {
+            return keyPeriodo;
+        }
+
+        public String getKeyProfesor() {
+            return keyProfesor;
         }
     }
 

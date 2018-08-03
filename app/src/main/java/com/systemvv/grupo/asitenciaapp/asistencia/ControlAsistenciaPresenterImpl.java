@@ -21,6 +21,7 @@ import com.systemvv.grupo.asitenciaapp.asistencia.entidad.Asistencia;
 import com.systemvv.grupo.asitenciaapp.asistencia.entidad.MotivoAsistencia;
 import com.systemvv.grupo.asitenciaapp.asistencia.useCase.GuardarAsistenciaLista;
 import com.systemvv.grupo.asitenciaapp.asistencia.useCase.GuardarAsistenciaListaHoraFin;
+import com.systemvv.grupo.asitenciaapp.asistencia.useCase.ObtenerInformacionAlumnos;
 import com.systemvv.grupo.asitenciaapp.asistencia.useCase.ObtenerListaAlumnos;
 import com.systemvv.grupo.asitenciaapp.asistencia.useCase.ObtenerListaAsistencia;
 import com.systemvv.grupo.asitenciaapp.asistencia.useCase.ValidarFechaRegistroAsistencia;
@@ -57,14 +58,16 @@ public class ControlAsistenciaPresenterImpl extends BaseActivityPresenterImpl<Co
     private ObtenerListaAsistencia obtenerListaAsistencia;
     private GuardarAsistenciaListaHoraFin guardarAsistenciaListaHoraFin;
     private ObtenerListaAlumnos obtenerListaAlumnos;
+    private ObtenerInformacionAlumnos obtenerInformacionAlumnos;
 
-    public ControlAsistenciaPresenterImpl(UseCaseHandler handler, Resources res, GuardarAsistenciaLista guardarAsistenciaLista, ValidarFechaRegistroAsistencia validarFechaRegistroAsistencia, ObtenerListaAsistencia obtenerListaAsistencia, GuardarAsistenciaListaHoraFin guardarAsistenciaListaHoraFin, ObtenerListaAlumnos obtenerListaAlumnos) {
+    public ControlAsistenciaPresenterImpl(UseCaseHandler handler, Resources res, GuardarAsistenciaLista guardarAsistenciaLista, ValidarFechaRegistroAsistencia validarFechaRegistroAsistencia, ObtenerListaAsistencia obtenerListaAsistencia, GuardarAsistenciaListaHoraFin guardarAsistenciaListaHoraFin, ObtenerListaAlumnos obtenerListaAlumnos, ObtenerInformacionAlumnos obtenerInformacionAlumnos) {
         super(handler, res);
         this.guardarAsistenciaLista = guardarAsistenciaLista;
         this.validarFechaRegistroAsistencia = validarFechaRegistroAsistencia;
         this.obtenerListaAsistencia = obtenerListaAsistencia;
         this.guardarAsistenciaListaHoraFin = guardarAsistenciaListaHoraFin;
         this.obtenerListaAlumnos = obtenerListaAlumnos;
+        this.obtenerInformacionAlumnos = obtenerInformacionAlumnos;
 
     }
 
@@ -89,8 +92,10 @@ public class ControlAsistenciaPresenterImpl extends BaseActivityPresenterImpl<Co
     @Override
     public void onStart() {
         super.onStart();
+        //  initObtenerListaAlumnos(cursoUi);
+        Log.d(TAG, "OnstartalumnosList :" + alumnosList.size() + " asdasd " + motivoAsistenciaList.size());
         if (view != null) view.mostrarInformacionBasica(cursoUi);
-        // initView();
+        //initView();
     }
 
  /*   private void initVistas() {
@@ -123,7 +128,6 @@ public class ControlAsistenciaPresenterImpl extends BaseActivityPresenterImpl<Co
         celdasAsistenciasColumnaPresentes = new ArrayList<>();
         celdasAsistencias = new ArrayList<>();
         guardandoListasAsistencias = new ArrayList<>();
-
         alumnosList = new ArrayList<>();
         initObtenerListaAlumnos(cursoUi);
         initObtenerListaMotivosAsistencia();
@@ -131,9 +135,11 @@ public class ControlAsistenciaPresenterImpl extends BaseActivityPresenterImpl<Co
 
     @Override
     public void onCreate() {
+        //  initTablaInstancia();
+        Log.d(TAG, "onCreate :");
         // initVistas();
 
-        Log.d(TAG, "onCreatealumnosList :" + alumnosList.size() + " asdasd " + motivoAsistenciaList.size());
+        //Log.d(TAG, "onCreatealumnosList :" + alumnosList.size() + " asdasd " + motivoAsistenciaList.size());
 
 
 //        columnHeaderList.addAll(motivoAsistenciaList());
@@ -161,9 +167,9 @@ public class ControlAsistenciaPresenterImpl extends BaseActivityPresenterImpl<Co
         Log.d(TAG, "OnstartalumnosList :" + alumnosList.size() + " asdasd " + motivoAsistenciaList.size());
 
 
-        columnHeaderList.addAll(motivoAsistenciaList);
+      /*  columnHeaderList.addAll(motivoAsistenciaList);
         rowHeaderList.addAll(alumnosList);
-        cellsList.addAll(getCellListForSortingTest());
+        cellsList.addAll(getCellListForSortingTest());*/
 
     }
 
@@ -193,14 +199,19 @@ public class ControlAsistenciaPresenterImpl extends BaseActivityPresenterImpl<Co
                 new UseCase.UseCaseCallback<ObtenerListaAlumnos.ResponseValue>() {
                     @Override
                     public void onSuccess(ObtenerListaAlumnos.ResponseValue response) {
+                        if (response.getAlumnosList().size() > 0)
+                            initObtenerInformacionListAlumnos(response.getAlumnosList());
+
+                        // alumnosList = new ArrayList<>();
+                        //  alumnosList.addAll(response.getAlumnosList());
                         Log.d(TAG, "onSuccess : " + response.getAlumnosList().size());
                         /*for (Alumnos alumnos : response.getAlumnosList()) {
                             alumnosList.add(alumnos);
                         }*/
-                        alumnosList.addAll(response.getAlumnosList());
+                        // alumnosList.addAll(response.getAlumnosList());
 
-                        if(alumnosList.size()>0)initLoading(alumnosList);
-                        Log.d(TAG, "onSuccessalumnosList : " + alumnosList.size());
+                      /*initLoading(response.getAlumnosList());
+                        Log.d(TAG, "onSuccessalumnosList : " + alumnosList.size());*/
                     }
 
                     @Override
@@ -208,19 +219,40 @@ public class ControlAsistenciaPresenterImpl extends BaseActivityPresenterImpl<Co
 
                     }
                 });
-        validateLlega(alumnosList);
+
     }
 
-    private void initLoading(List<Alumnos> alumnosList) {
-        Log.d(TAG,"initLoading :" + alumnosList.size());
+    private void initObtenerInformacionListAlumnos(final List<Alumnos> alumnosList) {
+        //   List<Alumnos> alumnos = new ArrayList<>();
+        handler.execute(obtenerInformacionAlumnos, new ObtenerInformacionAlumnos.RequestValues(alumnosList),
+                new UseCase.UseCaseCallback<ObtenerInformacionAlumnos.ResponseValue>() {
+                    @Override
+                    public void onSuccess(ObtenerInformacionAlumnos.ResponseValue response) {
+                       /* columnHeaderList.addAll(motivoAsistenciaList());
+                        rowHeaderList.addAll(alumnosList);
+                        cellsList.addAll(getCellListForSortingTest(alumnosList));*/
+                        Log.d(TAG, "alumnosList : " + alumnosList.size() + " alumnos ;" + response.getAlumnos().getNombre());
+                    }
+
+                    @Override
+                    public void onError() {
+
+                    }
+                });
+    }
+
+    private void initLoading(List<Alumnos> alumnosList2) {
+        alumnosList.addAll(alumnosList2);
+        //  this.alumnosList = alumnosList;
+        Log.d(TAG, "initLoading :" + alumnosList.size());
     }
 
     private void validateLlega(List<Alumnos> alumnosList) {
-        if(alumnosList.size()>0){
-            Log.d(TAG,"MAYO > 0");
+        if (alumnosList.size() > 0) {
+            Log.d(TAG, "MAYO > 0");
             Log.d(TAG, "alumnosList :" + alumnosList.size() + " asdasd " + motivoAsistenciaList.size());
-        }else{
-            Log.d(TAG,"MAYO < 0");
+        } else {
+            Log.d(TAG, "MAYO < 0");
         }
         /*columnHeaderList.addAll(motivoAsistenciaList);
         rowHeaderList.addAll(alumnosList);
@@ -276,7 +308,7 @@ public class ControlAsistenciaPresenterImpl extends BaseActivityPresenterImpl<Co
 //    }
 
 
-    private List<List<CeldasAsistencia>> getCellListForSortingTest() {
+    private List<List<CeldasAsistencia>> getCellListForSortingTest(List<Alumnos> alumnosList) {
         List<List<CeldasAsistencia>> list = new ArrayList<>();
         for (Alumnos alumnosUi : alumnosList) {
             Log.d(TAG, "alumnosUi : " + alumnosUi.getNombre());

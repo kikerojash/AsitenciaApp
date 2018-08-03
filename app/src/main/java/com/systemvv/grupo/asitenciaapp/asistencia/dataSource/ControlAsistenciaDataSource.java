@@ -22,4 +22,6 @@ public interface ControlAsistenciaDataSource {
     void onValidarFechaRegistroAsistencia(String fecha, ObjectCallbackSuccess<Boolean> callbackSuccess);
 
     void onObtenerAlumnosLista(CursoUi cursoUi , ObjectCallbackSuccess<List<Alumnos>> listObjectCallbackSuccess);
+
+    void onObtenerInformacionAlumnos(List<Alumnos> alumnosList, ObjectCallbackSuccess<Alumnos> listObjectCallbackSuccess);
 }

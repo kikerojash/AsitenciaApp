@@ -7,9 +7,12 @@ import android.util.Log;
 import com.systemvv.grupo.asitenciaapp.base.UseCase;
 import com.systemvv.grupo.asitenciaapp.base.UseCaseHandler;
 import com.systemvv.grupo.asitenciaapp.base.activity.BaseActivityPresenterImpl;
+import com.systemvv.grupo.asitenciaapp.login.dataSource.entidad.UsuarioUi;
 import com.systemvv.grupo.asitenciaapp.seleccionarInstituto.entidad.InstitutoUi;
 import com.systemvv.grupo.asitenciaapp.seleccionarInstituto.entidad.SeccionUi;
 import com.systemvv.grupo.asitenciaapp.seleccionarInstituto.useCase.ObtenerInstitutoLista;
+
+import org.parceler.Parcels;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,31 +39,46 @@ public class InstitutoPresenterImpl extends BaseActivityPresenterImpl<InstitutoV
     }
 
     @Override
+    public void onCreate() {
+        super.onCreate();
+        obtenerDatosDocente();
+    }
+
+    private void obtenerDatosDocente() {
+    }
+
+    String keyPeriodo;
+    UsuarioUi usuarioUi;
+
+    @Override
     public void setExtras(Bundle extras) {
         super.setExtras(extras);
         if (extras == null) return;
-        String usuario = extras.getString("datousuario");
-        String clave = extras.getString("datoclave");
-        Log.d(TAG, "usuario : " + usuario + " / clave : " + clave);
+        this.usuarioUi = Parcels.unwrap(extras.getParcelable("usuarioUi"));
+        this.keyPeriodo = extras.getString("keyPeriodo");
+        Log.d(TAG, "usuario : " + usuarioUi.getUsu_email() + " / keyPeriodo : " + keyPeriodo);
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        String keyUser = "asdfgh";
-        mostrarListaInstitutos(keyUser);
-         // if (view != null) view.mostrarListaInstitutos(insertDataStatica());
+        mostrarListaInstitutos(keyPeriodo);
+        // if (view != null) view.mostrarListaInstitutos(insertDataStatica());
     }
 
-    private void mostrarListaInstitutos(String keyUser) {
-        if(view!=null)view.mostrarProgressBar();
-        handler.execute(obtenerInstitutoLista, new ObtenerInstitutoLista.RequestValues(keyUser),
+    private void mostrarListaInstitutos(final String keyPeriodo) {
+        if (view != null) view.mostrarProgressBar();
+        handler.execute(obtenerInstitutoLista, new ObtenerInstitutoLista.RequestValues(keyPeriodo),
                 new UseCase.UseCaseCallback<ObtenerInstitutoLista.ResponseValue>() {
                     @Override
                     public void onSuccess(ObtenerInstitutoLista.ResponseValue response) {
-                        if (view != null){
-                            //view.mostrarListaInstitutos(response.getInstitutoUiList());
-                            view.mostrarListaInstitutos(insertDataStatica());
+                        if (view != null) {
+                            for(InstitutoUi institutoUi:response.getInstitutoUiList()){
+                                institutoUi.setKeyPeriodo(keyPeriodo);
+                                institutoUi.setKeyUsuario(usuarioUi.getKeyUser());
+                            }
+                            view.mostrarListaInstitutos(response.getInstitutoUiList());
+                            //view.mostrarListaInstitutos(insertDataStatica());
                             view.ocultarProgressBar();
                         }
                     }

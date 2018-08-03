@@ -14,7 +14,7 @@ public class SeccionRepository implements SeccionDataSource {
     }
 
     @Override
-    public void onObtenerListaSeccion(String keyDocente, CallBackResult<List<SeccionUi>> listCallBackResult) {
-        remote.onObtenerListaSeccion(keyDocente, listCallBackResult);
+    public void onObtenerListaSeccion(String keyDocente, String keyProfesor, CallBackResult<List<SeccionUi>> listCallBackResult) {
+        remote.onObtenerListaSeccion(keyDocente, keyProfesor, listCallBackResult);
     }
 }

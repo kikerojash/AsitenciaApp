@@ -22,9 +22,17 @@ import com.systemvv.grupo.asitenciaapp.R;
 import com.systemvv.grupo.asitenciaapp.base.UseCaseHandler;
 import com.systemvv.grupo.asitenciaapp.base.UseCaseThreadPoolScheduler;
 import com.systemvv.grupo.asitenciaapp.base.activity.BaseActivity;
+import com.systemvv.grupo.asitenciaapp.fire.FireStore;
+import com.systemvv.grupo.asitenciaapp.login.dataSource.LoginRepository;
+import com.systemvv.grupo.asitenciaapp.login.dataSource.entidad.UsuarioUi;
+import com.systemvv.grupo.asitenciaapp.login.dataSource.remote.LoginRemote;
+import com.systemvv.grupo.asitenciaapp.login.useCase.ValidarPeriodo;
+import com.systemvv.grupo.asitenciaapp.login.useCase.ValidarRolUsuario;
 import com.systemvv.grupo.asitenciaapp.padre.HijosActivity;
 import com.systemvv.grupo.asitenciaapp.padre.dialogHijos.DialogHijos;
 import com.systemvv.grupo.asitenciaapp.seleccionarInstituto.InstitutoActivity;
+
+import org.parceler.Parcels;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -62,7 +70,10 @@ public class LoginActivity extends BaseActivity<LoginView, LoginPresenter> imple
 
     @Override
     protected LoginPresenter getPresenter() {
-        return new LoginPresenterImpl(new UseCaseHandler(new UseCaseThreadPoolScheduler()), getResources());
+        LoginRepository loginRepository = new LoginRepository(new LoginRemote(new FireStore()));
+        return new LoginPresenterImpl(new UseCaseHandler(new UseCaseThreadPoolScheduler()), getResources(),
+                new ValidarPeriodo(loginRepository),
+                new ValidarRolUsuario(loginRepository));
     }
 
     @Override
@@ -82,8 +93,8 @@ public class LoginActivity extends BaseActivity<LoginView, LoginPresenter> imple
         //initializing firebase authentication object
         firebaseAuth = FirebaseAuth.getInstance();
         progressDialog = new ProgressDialog(this);
-        editTextUsuario.setText("kikerojash@gmail.com");
-        editTextClave.setText("kikerojas12");
+        editTextUsuario.setText("sumire@gmail.com");
+        editTextClave.setText("sumire");
 
     }
 
@@ -157,10 +168,15 @@ public class LoginActivity extends BaseActivity<LoginView, LoginPresenter> imple
     }
 
     @Override
-    public void initSeleccionarInstituto(String usuario, String clave) {
+    public void initSeleccionarInstituto(UsuarioUi usuario, String keyPeriodo) {
+        progressDialog.dismiss();
         Intent intent = new Intent(this, InstitutoActivity.class);
-        intent.putExtra("datousuario", usuario);
-        intent.putExtra("datoclave", clave);
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("usuarioUi", Parcels.wrap(usuario));
+        bundle.putString("keyPeriodo",keyPeriodo);
+        intent.putExtras(bundle);
+      /*  intent.putExtra("datousuario", usuario);
+        intent.putExtra("datoclave", clave);*/
         startActivity(intent);
     }
 
@@ -177,17 +193,19 @@ public class LoginActivity extends BaseActivity<LoginView, LoginPresenter> imple
     public void initAutenticacion(final String usuario, final String clave) {
         progressDialog.setMessage("Cargando Sesión Espere....");
         progressDialog.show();
-
+        progressDialog.setCancelable(false);
         //logging in the user
         firebaseAuth.signInWithEmailAndPassword(usuario, clave)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        progressDialog.dismiss();
+                        //   progressDialog.dismiss();
                         //if the task is successfull
                         if (task.isSuccessful()) {
                             //start the profile activity
-                            initSeleccionarInstituto(usuario, clave);
+                            presenter.onValidarAutenticacionInicio(usuario);
+                            //initSeleccionarInstituto(usuario, clave);
+
                             //startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
                         }
                     }
@@ -197,16 +215,25 @@ public class LoginActivity extends BaseActivity<LoginView, LoginPresenter> imple
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
         if (firebaseAuth.getCurrentUser() != null) {
+            ProgressDialog progressDialog = new ProgressDialog(this);
+            progressDialog.setCancelable(false);
+            progressDialog.setMessage("Cargando Sesión Espere....");
+            presenter.onValidarAutenticacion(firebaseAuth,progressDialog);
+           // presenter.onValidarAutenticacion(firebaseAuth.getCurrentUser().getEmail());
+            progressDialog.show();
+
+
             //close this activity
-            finish();
             //opening profile activity
             // startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
-            String email = "kikerojash@gmail.com";
-            String clave = "kikerojas12";
-            initSeleccionarInstituto(email, clave);
+
+            /*String email = firebaseAuth.getCurrentUser().getEmail();
+            presenter.onValidarAutenticacion(email);*/
+
+            // finish();
+           /* String clave = "kikerojas12";
+            initSeleccionarInstituto(email, clave);*/
         }
     }
 }

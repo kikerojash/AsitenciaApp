@@ -10,5 +10,5 @@ public interface SeccionDataSource {
         void onCallResult(T resultado);
     }
 
-    void onObtenerListaSeccion(String keyDocente, CallBackResult<List<SeccionUi>> listCallBackResult);
+    void onObtenerListaSeccion(String keyPeriodo,String keyProfesor, CallBackResult<List<SeccionUi>> listCallBackResult);
 }
