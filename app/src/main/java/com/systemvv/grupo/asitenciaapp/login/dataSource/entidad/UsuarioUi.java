@@ -1,9 +1,10 @@
 package com.systemvv.grupo.asitenciaapp.login.dataSource.entidad;
 
+
 import org.parceler.Parcel;
 
 @Parcel
-public class UsuarioUi {
+public class UsuarioUi{
 
     String keyUser;
     String per_nombre;
@@ -11,9 +12,12 @@ public class UsuarioUi {
     String tip_usuario;
     String tip_usuario_nombre;
     String usu_email;
+    String keyPeriodo;
 
     public UsuarioUi() {
     }
+
+
 
     public String getKeyUser() {
         return keyUser;
@@ -62,4 +66,14 @@ public class UsuarioUi {
     public void setUsu_email(String usu_email) {
         this.usu_email = usu_email;
     }
+
+    public String getKeyPeriodo() {
+        return keyPeriodo;
+    }
+
+    public void setKeyPeriodo(String keyPeriodo) {
+        this.keyPeriodo = keyPeriodo;
+    }
+
+
 }

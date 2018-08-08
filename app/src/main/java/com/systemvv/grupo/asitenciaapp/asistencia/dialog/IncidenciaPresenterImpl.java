@@ -5,10 +5,10 @@ import android.util.Log;
 
 import com.systemvv.grupo.asitenciaapp.asistencia.dialog.entidadui.IncidenciaUi;
 import com.systemvv.grupo.asitenciaapp.asistencia.dialog.useCase.GuardarIncidencia;
+import com.systemvv.grupo.asitenciaapp.asistencia.entidad.Alumnos;
 import com.systemvv.grupo.asitenciaapp.base.BaseView;
 import com.systemvv.grupo.asitenciaapp.base.UseCase;
 import com.systemvv.grupo.asitenciaapp.base.UseCaseHandler;
-import com.systemvv.grupo.asitenciaapp.cursos.entidad.AlumnosUi;
 import com.systemvv.grupo.asitenciaapp.utils.Utils;
 
 import org.parceler.Parcels;
@@ -89,7 +89,7 @@ public class IncidenciaPresenterImpl implements IncidenciaPresenter {
         this.nivelIncidencia = nivelIncidencia;
     }
 
-    AlumnosUi alumnosUi;
+    Alumnos alumnosUi;
 
     @Override
     public void onExtras(Bundle bundle) {

@@ -19,12 +19,11 @@ import com.systemvv.grupo.asitenciaapp.R;
 import com.systemvv.grupo.asitenciaapp.asistencia.dialog.dataSource.IncidenciaRepository;
 import com.systemvv.grupo.asitenciaapp.asistencia.dialog.dataSource.remote.IncidenciaRemote;
 import com.systemvv.grupo.asitenciaapp.asistencia.dialog.useCase.GuardarIncidencia;
+import com.systemvv.grupo.asitenciaapp.asistencia.entidad.Alumnos;
 import com.systemvv.grupo.asitenciaapp.base.UseCaseHandler;
 import com.systemvv.grupo.asitenciaapp.base.UseCaseThreadPoolScheduler;
-import com.systemvv.grupo.asitenciaapp.cursos.entidad.AlumnosUi;
 import com.systemvv.grupo.asitenciaapp.fire.FireStore;
 
-import org.parceler.Parcels;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -45,7 +44,7 @@ public class IncidenciaDialog extends DialogFragment implements IncidenciaView, 
     TextView textViewPadecimiento;
     @BindView(R.id.editText4)
     EditText editTextIncidencia;
-    private AlumnosUi alumnosUi;
+   // private AlumnosUi alumnosUi;
     private IncidenciaPresenter presenter;
 
     @Override
@@ -94,11 +93,11 @@ public class IncidenciaDialog extends DialogFragment implements IncidenciaView, 
     }
 
     private void initVistas() {
-        textViewNombreAlumno.setText(alumnosUi.getNombre());
+       /* textViewNombreAlumno.setText(alumnosUi.getNombre());
         textViewApellidoeAlumno.setText(alumnosUi.getApellido());
         validarTipoPadencia(alumnosUi.getTipoPadecimiento());
         Glide.with(getActivity()).load(alumnosUi.getFoto()).into(imgProfile);
-        spinnerIncidencias.setOnItemSelectedListener(this);
+        spinnerIncidencias.setOnItemSelectedListener(this);*/
     }
 
     private void validarTipoPadencia(int tipoPadecimiento) {
@@ -159,7 +158,7 @@ public class IncidenciaDialog extends DialogFragment implements IncidenciaView, 
     }
 
     @Override
-    public void initVistas(AlumnosUi alumnosUi) {
+    public void initVistas(Alumnos alumnosUi) {
         textViewNombreAlumno.setText(alumnosUi.getNombre());
         textViewApellidoeAlumno.setText(alumnosUi.getApellido());
         validarTipoPadencia(alumnosUi.getTipoPadecimiento());

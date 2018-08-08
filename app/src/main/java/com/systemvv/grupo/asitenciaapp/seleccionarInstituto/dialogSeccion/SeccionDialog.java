@@ -80,70 +80,12 @@ public class SeccionDialog extends DialogFragment implements SeccionView,ItemLis
         presenter.onStart();
     }
 
-    private void initVistas() {
 
-       /* textViewNombre.setText(institutoUi.getNombre());
-        Glide.with(this).load(institutoUi.getImage()).into(imageView);
-        // spinnerGrado.setOnItemSelectedListener(this);
-        // spinnerSeccion.setOnItemSelectedListener(this);
-        // Creating adapter for spinner
-        List<Integer> spinnerArray = new ArrayList<>();
-        List<String> spinnerArrayString = new ArrayList<>();
-        for (SeccionUi seccionUi : institutoUi.getSeccionList()) {
-            spinnerArray.add(seccionUi.getGrado());
-        }
-        for (SeccionUi seccionUi : institutoUi.getSeccionList()) {
-            spinnerArrayString.add(seccionUi.getSeccion());
-        }
-
-        ArrayAdapter<Integer> adapter = new ArrayAdapter<Integer>(
-                getActivity(),
-                android.R.layout.simple_spinner_item,
-                spinnerArray
-        );
-        //spinnerGrado.setAdapter(adapter);
-
-        ArrayAdapter<String> adapterString = new ArrayAdapter<String>(
-                getActivity(),
-                android.R.layout.simple_spinner_item,
-                spinnerArrayString
-        );
-        //spinnerSeccion.setAdapter(adapterString);
-        initSpinerValidacion();*/
-
-    }
 
     private int gradoSelected = 0;
     private String seccionSelected = "";
 
-    private void initSpinerValidacion() {
-        /*spinnerSeccion.setOnItemSelectedListener(this);
-        spinnerGrado.setOnItemSelectedListener(this);*/
-      /*  spinnerSeccion.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                seccionSelected = institutoUi.getSeccionList().get(position).getSeccion();
-                Log.d(TAG, "spnSeccion : " + institutoUi.getSeccionList().get(position).getSeccion());
-            }
 
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                Log.d(TAG, "spnSeccion::onNothingSelected");
-            }
-        });
-        spinnerGrado.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                gradoSelected = institutoUi.getSeccionList().get(position).getGrado();
-                Log.d(TAG, "spnGrado: " + institutoUi.getSeccionList().get(position).getGrado());
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                Log.d(TAG, "spnGrado::onNothingSelected");
-            }
-        });*/
-    }
 
 
     @Override

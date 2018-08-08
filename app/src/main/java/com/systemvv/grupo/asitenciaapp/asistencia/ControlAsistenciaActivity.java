@@ -13,6 +13,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -30,21 +31,19 @@ import com.systemvv.grupo.asitenciaapp.asistencia.adapter.estructura.ColumnaCabe
 import com.systemvv.grupo.asitenciaapp.asistencia.adapter.estructura.FilaCabeceraAsistencia;
 
 import com.systemvv.grupo.asitenciaapp.asistencia.adapter.holder.filas.FilasAsistenciaAlumnosHolder;
-import com.systemvv.grupo.asitenciaapp.asistencia.adapter.justificacion.JustificacionDialog;
 import com.systemvv.grupo.asitenciaapp.asistencia.dataSource.ControlAsistenciaRepository;
 import com.systemvv.grupo.asitenciaapp.asistencia.dataSource.remote.ControlAsistenciaRemote;
 import com.systemvv.grupo.asitenciaapp.asistencia.dialog.IncidenciaDialog;
+import com.systemvv.grupo.asitenciaapp.asistencia.entidad.Alumnos;
+import com.systemvv.grupo.asitenciaapp.asistencia.entidad.Asistencia;
 import com.systemvv.grupo.asitenciaapp.asistencia.useCase.GuardarAsistenciaLista;
 import com.systemvv.grupo.asitenciaapp.asistencia.useCase.GuardarAsistenciaListaHoraFin;
-import com.systemvv.grupo.asitenciaapp.asistencia.useCase.ObtenerInformacionAlumnos;
 import com.systemvv.grupo.asitenciaapp.asistencia.useCase.ObtenerListaAlumnos;
-import com.systemvv.grupo.asitenciaapp.asistencia.useCase.ObtenerListaAsistencia;
 import com.systemvv.grupo.asitenciaapp.asistencia.useCase.ValidarFechaRegistroAsistencia;
 import com.systemvv.grupo.asitenciaapp.base.UseCaseHandler;
 import com.systemvv.grupo.asitenciaapp.base.UseCaseThreadPoolScheduler;
 import com.systemvv.grupo.asitenciaapp.base.activity.BaseActivity;
-import com.systemvv.grupo.asitenciaapp.cursos.entidad.AlumnosUi;
-import com.systemvv.grupo.asitenciaapp.cursos.entidad.AsistenciaUi;
+import com.systemvv.grupo.asitenciaapp.conexion.FireAuthConexion;
 import com.systemvv.grupo.asitenciaapp.cursos.entidad.CursoUi;
 import com.systemvv.grupo.asitenciaapp.fire.FireStore;
 import com.systemvv.grupo.asitenciaapp.login.LoginActivity;
@@ -81,6 +80,8 @@ public class ControlAsistenciaActivity extends BaseActivity<ControlAsistenciaVie
     Toolbar toolbar;
     @BindView(R.id.profile_image)
     CircleImageView circleImageView;
+    @BindView(R.id.textViewInformacion)
+    TextView textViewInformacion;
     private AsistenciaAdapter adapter;
     //firebase auth object
     private FirebaseAuth firebaseAuth;
@@ -102,10 +103,8 @@ public class ControlAsistenciaActivity extends BaseActivity<ControlAsistenciaVie
                 getResources(),
                 new GuardarAsistenciaLista(repository),
                 new ValidarFechaRegistroAsistencia(repository),
-                new ObtenerListaAsistencia(repository),
                 new GuardarAsistenciaListaHoraFin(repository),
-                new ObtenerListaAlumnos(repository),
-                new ObtenerInformacionAlumnos(repository));
+                new ObtenerListaAlumnos(repository));
     }
 
     @Override
@@ -123,6 +122,7 @@ public class ControlAsistenciaActivity extends BaseActivity<ControlAsistenciaVie
         setContentView(R.layout.activity_asistencia);
         //initializing firebase authentication object
         firebaseAuth = FirebaseAuth.getInstance();
+        //firebaseAuth = FireAuthConexion.getInstance();
         ButterKnife.bind(this);
         setupToolbar();
         initAdapter();
@@ -155,6 +155,12 @@ public class ControlAsistenciaActivity extends BaseActivity<ControlAsistenciaVie
     }
 
     @Override
+    protected void onStart() {
+        super.onStart();
+
+    }
+
+    @Override
     public void actualizarDatosCambiadosTabla() {
         adapter.notifyDataSetChanged();
     }
@@ -164,11 +170,12 @@ public class ControlAsistenciaActivity extends BaseActivity<ControlAsistenciaVie
         toast(mensaje);
     }
 
-    private void snackBar(String mensaje){
-        Snackbar.make(progressBar,mensaje,Snackbar.LENGTH_SHORT).show();
+    private void snackBar(String mensaje) {
+        Snackbar.make(progressBar, mensaje, Snackbar.LENGTH_SHORT).show();
     }
-    private void toast(String mensaje){
-        Toast.makeText(getApplicationContext(),mensaje,Toast.LENGTH_SHORT).show();
+
+    private void toast(String mensaje) {
+        Toast.makeText(getApplicationContext(), mensaje, Toast.LENGTH_SHORT).show();
     }
 
     private void initAdapter() {
@@ -183,7 +190,11 @@ public class ControlAsistenciaActivity extends BaseActivity<ControlAsistenciaVie
 
     @Override
     public void onCellClicked(@NonNull RecyclerView.ViewHolder holder, int column, int row) {
-        AsistenciaUi asistenciaUi = (AsistenciaUi) table.getAdapter().getCellItem(column, row);
+       /* AsistenciaUi asistenciaUi = (AsistenciaUi) table.getAdapter().getCellItem(column, row);
+        List<CeldasAsistencia> celdasList = adapter.getCellRowItems(row);
+        presenter.onClickCeldas(holder, asistenciaUi, celdasList);*/
+
+        Asistencia asistenciaUi = (Asistencia) table.getAdapter().getCellItem(column, row);
         List<CeldasAsistencia> celdasList = adapter.getCellRowItems(row);
         presenter.onClickCeldas(holder, asistenciaUi, celdasList);
     }
@@ -207,10 +218,15 @@ public class ControlAsistenciaActivity extends BaseActivity<ControlAsistenciaVie
     }
 
     @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
     public void onRowHeaderClicked(@NonNull RecyclerView.ViewHolder holder, int row) {
         if (holder instanceof FilasAsistenciaAlumnosHolder) {
             FilasAsistenciaAlumnosHolder filasAsistenciaAlumnosHolder = (FilasAsistenciaAlumnosHolder) holder;
-            AlumnosUi alumnosUi = (AlumnosUi) table.getAdapter().getRowHeaderItem(row);
+            Alumnos alumnosUi = (Alumnos) table.getAdapter().getRowHeaderItem(row);
 
             FragmentTransaction ft = getFragmentManager().beginTransaction();
             Fragment prev = getFragmentManager().findFragmentByTag("dialog");
@@ -241,6 +257,7 @@ public class ControlAsistenciaActivity extends BaseActivity<ControlAsistenciaVie
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
+
         switch (id) {
             case R.id.menu_guardar_entrada:
                 //Toast.makeText(getApplicationContext(), "Registro Guardados de Entrada", Toast.LENGTH_SHORT).show();
@@ -249,7 +266,7 @@ public class ControlAsistenciaActivity extends BaseActivity<ControlAsistenciaVie
                 break;
             case R.id.menu_guardar_salida:
                 presenter.onGuardarSalida();
-                Toast.makeText(getApplicationContext(), "Registro Guardados de Salida", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(), "Registro Guardados de Salida", Toast.LENGTH_SHORT).show();
                 Log.d(TAG, "menu_guardar_salida:");
                 break;
             default:
@@ -263,9 +280,38 @@ public class ControlAsistenciaActivity extends BaseActivity<ControlAsistenciaVie
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Bundle extras = getIntent().getExtras();
+        String keyInstituto = extras.getString("keyInstituto");
+        String keyCurso = extras.getString("keyCurso");
+        String keyUser = extras.getString("keyUser");
+        String keyPeriodo = extras.getString("keyPeriodo");
+        String keySeccion = extras.getString("keySeccion");
+        String keyGrado = extras.getString("keyGrado");
+        Log.d(TAG, "keyInstituto / " + keyInstituto +
+                " / keyCurso " + keyCurso +
+                " / keyUser " + keyUser +
+                " / keyPeriodo " + keyPeriodo +
+                " / keySeccion " + keySeccion +
+                " / keyGrado " + keyGrado
+        );
         if (firebaseAuth.getCurrentUser() == null) {
             finish();
             startActivity(new Intent(this, LoginActivity.class));
         }
+    }
+
+    @Override
+    public void mostrarInformacionSnackBar(String mensaje, final int tipoRegistroResultado) {
+        Snackbar.make(progressBar, mensaje, Snackbar.LENGTH_INDEFINITE)
+                .setActionTextColor(getResources().getColor(R.color.md_red_400))
+                .setAction("Aceptar", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        presenter.onClickAccionBar(tipoRegistroResultado);
+                        Log.i("Snackbar", "Pulsada acción snackbar!");
+
+                    }
+                })
+                .show();
     }
 }

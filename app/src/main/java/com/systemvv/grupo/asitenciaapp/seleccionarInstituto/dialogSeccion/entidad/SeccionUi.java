@@ -1,10 +1,7 @@
 package com.systemvv.grupo.asitenciaapp.seleccionarInstituto.dialogSeccion.entidad;
 
 import com.systemvv.grupo.asitenciaapp.seleccionarInstituto.entidad.InstitutoUi;
-
 import org.parceler.Parcel;
-
-import java.util.Objects;
 
 @Parcel
 public class SeccionUi {
@@ -67,5 +64,7 @@ public class SeccionUi {
             result=31*result+(grado!=null ? grado.hashCode():0);
             return result;
         }
+
+
 
 }

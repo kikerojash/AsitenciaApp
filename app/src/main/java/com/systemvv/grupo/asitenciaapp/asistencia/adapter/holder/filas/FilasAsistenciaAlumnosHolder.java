@@ -9,7 +9,6 @@ import com.bumptech.glide.Glide;
 import com.evrencoskun.tableview.adapter.recyclerview.holder.AbstractViewHolder;
 import com.systemvv.grupo.asitenciaapp.R;
 import com.systemvv.grupo.asitenciaapp.asistencia.entidad.Alumnos;
-import com.systemvv.grupo.asitenciaapp.cursos.entidad.AlumnosUi;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

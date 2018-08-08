@@ -7,7 +7,6 @@ import android.widget.TextView;
 import com.evrencoskun.tableview.adapter.recyclerview.holder.AbstractViewHolder;
 import com.systemvv.grupo.asitenciaapp.R;
 import com.systemvv.grupo.asitenciaapp.asistencia.entidad.Asistencia;
-import com.systemvv.grupo.asitenciaapp.cursos.entidad.AsistenciaUi;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -37,7 +36,7 @@ public class CeldasAsistenciaAlumnoTardeHolder extends AbstractViewHolder {
         }
     }
 
-    private void validacionPintar(AsistenciaUi asistencia) {
+/* private void validacionPintar(AsistenciaUi asistencia) {
         switch (asistencia.getTipasistencia()) {
             case ASISTENCIA_TARDE:
                 if (asistencia.isPintar()) {
@@ -56,5 +55,5 @@ public class CeldasAsistenciaAlumnoTardeHolder extends AbstractViewHolder {
             default:
                 break;
         }
-    }
+    }*/
 }

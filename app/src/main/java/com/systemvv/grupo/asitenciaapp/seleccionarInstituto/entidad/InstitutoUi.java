@@ -1,28 +1,27 @@
 package com.systemvv.grupo.asitenciaapp.seleccionarInstituto.entidad;
 
-import org.parceler.Parcel;
 
-import java.util.List;
+import org.parceler.Parcel;
 
 @Parcel
 public class InstitutoUi {
+    String keyInstituto;
     String nombre;
     String image;
     String cede;
     String direccion;
     String keyUsuario;
     String keyPeriodo;
-    List<SeccionUi> seccionList;
+
 
     public InstitutoUi() {
     }
 
-    public InstitutoUi(String nombre, String image, String cede, String direccion, List<SeccionUi> seccionList) {
+    public InstitutoUi(String nombre, String image, String cede, String direccion) {
         this.nombre = nombre;
         this.image = image;
         this.cede = cede;
         this.direccion = direccion;
-        this.seccionList = seccionList;
     }
 
     public String getNombre() {
@@ -57,14 +56,6 @@ public class InstitutoUi {
         this.direccion = direccion;
     }
 
-    public List<SeccionUi> getSeccionList() {
-        return seccionList;
-    }
-
-    public void setSeccionList(List<SeccionUi> seccionList) {
-        this.seccionList = seccionList;
-    }
-
     public String getKeyUsuario() {
         return keyUsuario;
     }
@@ -80,4 +71,14 @@ public class InstitutoUi {
     public void setKeyPeriodo(String keyPeriodo) {
         this.keyPeriodo = keyPeriodo;
     }
+
+    public String getKeyInstituto() {
+        return keyInstituto;
+    }
+
+    public void setKeyInstituto(String keyInstituto) {
+        this.keyInstituto = keyInstituto;
+    }
+
+
 }

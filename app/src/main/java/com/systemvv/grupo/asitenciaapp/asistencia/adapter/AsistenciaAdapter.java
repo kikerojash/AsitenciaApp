@@ -23,9 +23,6 @@ import com.systemvv.grupo.asitenciaapp.asistencia.adapter.holder.filas.FilasAsis
 import com.systemvv.grupo.asitenciaapp.asistencia.entidad.Alumnos;
 import com.systemvv.grupo.asitenciaapp.asistencia.entidad.Asistencia;
 import com.systemvv.grupo.asitenciaapp.asistencia.entidad.MotivoAsistencia;
-import com.systemvv.grupo.asitenciaapp.cursos.entidad.AlumnosUi;
-import com.systemvv.grupo.asitenciaapp.cursos.entidad.AsistenciaUi;
-import com.systemvv.grupo.asitenciaapp.cursos.entidad.MotivosAsistenciaUi;
 
 public class AsistenciaAdapter extends AbstractTableAdapter<ColumnaCabeceraAsistencia, FilaCabeceraAsistencia, CeldasAsistencia> {
 

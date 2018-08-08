@@ -18,4 +18,6 @@ public interface ControlAsistenciaView extends BaseActivityView<ControlAsistenci
 
     void mostrarMensaje(String mensaje);
 
+    void mostrarInformacionSnackBar(String mensaje, int tipoRegistroResultado);
+
 }

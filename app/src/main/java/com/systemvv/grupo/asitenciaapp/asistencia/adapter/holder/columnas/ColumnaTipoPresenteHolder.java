@@ -7,7 +7,6 @@ import android.widget.TextView;
 import com.evrencoskun.tableview.adapter.recyclerview.holder.AbstractViewHolder;
 import com.systemvv.grupo.asitenciaapp.R;
 import com.systemvv.grupo.asitenciaapp.asistencia.entidad.MotivoAsistencia;
-import com.systemvv.grupo.asitenciaapp.cursos.entidad.MotivosAsistenciaUi;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

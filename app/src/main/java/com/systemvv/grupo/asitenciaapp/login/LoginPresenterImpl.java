@@ -10,6 +10,7 @@ import com.systemvv.grupo.asitenciaapp.R;
 import com.systemvv.grupo.asitenciaapp.base.UseCase;
 import com.systemvv.grupo.asitenciaapp.base.UseCaseHandler;
 import com.systemvv.grupo.asitenciaapp.base.activity.BaseActivityPresenterImpl;
+import com.systemvv.grupo.asitenciaapp.login.dataSource.entidad.UsuarioUi;
 import com.systemvv.grupo.asitenciaapp.login.useCase.ValidarPeriodo;
 import com.systemvv.grupo.asitenciaapp.login.useCase.ValidarRolUsuario;
 import com.systemvv.grupo.asitenciaapp.utils.Utils;

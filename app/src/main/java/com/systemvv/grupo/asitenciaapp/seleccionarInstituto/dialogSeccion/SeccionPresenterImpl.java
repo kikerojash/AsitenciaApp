@@ -92,18 +92,12 @@ public class SeccionPresenterImpl implements SeccionPresenter {
 
     @Override
     public void onExtras(Bundle bundle) {
+        if(bundle==null)return;
         this.institutoUi = Parcels.unwrap(bundle.getParcelable("example"));
+
         Log.d(TAG, "onExtras : " + institutoUi.getNombre());
         if (view != null) view.initVistas(institutoUi);
     }
 
-    /*@Override
-    public void onSeleccionSpinnerGrado(String selectedGrado) {
 
-    }
-
-    @Override
-    public void onSeleccionSpinnerSeccion(String selectedSeccion) {
-
-    }*/
 }

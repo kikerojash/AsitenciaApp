@@ -54,7 +54,9 @@
 
         <activity
             android:name=".asistencia.ControlAsistenciaActivity"
-            android:screenOrientation="portrait" />
+           />
+
+        <activity android:name=".asistencia.AsistenciaActivity"></activity>
 
         <activity android:name=".padre.reporteAsistencia.ReportesActivity" />
 

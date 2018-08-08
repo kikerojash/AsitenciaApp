@@ -26,13 +26,13 @@ public class GuardarAsistenciaListaHoraFin extends UseCase<GuardarAsistenciaList
     }
 
     public static final class RequestValues implements UseCase.RequestValues{
-        private List<Asistencia> asistenciaList;
+        private List<String> asistenciaList;
 
-        public RequestValues(List<Asistencia> asistenciaList) {
+        public RequestValues(List<String> asistenciaList) {
             this.asistenciaList = asistenciaList;
         }
 
-        public List<Asistencia> getAsistenciaList() {
+        public List<String> getAsistenciaList() {
             return asistenciaList;
         }
     }

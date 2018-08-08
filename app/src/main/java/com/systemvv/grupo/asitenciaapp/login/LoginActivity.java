@@ -22,6 +22,7 @@ import com.systemvv.grupo.asitenciaapp.R;
 import com.systemvv.grupo.asitenciaapp.base.UseCaseHandler;
 import com.systemvv.grupo.asitenciaapp.base.UseCaseThreadPoolScheduler;
 import com.systemvv.grupo.asitenciaapp.base.activity.BaseActivity;
+import com.systemvv.grupo.asitenciaapp.conexion.FireAuthConexion;
 import com.systemvv.grupo.asitenciaapp.fire.FireStore;
 import com.systemvv.grupo.asitenciaapp.login.dataSource.LoginRepository;
 import com.systemvv.grupo.asitenciaapp.login.dataSource.entidad.UsuarioUi;
@@ -91,7 +92,8 @@ public class LoginActivity extends BaseActivity<LoginView, LoginPresenter> imple
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
         //initializing firebase authentication object
-        firebaseAuth = FirebaseAuth.getInstance();
+        //   firebaseAuth = FirebaseAuth.getInstance();
+        firebaseAuth = FireAuthConexion.getInstance();
         progressDialog = new ProgressDialog(this);
         editTextUsuario.setText("sumire@gmail.com");
         editTextClave.setText("sumire");
@@ -170,13 +172,15 @@ public class LoginActivity extends BaseActivity<LoginView, LoginPresenter> imple
     @Override
     public void initSeleccionarInstituto(UsuarioUi usuario, String keyPeriodo) {
         progressDialog.dismiss();
+        usuario.setKeyPeriodo(keyPeriodo);
+
         Intent intent = new Intent(this, InstitutoActivity.class);
         Bundle bundle = new Bundle();
+
         bundle.putParcelable("usuarioUi", Parcels.wrap(usuario));
-        bundle.putString("keyPeriodo",keyPeriodo);
+        //  bundle.putString("keyPeriodo",keyPeriodo);
+        //intent.putExtra("usuarioUi", usuario);
         intent.putExtras(bundle);
-      /*  intent.putExtra("datousuario", usuario);
-        intent.putExtra("datoclave", clave);*/
         startActivity(intent);
     }
 
@@ -219,8 +223,8 @@ public class LoginActivity extends BaseActivity<LoginView, LoginPresenter> imple
             ProgressDialog progressDialog = new ProgressDialog(this);
             progressDialog.setCancelable(false);
             progressDialog.setMessage("Cargando Sesión Espere....");
-            presenter.onValidarAutenticacion(firebaseAuth,progressDialog);
-           // presenter.onValidarAutenticacion(firebaseAuth.getCurrentUser().getEmail());
+            presenter.onValidarAutenticacion(firebaseAuth, progressDialog);
+            // presenter.onValidarAutenticacion(firebaseAuth.getCurrentUser().getEmail());
             progressDialog.show();
 
 

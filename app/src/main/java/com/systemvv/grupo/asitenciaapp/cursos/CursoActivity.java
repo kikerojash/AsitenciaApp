@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -13,10 +14,12 @@ import android.widget.ProgressBar;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.systemvv.grupo.asitenciaapp.R;
+import com.systemvv.grupo.asitenciaapp.asistencia.AsistenciaActivity;
 import com.systemvv.grupo.asitenciaapp.asistencia.ControlAsistenciaActivity;
 import com.systemvv.grupo.asitenciaapp.base.UseCaseHandler;
 import com.systemvv.grupo.asitenciaapp.base.UseCaseThreadPoolScheduler;
 import com.systemvv.grupo.asitenciaapp.base.activity.BaseActivity;
+import com.systemvv.grupo.asitenciaapp.conexion.FireAuthConexion;
 import com.systemvv.grupo.asitenciaapp.cursos.adapter.CursoAdapter;
 import com.systemvv.grupo.asitenciaapp.cursos.dataSource.CursoRepository;
 import com.systemvv.grupo.asitenciaapp.cursos.dataSource.remote.CursoRemote;
@@ -85,6 +88,7 @@ public class CursoActivity extends BaseActivity<CursoView, CursoPresenter> imple
         setupToolbar();
         initVistas();
     }
+
     private void setupToolbar() {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -107,13 +111,34 @@ public class CursoActivity extends BaseActivity<CursoView, CursoPresenter> imple
         adapter.mostrarLista(cursoUiList);
     }
 
+
+
     @Override
     public void onClickCursoItem(CursoUi cursoUi) {
-        Intent intent = new Intent(getActivity(), ControlAsistenciaActivity.class);
+        Intent intent = new Intent(this, ControlAsistenciaActivity.class);
+        //  intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+      /*  String keyInstituto = cursoUi.getInstitutoUi().getKeyInstituto();
+        String keyCurso = cursoUi.getKeyCurso();
+        String keyUser = cursoUi.getInstitutoUi().getKeyUsuario();
+        String keyPeriodo = cursoUi.getInstitutoUi().getKeyPeriodo();
+        String keySeccion = cursoUi.getSeccionSelected();
+        String keyGrado = cursoUi.getGradoSelected()+"";*/
         Bundle bundle = new Bundle();
+       /* bundle.putString("keyInstituto",keyInstituto);
+        bundle.putString("keyCurso",keyCurso);
+        bundle.putString("keyUser",keyUser);
+        bundle.putString("keyPeriodo",keyPeriodo);
+        bundle.putString("keySeccion",keySeccion);
+        bundle.putString("keyGrado",keyGrado);*/
         bundle.putParcelable("cursoUi", Parcels.wrap(cursoUi));
         intent.putExtras(bundle);
         startActivity(intent);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
     }
 
     @Override
@@ -134,10 +159,13 @@ public class CursoActivity extends BaseActivity<CursoView, CursoPresenter> imple
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if(firebaseAuth.getCurrentUser() == null){
+        if (firebaseAuth.getCurrentUser() == null) {
             finish();
             startActivity(new Intent(this, LoginActivity.class));
         }
     }
+
+
+
 
 }

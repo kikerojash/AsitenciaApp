@@ -9,12 +9,18 @@ public class Constantes {
     public static final String NODO_PERIODO_GRADO_CURSO_ALUMNO = "periodo_grado_curso_alumno";
     public static final String NODO_ALUMNOS = "alumno";
 
-    public static final String NODO_PERIODO_GRADO_ALUMNO="periodo_grado_alumno";
+    public static final String NODO_PERIODO_GRADO_ALUMNO = "periodo_grado_alumno";
 
 
     public static final String NODO_PERIODO = "periodo";
     public static final String NODO_USUARIO = "usuario";
 
+
+    /*Tipo Asistencia -Validacion*/
+
+    public static final int FALTA_ASISTENCIA_HORA_CIERRE = 0;
+    public static final int FALTA_ASISTENCIA_REGISTRO_HOY = 1;
+    public static final int REGISTROS_COMPLETOS = 2;
 
 
 

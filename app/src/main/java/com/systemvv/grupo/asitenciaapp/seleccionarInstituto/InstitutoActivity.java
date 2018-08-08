@@ -22,6 +22,7 @@ import com.systemvv.grupo.asitenciaapp.R;
 import com.systemvv.grupo.asitenciaapp.base.UseCaseHandler;
 import com.systemvv.grupo.asitenciaapp.base.UseCaseThreadPoolScheduler;
 import com.systemvv.grupo.asitenciaapp.base.activity.BaseActivity;
+import com.systemvv.grupo.asitenciaapp.conexion.FireAuthConexion;
 import com.systemvv.grupo.asitenciaapp.fire.FireStore;
 import com.systemvv.grupo.asitenciaapp.login.LoginActivity;
 import com.systemvv.grupo.asitenciaapp.seleccionarInstituto.adapter.InstitutoAdapter;
@@ -86,6 +87,7 @@ public class InstitutoActivity extends BaseActivity<InstitutoView, InstitutoPres
         setContentView(R.layout.activity_instituto);
         //initializing firebase authentication object
         firebaseAuth = FirebaseAuth.getInstance();
+
         ButterKnife.bind(this);
         initVistas();
         initToolbar();
@@ -130,6 +132,11 @@ public class InstitutoActivity extends BaseActivity<InstitutoView, InstitutoPres
         dialogFragment.show(ft, "dialog");
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+    }
 
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_instituto_docente, menu);
@@ -158,18 +165,18 @@ public class InstitutoActivity extends BaseActivity<InstitutoView, InstitutoPres
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if(firebaseAuth.getCurrentUser() == null){
+        if (firebaseAuth.getCurrentUser() == null) {
             //closing this activity
             finish();
             //starting login activity
             startActivity(new Intent(this, LoginActivity.class));
         }
 
-        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(InstitutoActivity.this,  new OnSuccessListener<InstanceIdResult>() {
+        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(InstitutoActivity.this, new OnSuccessListener<InstanceIdResult>() {
             @Override
             public void onSuccess(InstanceIdResult instanceIdResult) {
                 String newToken = instanceIdResult.getToken();
-                Log.e("newToken",newToken);
+                Log.e("newToken", newToken);
             }
         });
     }

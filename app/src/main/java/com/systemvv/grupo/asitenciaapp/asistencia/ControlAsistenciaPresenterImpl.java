@@ -21,17 +21,13 @@ import com.systemvv.grupo.asitenciaapp.asistencia.entidad.Asistencia;
 import com.systemvv.grupo.asitenciaapp.asistencia.entidad.MotivoAsistencia;
 import com.systemvv.grupo.asitenciaapp.asistencia.useCase.GuardarAsistenciaLista;
 import com.systemvv.grupo.asitenciaapp.asistencia.useCase.GuardarAsistenciaListaHoraFin;
-import com.systemvv.grupo.asitenciaapp.asistencia.useCase.ObtenerInformacionAlumnos;
 import com.systemvv.grupo.asitenciaapp.asistencia.useCase.ObtenerListaAlumnos;
-import com.systemvv.grupo.asitenciaapp.asistencia.useCase.ObtenerListaAsistencia;
 import com.systemvv.grupo.asitenciaapp.asistencia.useCase.ValidarFechaRegistroAsistencia;
 import com.systemvv.grupo.asitenciaapp.base.UseCase;
 import com.systemvv.grupo.asitenciaapp.base.UseCaseHandler;
 import com.systemvv.grupo.asitenciaapp.base.activity.BaseActivityPresenterImpl;
-import com.systemvv.grupo.asitenciaapp.cursos.entidad.AlumnosUi;
-import com.systemvv.grupo.asitenciaapp.cursos.entidad.AsistenciaUi;
 import com.systemvv.grupo.asitenciaapp.cursos.entidad.CursoUi;
-import com.systemvv.grupo.asitenciaapp.cursos.entidad.MotivosAsistenciaUi;
+import com.systemvv.grupo.asitenciaapp.utils.Constantes;
 
 
 import org.parceler.Parcels;
@@ -55,20 +51,16 @@ public class ControlAsistenciaPresenterImpl extends BaseActivityPresenterImpl<Co
     /*Caso de Uso*/
     private GuardarAsistenciaLista guardarAsistenciaLista;
     private ValidarFechaRegistroAsistencia validarFechaRegistroAsistencia;
-    private ObtenerListaAsistencia obtenerListaAsistencia;
     private GuardarAsistenciaListaHoraFin guardarAsistenciaListaHoraFin;
     private ObtenerListaAlumnos obtenerListaAlumnos;
-    private ObtenerInformacionAlumnos obtenerInformacionAlumnos;
 
-    public ControlAsistenciaPresenterImpl(UseCaseHandler handler, Resources res, GuardarAsistenciaLista guardarAsistenciaLista, ValidarFechaRegistroAsistencia validarFechaRegistroAsistencia, ObtenerListaAsistencia obtenerListaAsistencia, GuardarAsistenciaListaHoraFin guardarAsistenciaListaHoraFin, ObtenerListaAlumnos obtenerListaAlumnos, ObtenerInformacionAlumnos obtenerInformacionAlumnos) {
+
+    public ControlAsistenciaPresenterImpl(UseCaseHandler handler, Resources res, GuardarAsistenciaLista guardarAsistenciaLista, ValidarFechaRegistroAsistencia validarFechaRegistroAsistencia, GuardarAsistenciaListaHoraFin guardarAsistenciaListaHoraFin, ObtenerListaAlumnos obtenerListaAlumnos) {
         super(handler, res);
         this.guardarAsistenciaLista = guardarAsistenciaLista;
         this.validarFechaRegistroAsistencia = validarFechaRegistroAsistencia;
-        this.obtenerListaAsistencia = obtenerListaAsistencia;
         this.guardarAsistenciaListaHoraFin = guardarAsistenciaListaHoraFin;
         this.obtenerListaAlumnos = obtenerListaAlumnos;
-        this.obtenerInformacionAlumnos = obtenerInformacionAlumnos;
-
     }
 
     @Override
@@ -86,29 +78,15 @@ public class ControlAsistenciaPresenterImpl extends BaseActivityPresenterImpl<Co
         super.setExtras(extras);
         if (extras == null) return;
         this.cursoUi = Parcels.unwrap(extras.getParcelable("cursoUi"));
-        initTablaInstancia();
+
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        //  initObtenerListaAlumnos(cursoUi);
-        Log.d(TAG, "OnstartalumnosList :" + alumnosList.size() + " asdasd " + motivoAsistenciaList.size());
         if (view != null) view.mostrarInformacionBasica(cursoUi);
-        //initView();
     }
 
- /*   private void initVistas() {
-        columnHeaderList = new ArrayList<>();
-        cellsList = new ArrayList<>();
-        rowHeaderList = new ArrayList<>();
-        columnHeaderList.addAll(cursoUi.getMotivosAsistenciaUiList());
-        rowHeaderList.addAll(cursoUi.getAlumnosUiList());
-        cellsList.addAll(getCellListForSortingTest());
-        if (view != null) view.mostrarListaTablas(columnHeaderList, rowHeaderList, cellsList);
-    }*/
-
-    List<AsistenciaUi> guardandoListasAsistencias;
 
     List<Alumnos> alumnosList;
     List<MotivoAsistencia> motivoAsistenciaList;
@@ -116,9 +94,7 @@ public class ControlAsistenciaPresenterImpl extends BaseActivityPresenterImpl<Co
     @Override
     public void onResume() {
         super.onResume();
-        Log.d(TAG, "ReSumeealumnosList :" + alumnosList.size() + " asdasd " + motivoAsistenciaList.size());
 
-        if (view != null) view.mostrarListaTablas(columnHeaderList, rowHeaderList, cellsList);
     }
 
     private void initTablaInstancia() {
@@ -127,34 +103,20 @@ public class ControlAsistenciaPresenterImpl extends BaseActivityPresenterImpl<Co
         rowHeaderList = new ArrayList<>();
         celdasAsistenciasColumnaPresentes = new ArrayList<>();
         celdasAsistencias = new ArrayList<>();
-        guardandoListasAsistencias = new ArrayList<>();
+
         alumnosList = new ArrayList<>();
-        initObtenerListaAlumnos(cursoUi);
-        initObtenerListaMotivosAsistencia();
     }
 
     @Override
     public void onCreate() {
-        //  initTablaInstancia();
         Log.d(TAG, "onCreate :");
-        // initVistas();
-
-        //Log.d(TAG, "onCreatealumnosList :" + alumnosList.size() + " asdasd " + motivoAsistenciaList.size());
-
-
-//        columnHeaderList.addAll(motivoAsistenciaList());
-//        rowHeaderList.addAll(alumnosList);
-//        cellsList.addAll(getCellListForSortingTest());
-
-        /*Log.d(TAG, "OnCreatePresenter : " + alumnosList.size() +
-                " / motivosAsistenciaLista : " + motivoAsistenciaList().size() +
-                " / celdasLista :   " + getCellListForSortingTest().size());
-*/
         DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+        DateFormat dfHours = new SimpleDateFormat("HH:mm aaa");
         String date = df.format(Calendar.getInstance().getTime());
-        // validarExisteFecha(date);
-
-        //if (view != null) view.mostrarListaTablas(columnHeaderList, rowHeaderList, cellsList);
+        initTablaInstancia();
+        initObtenerListaAlumnos(cursoUi);
+        validarExisteFecha(date);
+        initObtenerListaMotivosAsistencia();
     }
 
     private void initObtenerListaMotivosAsistencia() {
@@ -162,76 +124,43 @@ public class ControlAsistenciaPresenterImpl extends BaseActivityPresenterImpl<Co
         motivoAsistenciaList.addAll(motivoAsistenciaList());
     }
 
-    private void initView() {
-
-        Log.d(TAG, "OnstartalumnosList :" + alumnosList.size() + " asdasd " + motivoAsistenciaList.size());
-
-
-      /*  columnHeaderList.addAll(motivoAsistenciaList);
-        rowHeaderList.addAll(alumnosList);
-        cellsList.addAll(getCellListForSortingTest());*/
-
-    }
-
-    // List<MotivoAsistencia> motivoAsistencias;
 
     private List<MotivoAsistencia> motivoAsistenciaList() {
         List<MotivoAsistencia> motivoAsistencias = new ArrayList<>();
-
         MotivoAsistencia motivosAsistenciaPuntual = new MotivoAsistencia();
-        motivosAsistenciaPuntual.setTipoMotivo(MotivosAsistenciaUi.TIPO_ASISTENCIA_PUNTUAL);
+        motivosAsistenciaPuntual.setTipoMotivo(MotivoAsistencia.TIPO_ASISTENCIA_PUNTUAL);
+
 
         MotivoAsistencia motivosAsistenciaTardeUi = new MotivoAsistencia();
-        motivosAsistenciaTardeUi.setTipoMotivo(MotivosAsistenciaUi.TIPO_ASISTENCIA_TARDE);
+        motivosAsistenciaTardeUi.setTipoMotivo(MotivoAsistencia.TIPO_ASISTENCIA_TARDE);
+
 
         MotivoAsistencia motivosAsistenciaFaltoUi = new MotivoAsistencia();
-        motivosAsistenciaFaltoUi.setTipoMotivo(MotivosAsistenciaUi.TIPO_ASISTENCIA_FALTO);
+        motivosAsistenciaFaltoUi.setTipoMotivo(MotivoAsistencia.TIPO_ASISTENCIA_FALTO);
+
 
         motivoAsistencias.add(motivosAsistenciaPuntual);
         motivoAsistencias.add(motivosAsistenciaTardeUi);
         motivoAsistencias.add(motivosAsistenciaFaltoUi);
+
         return motivoAsistencias;
     }
 
+
     private void initObtenerListaAlumnos(CursoUi cursoUi) {
-//        alumnosList = new ArrayList<>();
+        if (view != null) view.mostrarProgressBar();
         handler.execute(obtenerListaAlumnos, new ObtenerListaAlumnos.RequestValues(cursoUi),
                 new UseCase.UseCaseCallback<ObtenerListaAlumnos.ResponseValue>() {
                     @Override
                     public void onSuccess(ObtenerListaAlumnos.ResponseValue response) {
-                        if (response.getAlumnosList().size() > 0)
-                            initObtenerInformacionListAlumnos(response.getAlumnosList());
-
-                        // alumnosList = new ArrayList<>();
-                        //  alumnosList.addAll(response.getAlumnosList());
-                        Log.d(TAG, "onSuccess : " + response.getAlumnosList().size());
-                        /*for (Alumnos alumnos : response.getAlumnosList()) {
-                            alumnosList.add(alumnos);
-                        }*/
-                        // alumnosList.addAll(response.getAlumnosList());
-
-                      /*initLoading(response.getAlumnosList());
-                        Log.d(TAG, "onSuccessalumnosList : " + alumnosList.size());*/
-                    }
-
-                    @Override
-                    public void onError() {
-
-                    }
-                });
-
-    }
-
-    private void initObtenerInformacionListAlumnos(final List<Alumnos> alumnosList) {
-        //   List<Alumnos> alumnos = new ArrayList<>();
-        handler.execute(obtenerInformacionAlumnos, new ObtenerInformacionAlumnos.RequestValues(alumnosList),
-                new UseCase.UseCaseCallback<ObtenerInformacionAlumnos.ResponseValue>() {
-                    @Override
-                    public void onSuccess(ObtenerInformacionAlumnos.ResponseValue response) {
-                       /* columnHeaderList.addAll(motivoAsistenciaList());
+                        alumnosList.addAll(response.getAlumnosList());
+                        columnHeaderList.addAll(motivoAsistenciaList);
                         rowHeaderList.addAll(alumnosList);
-                        cellsList.addAll(getCellListForSortingTest(alumnosList));*/
-                        Log.d(TAG, "alumnosList : " + alumnosList.size() + " alumnos ;" + response.getAlumnos().getNombre());
+                        cellsList.addAll(getCellListForSortingTest(alumnosList));
+                        if (view != null) {
+                            view.ocultarProgressBar();
+                            view.mostrarListaTablas(columnHeaderList, rowHeaderList, cellsList);
+                        }
                     }
 
                     @Override
@@ -239,73 +168,8 @@ public class ControlAsistenciaPresenterImpl extends BaseActivityPresenterImpl<Co
 
                     }
                 });
+
     }
-
-    private void initLoading(List<Alumnos> alumnosList2) {
-        alumnosList.addAll(alumnosList2);
-        //  this.alumnosList = alumnosList;
-        Log.d(TAG, "initLoading :" + alumnosList.size());
-    }
-
-    private void validateLlega(List<Alumnos> alumnosList) {
-        if (alumnosList.size() > 0) {
-            Log.d(TAG, "MAYO > 0");
-            Log.d(TAG, "alumnosList :" + alumnosList.size() + " asdasd " + motivoAsistenciaList.size());
-        } else {
-            Log.d(TAG, "MAYO < 0");
-        }
-        /*columnHeaderList.addAll(motivoAsistenciaList);
-        rowHeaderList.addAll(alumnosList);
-        cellsList.addAll(getCellListForSortingTest());
-        if (view != null) view.mostrarListaTablas(columnHeaderList, rowHeaderList, cellsList);*/
-    }
-
-
-//    private List<List<CeldasAsistencia>> getCellListForSortingTest() {
-//        List<List<CeldasAsistencia>> list = new ArrayList<>();
-//        for (AlumnosUi alumnosUi : cursoUi.getAlumnosUiList()) {
-//
-//            List<CeldasAsistencia> cellList = new ArrayList<>();
-//
-//            for (int j = 0; j < cursoUi.getMotivosAsistenciaUiList().size(); j++) {
-//                MotivosAsistenciaUi motivosAsistenciaUi = cursoUi.getMotivosAsistenciaUiList().get(j);
-//
-//                Log.d(TAG, "MotivoAsistencia : " + motivosAsistenciaUi.getAsistenciaUiList().size());
-//                for (AsistenciaUi asistenciaUi : motivosAsistenciaUi.getAsistenciaUiList()) {
-//                    Log.d(TAG, "CURSO::ASISTENCIA : " + cursoUi.getAsistenciaUis().size());
-//                    if (asistenciaUi.getJustificacion() == 1) {
-//                        AsistenciaUi asistencia = new AsistenciaUi();
-//                        asistencia.setPintar(false);
-//                        asistencia.setJustificacion(MotivosAsistenciaUi.TIPO_ASISTENCIA_PUNTUAL);
-//                        asistencia.setTipoAsistencia("asdasdasd" + j);
-//                        asistencia.setAlumnosUi(alumnosUi);
-//                        cellList.add(asistencia);
-//                        Log.d(TAG, "alumnosUi.getTipoAsistencia() 1: " + motivosAsistenciaUi.getTipoMotivo());
-//                    } else if (asistenciaUi.getJustificacion() == 2) {
-//                        AsistenciaUi asistencia = new AsistenciaUi();
-//                        asistencia.setPintar(false);
-//                        asistencia.setJustificacion(MotivosAsistenciaUi.TIPO_ASISTENCIA_TARDE);
-//                        asistencia.setTipasistencia(AsistenciaUi.TipoAsistencia.ASISTENCIA_TARDE);
-//                        asistencia.setTipoAsistencia("asdasdasd" + j);
-//                        asistencia.setAlumnosUi(alumnosUi);
-//                        cellList.add(asistencia);
-//                        Log.d(TAG, "alumnosUi.getTipoAsistencia() 2: " + motivosAsistenciaUi.getTipoMotivo());
-//                    } else if (asistenciaUi.getJustificacion() == 4) {
-//                        AsistenciaUi asistencia = new AsistenciaUi();
-//                        asistencia.setPintar(false);
-//                        asistencia.setJustificacion(MotivosAsistenciaUi.TIPO_ASISTENCIA_FALTO);
-//                        asistencia.setTipoAsistencia("asdasdasd" + j);
-//                        asistencia.setAlumnosUi(alumnosUi);
-//                        cellList.add(asistencia);
-//                        Log.d(TAG, "alumnosUi.getTipoAsistencia() 4: " + motivosAsistenciaUi.getTipoMotivo());
-//                    }
-//                }
-//            }
-//            list.add(cellList);
-//        }
-//
-//        return list;
-//    }
 
 
     private List<List<CeldasAsistencia>> getCellListForSortingTest(List<Alumnos> alumnosList) {
@@ -316,49 +180,38 @@ public class ControlAsistenciaPresenterImpl extends BaseActivityPresenterImpl<Co
             Log.d(TAG, "motivoAsistencias : " + motivoAsistenciaList().size());
             for (int j = 0; j < motivoAsistenciaList.size(); j++) {
                 MotivoAsistencia motivosAsistenciaUi = motivoAsistenciaList().get(j);
-
-                //Log.d(TAG, "MotivoAsistencia : " + motivosAsistenciaUi.getAsistenciaUiList().size());
-                Asistencia asistencia = new Asistencia();
-                asistencia.setPintar(false);
-                asistencia.setJustificacion(MotivosAsistenciaUi.TIPO_ASISTENCIA_PUNTUAL);
-                asistencia.setTipoAsistencia("asdasdasd" + j);
-                asistencia.setAlumnosUi(alumnosUi);
-                cellList.add(asistencia);
-                /*for (Asistencia asistenciaUi : motivosAsistenciaUi.getAsistenciaUiList()) {
-                    Log.d(TAG, "CURSO::ASISTENCIA : " + cursoUi.getAsistenciaUis().size());
-                    if (asistenciaUi.getJustificacion() == 1) {
-                        AsistenciaUi asistencia = new AsistenciaUi();
-                        asistencia.setPintar(false);
-                        asistencia.setJustificacion(MotivosAsistenciaUi.TIPO_ASISTENCIA_PUNTUAL);
-                        asistencia.setTipoAsistencia("asdasdasd" + j);
-                        asistencia.setAlumnosUi(alumnosUi);
-                        cellList.add(asistencia);
-                        Log.d(TAG, "alumnosUi.getTipoAsistencia() 1: " + motivosAsistenciaUi.getTipoMotivo());
-                    } else if (asistenciaUi.getJustificacion() == 2) {
-                        AsistenciaUi asistencia = new AsistenciaUi();
-                        asistencia.setPintar(false);
-                        asistencia.setJustificacion(MotivosAsistenciaUi.TIPO_ASISTENCIA_TARDE);
-                        asistencia.setTipasistencia(AsistenciaUi.TipoAsistencia.ASISTENCIA_TARDE);
-                        asistencia.setTipoAsistencia("asdasdasd" + j);
-                        asistencia.setAlumnosUi(alumnosUi);
-                        cellList.add(asistencia);
-                        Log.d(TAG, "alumnosUi.getTipoAsistencia() 2: " + motivosAsistenciaUi.getTipoMotivo());
-                    } else if (asistenciaUi.getJustificacion() == 4) {
-                        AsistenciaUi asistencia = new AsistenciaUi();
-                        asistencia.setPintar(false);
-                        asistencia.setJustificacion(MotivosAsistenciaUi.TIPO_ASISTENCIA_FALTO);
-                        asistencia.setTipoAsistencia("asdasdasd" + j);
-                        asistencia.setAlumnosUi(alumnosUi);
-                        cellList.add(asistencia);
-                        Log.d(TAG, "alumnosUi.getTipoAsistencia() 4: " + motivosAsistenciaUi.getTipoMotivo());
-                    }
-                }*/
+                if (motivosAsistenciaUi.getTipoMotivo() == 1) {
+                    Asistencia asistencia = new Asistencia();
+                    asistencia.setPintar(false);
+                    asistencia.setJustificacion(MotivoAsistencia.TIPO_ASISTENCIA_PUNTUAL);
+                    asistencia.setTipoAsistencia("asdasdasd" + j);
+                    asistencia.setAlumnosUi(alumnosUi);
+                    cellList.add(asistencia);
+                    Log.d(TAG, "alumnosUi.getTipoAsistencia() 1: " + motivosAsistenciaUi.getTipoMotivo());
+                } else if (motivosAsistenciaUi.getTipoMotivo() == 2) {
+                    Asistencia asistencia = new Asistencia();
+                    asistencia.setPintar(false);
+                    asistencia.setJustificacion(MotivoAsistencia.TIPO_ASISTENCIA_TARDE);
+                    asistencia.setTipoAsistencia("asdasdasd" + j);
+                    asistencia.setAlumnosUi(alumnosUi);
+                    cellList.add(asistencia);
+                    Log.d(TAG, "alumnosUi.getTipoAsistencia() 2: " + motivosAsistenciaUi.getTipoMotivo());
+                } else if (motivosAsistenciaUi.getTipoMotivo() == 4) {
+                    Asistencia asistencia = new Asistencia();
+                    asistencia.setPintar(false);
+                    asistencia.setJustificacion(MotivoAsistencia.TIPO_ASISTENCIA_FALTO);
+                    asistencia.setTipoAsistencia("asdasdasd" + j);
+                    asistencia.setAlumnosUi(alumnosUi);
+                    cellList.add(asistencia);
+                    Log.d(TAG, "alumnosUi.getTipoAsistencia() 4: " + motivosAsistenciaUi.getTipoMotivo());
+                }
             }
             list.add(cellList);
         }
 
         return list;
     }
+
 
     boolean clickColumn = false;
 
@@ -367,12 +220,12 @@ public class ControlAsistenciaPresenterImpl extends BaseActivityPresenterImpl<Co
 
     @Override
     public void onClickColumnaCabecera(@NonNull RecyclerView.ViewHolder holder, List<CeldasAsistencia> clickColumnaList) {
-      /*  if (clickColumn == false) {
+        if (clickColumn == false) {
             if (holder instanceof ColumnaTipoPresenteHolder) {
                 clickColumn = true;
 
                 for (CeldasAsistencia celdasAsistencia : clickColumnaList) {
-                    AsistenciaUi asistencia = (AsistenciaUi) celdasAsistencia;
+                    Asistencia asistencia = (Asistencia) celdasAsistencia;
                     asistencia.setJustificacion(1);
                     asistencia.setTipoAsistencia("PUNTUAL");
                     asistencia.setPintar(true);
@@ -382,77 +235,129 @@ public class ControlAsistenciaPresenterImpl extends BaseActivityPresenterImpl<Co
             if (view != null) view.actualizarDatosCambiadosTabla();
         } else {
             Log.d(TAG, "no hacer nada");
-        }*/
+        }
     }
 
     List<CeldasAsistencia> celdasAsistencias;
 
     @Override
-    public void onClickCeldas(@NonNull RecyclerView.ViewHolder holder, AsistenciaUi asistenciaUi, List<CeldasAsistencia> clickCeldasList) {
-       /* if (clickColumn == true) {
+    public void onClickCeldas(@NonNull RecyclerView.ViewHolder holder, Asistencia asistenciaUi, List<CeldasAsistencia> clickCeldasList) {
+        if (clickColumn == true) {
+
             if (holder instanceof CeldasAsistenciaAlumnoPuntualHolder) {
                 asistenciaUi.setTipoAsistencia("PUNTUAL");
                 pintandoCeldas(asistenciaUi, clickCeldasList);
+                Log.d(TAG, "onClickCeldasPUNTUAL : ");
             } else if (holder instanceof CeldasAsistenciaAlumnoTardeHolder) {
                 asistenciaUi.setTipoAsistencia("TARDE");
                 pintandoCeldas(asistenciaUi, clickCeldasList);
+                Log.d(TAG, "onClickCeldasTARDE : ");
             } else if (holder instanceof CeldasAsistenciaAlumnoFaltoHolder) {
                 asistenciaUi.setTipoAsistencia("FALTO");
                 pintandoCeldas(asistenciaUi, clickCeldasList);
+                Log.d(TAG, "onClickCeldasFALTO : ");
             }
             if (view != null) view.actualizarDatosCambiadosTabla();
         } else {
-            //Toast.makeText(getApplicationContext(), "Seleccione todos los items primero ", Toast.LENGTH_SHORT).show();
-        }*/
+            // Toast.makeText(getApplicationContext(), "Seleccione todos los items primero ", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
     public void onGuardarEntrada() {
-        /*List<AsistenciaUi> guardandoListasAsistencias = new ArrayList<>();
+        List<Asistencia> guardandoListasAsistencias = new ArrayList<>();
+        switch (tipoValidacionExistFecha) {
+            case Constantes.FALTA_ASISTENCIA_HORA_CIERRE:
+                Log.d(TAG, "FALTA_ASISTENCIA_HORA_CIERRE : ");
+                if (view != null) {
+                    view.mostrarMensaje("Falta Registrar Hora Cierre");
+                    return;
+                }
+                break;
+            case Constantes.FALTA_ASISTENCIA_REGISTRO_HOY:
+                Log.d(TAG, "FALTA_ASISTENCIA_REGISTRO_HOY : ");
+                // List<Asistencia> guardandoListasAsistencias = new ArrayList<>();
 
-        DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-        DateFormat dfHours = new SimpleDateFormat("HH:mm aaa");
-        String date = df.format(Calendar.getInstance().getTime());
-        String horaInicioCurso = dfHours.format(Calendar.getInstance().getTime());
+                DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+                DateFormat dfHours = new SimpleDateFormat("HH:mm aaa");
+                String date = df.format(Calendar.getInstance().getTime());
+                String horaInicioCurso = dfHours.format(Calendar.getInstance().getTime());
 
-        for (CeldasAsistencia celdasAsistencia : celdasAsistencias) {
-            AsistenciaUi asistenciaUi = (AsistenciaUi) celdasAsistencia;
-            asistenciaUi.setHoraInicioCurso(horaInicioCurso);
-            asistenciaUi.setFecha(date);
-            if (asistenciaUi.isPintar()) {
-                Log.d(TAG, "celdasAsistencias : " + asistenciaUi.getTipoAsistencia() +
-                        " celdasAsistencias : " + asistenciaUi.getAlumnosUi().getNombre());
-                guardandoListasAsistencias.add(asistenciaUi);
-                continue;
-            }
+                for (CeldasAsistencia celdasAsistencia : celdasAsistencias) {
+                    Asistencia asistenciaUi = (Asistencia) celdasAsistencia;
+                    asistenciaUi.setHoraInicioCurso(horaInicioCurso);
+                    asistenciaUi.setFecha(date);
+                    if (asistenciaUi.isPintar()) {
+                        /*Log.d(TAG, "celdasAsistencias : " + asistenciaUi.getTipoAsistencia() +
+                                " celdasAsistencias : " + asistenciaUi.getAlumnosUi().getNombre());*/
+                        guardandoListasAsistencias.add(asistenciaUi);
+                        continue;
+                    }
+                }
+                for (CeldasAsistencia celdasAsistencia : celdasAsistenciasColumnaPresentes) {
+                    Asistencia asistenciaUi = (Asistencia) celdasAsistencia;
+                    asistenciaUi.setHoraInicioCurso(horaInicioCurso);
+                    asistenciaUi.setFecha(date);
+                    if (asistenciaUi.isPintar()) {
+                       /* Log.d(TAG, "celdasAsistenciasColumnaPresentes : " + asistenciaUi.getTipoAsistencia() +
+                                " celdasAsistenciasColumnaPresentes : " + asistenciaUi.getAlumnosUi().getNombre());*/
+                        guardandoListasAsistencias.add(asistenciaUi);
+                        continue;
+                    }
+                }
+                if (guardandoListasAsistencias.size() == 0 || guardandoListasAsistencias == null) {
+                    if (view != null) view.mostrarMensaje("No se Permiten Campos Vacíos");
+                    return;
+                }
+                initGuardarListaAsistencia(guardandoListasAsistencias);
+                break;
+            case Constantes.REGISTROS_COMPLETOS:
+                if (view != null) {
+                    view.mostrarMensaje("Vuelva Mañana, Registros Completos");
+                    return;
+                }
+                break;
         }
-        for (CeldasAsistencia celdasAsistencia : celdasAsistenciasColumnaPresentes) {
-            AsistenciaUi asistenciaUi = (AsistenciaUi) celdasAsistencia;
-            asistenciaUi.setHoraInicioCurso(horaInicioCurso);
-            asistenciaUi.setFecha(date);
-            if (asistenciaUi.isPintar()) {
-                Log.d(TAG, "celdasAsistenciasColumnaPresentes : " + asistenciaUi.getTipoAsistencia() +
-                        " celdasAsistenciasColumnaPresentes : " + asistenciaUi.getAlumnosUi().getNombre());
-                guardandoListasAsistencias.add(asistenciaUi);
-                continue;
-            }
+        if (guardandoListasAsistencias.size() == 0) {
+            if (view != null) view.mostrarMensaje("No se Permiten Campos Vacíos");
         }
-        Log.d(TAG, "CONTADORFINAL : " + guardandoListasAsistencias.size());
-        validarExisteFecha(date, guardandoListasAsistencias);*/
-        //initGuardarListaAsistencia(guardandoListasAsistencias);
     }
 
-    private void validarExisteFecha(String date, final List<AsistenciaUi> guardandoListasAsistencias) {
-        handler.execute(validarFechaRegistroAsistencia, new ValidarFechaRegistroAsistencia.RequestValues(date),
+    int tipoValidacionExistFecha = 0;
+    List<String> stringListAsistencia;
+
+    private void validarExisteFecha(String date) {
+        if (view != null) view.mostrarProgressBar();
+        stringListAsistencia = new ArrayList<>();
+        handler.execute(validarFechaRegistroAsistencia, new ValidarFechaRegistroAsistencia.RequestValues(date, cursoUi),
                 new UseCase.UseCaseCallback<ValidarFechaRegistroAsistencia.ResponseValue>() {
                     @Override
                     public void onSuccess(ValidarFechaRegistroAsistencia.ResponseValue response) {
-                        if (response.isaBoolean()) {
-                            Log.d(TAG, "SOLO FALTA REGISTRAR HORA DE FIN");
-                            if (view != null)
-                                view.mostrarMensaje(res.getString(R.string.validacion_mensaje_guardar));
-                        } else {
-                            initGuardarListaAsistencia(guardandoListasAsistencias);
+                        switch (response.getTipoValidacionFecha()) {
+                            case Constantes.FALTA_ASISTENCIA_HORA_CIERRE:
+                                tipoValidacionExistFecha = Constantes.FALTA_ASISTENCIA_HORA_CIERRE;
+                                stringListAsistencia.addAll(response.getStringList());
+                                if (view != null) {
+                                    view.mostrarInformacionSnackBar("Falta Registrar Hora Cierre", Constantes.FALTA_ASISTENCIA_HORA_CIERRE);
+                                }
+                                Log.d(TAG, "SOLO FALTA REGISTRAR HORA DE CIERRE");
+                                break;
+                            case Constantes.FALTA_ASISTENCIA_REGISTRO_HOY:
+                                tipoValidacionExistFecha = Constantes.FALTA_ASISTENCIA_REGISTRO_HOY;
+                                if (view != null) {
+                                    view.mostrarInformacionSnackBar("Falta Registro de Hoy", Constantes.FALTA_ASISTENCIA_REGISTRO_HOY);
+                                }
+                                Log.d(TAG, "AUN NO SE REGISTRAR ASISTENCIA");
+                                break;
+
+                            case Constantes.REGISTROS_COMPLETOS:
+                                if (view != null) {
+                                    view.mostrarInformacionSnackBar("Vuelva Mañana, Registros Completos", Constantes.REGISTROS_COMPLETOS);
+                                }
+                                tipoValidacionExistFecha = Constantes.REGISTROS_COMPLETOS;
+                                Log.d(TAG, "REGISTROS_COMPLETOS");
+                                break;
+
                         }
                     }
 
@@ -465,17 +370,38 @@ public class ControlAsistenciaPresenterImpl extends BaseActivityPresenterImpl<Co
 
     @Override
     public void onGuardarSalida() {
-        DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-        String date = df.format(Calendar.getInstance().getTime());
-        handler.execute(obtenerListaAsistencia, new ObtenerListaAsistencia.RequestValues(date),
-                new UseCase.UseCaseCallback<ObtenerListaAsistencia.ResponseValue>() {
+
+        switch (tipoValidacionExistFecha) {
+            case Constantes.FALTA_ASISTENCIA_HORA_CIERRE:
+                Log.d(TAG, "FALTA_ASISTENCIA_HORA_CIERRE : ");
+                initRegistroSalida(stringListAsistencia);
+                break;
+            case Constantes.FALTA_ASISTENCIA_REGISTRO_HOY:
+                Log.d(TAG, "FALTA_ASISTENCIA_REGISTRO_HOY : ");
+                if (view != null) {
+                    view.mostrarMensaje("Falta Registros Hoy");
+                    return;
+                }
+                break;
+            case Constantes.REGISTROS_COMPLETOS:
+                if (view != null) {
+                    view.mostrarMensaje("Vuelva Mañana, Registros Completos");
+                    return;
+                }
+                break;
+        }
+    }
+
+    private void initRegistroSalida(List<String> stringListAsistencia) {
+        handler.execute(guardarAsistenciaListaHoraFin, new GuardarAsistenciaListaHoraFin.RequestValues(stringListAsistencia),
+                new UseCase.UseCaseCallback<GuardarAsistenciaListaHoraFin.ResponseValue>() {
                     @Override
-                    public void onSuccess(ObtenerListaAsistencia.ResponseValue response) {
-                        if (response.getAsistenciaList() == null) {
+                    public void onSuccess(GuardarAsistenciaListaHoraFin.ResponseValue response) {
+                        if (response.isaBoolean()) {
                             if (view != null)
-                                view.mostrarMensaje(res.getString(R.string.validacion_mensaje_guardar_hora_fin));
+                                view.mostrarMensaje(res.getString(R.string.validacion_mensaje_guardar_hora_fin_correctos));
                         } else {
-                            //actualizarHoraFinAsistenciaLista(response.getAsistenciaList());
+                            Log.d(TAG, "ALGO PASO PAPU");
                         }
                     }
 
@@ -486,37 +412,35 @@ public class ControlAsistenciaPresenterImpl extends BaseActivityPresenterImpl<Co
                 });
     }
 
-    private void actualizarHoraFinAsistenciaLista(List<Asistencia> asistenciaList) {
-
-//        handler.execute(guardarAsistenciaListaHoraFin, new GuardarAsistenciaListaHoraFin.RequestValues(asistenciaList),
-//                new UseCase.UseCaseCallback<GuardarAsistenciaListaHoraFin.ResponseValue>() {
-//                    @Override
-//                    public void onSuccess(GuardarAsistenciaListaHoraFin.ResponseValue response) {
-//                        if (response.isaBoolean()) {
-//                          // if (view != null)
-//                          //      view.mostrarMensaje(res.getString(R.string.validacion_mensaje_guardar_hora_fin_correctos));*/
-//                        } else {
-//                            Log.d(TAG, "ALGO PASO PAPU");
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void onError() {
-//
-//                    }
-//                });
+    @Override
+    public void onClickAccionBar(int tipoResultado) {
+        switch (tipoResultado) {
+            case Constantes.FALTA_ASISTENCIA_HORA_CIERRE:
+                //  mostrarListaTablas();
+                break;
+            case Constantes.FALTA_ASISTENCIA_REGISTRO_HOY:
+                //  mostrarListaTablas();
+                break;
+        }
     }
 
-    private void initGuardarListaAsistencia(List<AsistenciaUi> guardandoListasAsistencias) {
-        handler.execute(guardarAsistenciaLista, new GuardarAsistenciaLista.ResquestValues(guardandoListasAsistencias),
+
+    private void initGuardarListaAsistencia(List<Asistencia> guardandoListasAsistencias) {
+        if (view != null) view.mostrarProgressBar();
+        handler.execute(guardarAsistenciaLista, new GuardarAsistenciaLista.ResquestValues(guardandoListasAsistencias, cursoUi),
                 new UseCase.UseCaseCallback<GuardarAsistenciaLista.ResponseValue>() {
                     @Override
                     public void onSuccess(GuardarAsistenciaLista.ResponseValue response) {
                         if (response.isaBoolean()) {
-                            if (view != null)
+                            if (view != null) {
                                 view.mostrarMensaje(res.getString(R.string.validacion_mensaje_guardar_correcto));
-                            return;
-                            //   Log.d(TAG, "REGISTROS GUARDADOS CORRECTAMENTE");
+                                //view.mostrarMensaje("NO SE OLVIDE SUS REGISTRO DE SALIDA");
+                                view.ocultarProgressBar();
+                            }
+
+                            if (view != null)
+                                view.mostrarMensaje("NO SE OLVIDE SU REGISTRO DE SALIDA");
+
 
                         }
                     }
@@ -526,21 +450,23 @@ public class ControlAsistenciaPresenterImpl extends BaseActivityPresenterImpl<Co
                         Log.d(TAG, "onError");
                     }
                 });
+
+
     }
 
-    private void pintandoCeldas(AsistenciaUi asistenciaUi, List<CeldasAsistencia> celdasList) {
-       /*celdasAsistencias.addAll(celdasList);
+    private void pintandoCeldas(Asistencia asistenciaUi, List<CeldasAsistencia> celdasList) {
+        /*celdasAsistencias.addAll(celdasList);*/
         for (int i = 0; i < celdasList.size(); i++) {
-            AsistenciaUi asistencia = (AsistenciaUi) celdasList.get(i);
+            Asistencia asistencia = (Asistencia) celdasList.get(i);
             if (asistencia.isPintar()) {
                 remplazarItem(asistencia, asistenciaUi);
                 return;
             }
         }
-        asistenciaUi.setPintar(true);*/
+        asistenciaUi.setPintar(true);
     }
 
-    private void remplazarItem(AsistenciaUi asistenciaAnterior, AsistenciaUi asistenciaNueva) {
+    private void remplazarItem(Asistencia asistenciaAnterior, Asistencia asistenciaNueva) {
         asistenciaAnterior.setPintar(false);
         asistenciaNueva.setPintar(true);
         if (view != null) view.actualizarDatosCambiadosTabla();
