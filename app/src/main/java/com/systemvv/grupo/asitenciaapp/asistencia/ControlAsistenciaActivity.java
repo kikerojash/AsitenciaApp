@@ -8,6 +8,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.view.ActionMode;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -47,6 +48,7 @@ import com.systemvv.grupo.asitenciaapp.conexion.FireAuthConexion;
 import com.systemvv.grupo.asitenciaapp.cursos.entidad.CursoUi;
 import com.systemvv.grupo.asitenciaapp.fire.FireStore;
 import com.systemvv.grupo.asitenciaapp.login.LoginActivity;
+import com.systemvv.grupo.asitenciaapp.utils.MyExcepcionHandler;
 
 import org.parceler.Parcels;
 
@@ -236,8 +238,14 @@ public class ControlAsistenciaActivity extends BaseActivity<ControlAsistenciaVie
             ft.addToBackStack(null);
             IncidenciaDialog dialogFragment = new IncidenciaDialog();
             Bundle bundle = new Bundle();
+            //  bundle.putParcelable("alumnoUi", Parcels.wrap(alumnosUi));
+            bundle.putString("keyAlumno", alumnosUi.getKeyAlumno());
+            bundle.putString("keyGrado", alumnosUi.getKeyGrado());
+            bundle.putString("keyInstitucion", alumnosUi.getKeyInstitucion());
+            bundle.putString("keyPeriodo", alumnosUi.getKeyPeriodo());
+            bundle.putString("keySeccion", alumnosUi.getKeySeccion());
+            bundle.putString("keyCurso", alumnosUi.getKeyCurso());
 
-            bundle.putParcelable("alumnoUi", Parcels.wrap(alumnosUi));
             dialogFragment.setArguments(bundle);
             dialogFragment.show(ft, "dialog");
         }
@@ -280,25 +288,16 @@ public class ControlAsistenciaActivity extends BaseActivity<ControlAsistenciaVie
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Bundle extras = getIntent().getExtras();
-        String keyInstituto = extras.getString("keyInstituto");
-        String keyCurso = extras.getString("keyCurso");
-        String keyUser = extras.getString("keyUser");
-        String keyPeriodo = extras.getString("keyPeriodo");
-        String keySeccion = extras.getString("keySeccion");
-        String keyGrado = extras.getString("keyGrado");
-        Log.d(TAG, "keyInstituto / " + keyInstituto +
-                " / keyCurso " + keyCurso +
-                " / keyUser " + keyUser +
-                " / keyPeriodo " + keyPeriodo +
-                " / keySeccion " + keySeccion +
-                " / keyGrado " + keyGrado
-        );
+        Thread.setDefaultUncaughtExceptionHandler(new MyExcepcionHandler(this));
+        if (getIntent().getBooleanExtra("crash", false)) {
+            throw new NullPointerException();
+        }
         if (firebaseAuth.getCurrentUser() == null) {
             finish();
             startActivity(new Intent(this, LoginActivity.class));
         }
     }
+
 
     @Override
     public void mostrarInformacionSnackBar(String mensaje, final int tipoRegistroResultado) {

@@ -84,6 +84,8 @@ public class ControlAsistenciaRemote implements ControlAsistenciaDataSource {
         List<Asistencia> asistenciasList = new ArrayList<>();
         String grado = String.valueOf(cursoUi.getGradoSelected());
         String seccion = cursoUi.getSeccionSelected();
+        String keyGrado = cursoUi.getKeyGrado();
+        String keySeccion = cursoUi.getKeySeccion();
         String keyPeriodo = cursoUi.getInstitutoUi().getKeyPeriodo();
         String keyCurso = cursoUi.getKeyCurso();
         String keyInstituto = cursoUi.getInstitutoUi().getKeyInstituto();
@@ -94,10 +96,10 @@ public class ControlAsistenciaRemote implements ControlAsistenciaDataSource {
             asistencia.setAsi_hora_inicio(asistenciaUi.getHoraInicioCurso());
             asistencia.setAsi_tipo_asistencia(asistenciaUi.getTipoAsistencia());
             asistencia.setCur_id_curso(keyCurso);
-            asistencia.setGra_id_grado(grado);
+            asistencia.setGra_id_grado(keyGrado);
             asistencia.setIns_id_institucion(keyInstituto);
             asistencia.setPrd_id_periodo(keyPeriodo);
-            asistencia.setSec_id_seccion(seccion);
+            asistencia.setSec_id_seccion(keySeccion);
             asistenciasList.add(asistencia);
         }
         return asistenciasList;

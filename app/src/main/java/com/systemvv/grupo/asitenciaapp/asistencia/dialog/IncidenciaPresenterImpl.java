@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.systemvv.grupo.asitenciaapp.asistencia.dialog.entidadui.IncidenciaUi;
 import com.systemvv.grupo.asitenciaapp.asistencia.dialog.useCase.GuardarIncidencia;
+import com.systemvv.grupo.asitenciaapp.asistencia.dialog.useCase.ObtenerAlumno;
 import com.systemvv.grupo.asitenciaapp.asistencia.entidad.Alumnos;
 import com.systemvv.grupo.asitenciaapp.base.BaseView;
 import com.systemvv.grupo.asitenciaapp.base.UseCase;
@@ -25,11 +26,12 @@ public class IncidenciaPresenterImpl implements IncidenciaPresenter {
     private IncidenciaView view;
     private UseCaseHandler handler;
     private GuardarIncidencia guardarIncidencia;
+    private ObtenerAlumno obtenerAlumno;
 
-
-    public IncidenciaPresenterImpl(UseCaseHandler handler, GuardarIncidencia guardarIncidencia) {
+    public IncidenciaPresenterImpl(UseCaseHandler handler, GuardarIncidencia guardarIncidencia, ObtenerAlumno obtenerAlumno) {
         this.handler = handler;
         this.guardarIncidencia = guardarIncidencia;
+        this.obtenerAlumno = obtenerAlumno;
     }
 
     @Override
@@ -86,16 +88,44 @@ public class IncidenciaPresenterImpl implements IncidenciaPresenter {
 
     @Override
     public void onSeleccionSpinnerIncidencia(String nivelIncidencia) {
+
         this.nivelIncidencia = nivelIncidencia;
+
+        // this.nivelIncidencia = nivelIncidencia;
     }
 
-    Alumnos alumnosUi;
+    //Alumnos alumnosUi;
+    String keyAlumno, keyGrado, keyInstitucion, keyPeriodo, keySeccion, keyCurso;
 
     @Override
     public void onExtras(Bundle bundle) {
-        this.alumnosUi = Parcels.unwrap(bundle.getParcelable("alumnoUi"));
-        Log.d(TAG, "alumnosUi : " + alumnosUi.getNombre());
-        if (view != null) view.initVistas(alumnosUi);
+        if (bundle == null) return;
+        // this.keyAlumno = Parcels.unwrap(bundle.getParcelable("keyAlumno"));
+        this.keyAlumno = bundle.getString("keyAlumno");
+        this.keyGrado = bundle.getString("keyGrado");
+        this.keyInstitucion = bundle.getString("keyInstitucion");
+        this.keyPeriodo = bundle.getString("keyPeriodo");
+        this.keySeccion = bundle.getString("keySeccion");
+        this.keyCurso = bundle.getString("keyCurso");
+        mostrarAlumno(keyAlumno);
+        /*Log.d(TAG, "alumnosUi : " + alumnosUi.getNombre());*/
+        // if (view != null) view.initVistas(alumnosUi);
+
+    }
+
+    private void mostrarAlumno(String keyAlumno) {
+        handler.execute(obtenerAlumno, new ObtenerAlumno.RequestValues(keyAlumno),
+                new UseCase.UseCaseCallback<ObtenerAlumno.ResponseValue>() {
+                    @Override
+                    public void onSuccess(ObtenerAlumno.ResponseValue response) {
+                        if (view != null) view.initVistas(response.getAlumnos());
+                    }
+
+                    @Override
+                    public void onError() {
+
+                    }
+                });
     }
 
     private void initGuardarIncidencia(String mensajeIncidencia) {
@@ -103,17 +133,26 @@ public class IncidenciaPresenterImpl implements IncidenciaPresenter {
         String date = df.format(Calendar.getInstance().getTime());
         IncidenciaUi incidenciaUi = new IncidenciaUi();
         incidenciaUi.setMensajeIncidencia(mensajeIncidencia);
-        incidenciaUi.setNivelIncidencia(nivelIncidencia);
-        incidenciaUi.setAlu_id_alumno(alumnosUi.getNombre());
+        if(nivelIncidencia == null) incidenciaUi.setNivelIncidencia("Prioridad Baja");
+        else incidenciaUi.setNivelIncidencia(nivelIncidencia);
+        //incidenciaUi.setNivelIncidencia(nivelIncidencia);
+        incidenciaUi.setAlu_id_alumno(keyAlumno);
+        incidenciaUi.setCur_id_curso(keyCurso);
+        incidenciaUi.setGra_id_grado(keyGrado);
+        incidenciaUi.setIns_id_institucion(keyInstitucion);
+        incidenciaUi.setPrd_id_periodo(keyPeriodo);
+        incidenciaUi.setSec_id_seccion(keySeccion);
         incidenciaUi.setFechaIncidencia(date);
         incidenciaUi.setTimeStamp(new Date().getTime());
         handler.execute(guardarIncidencia, new GuardarIncidencia.RequestValues(incidenciaUi),
                 new UseCase.UseCaseCallback<GuardarIncidencia.ResponseValue>() {
                     @Override
                     public void onSuccess(GuardarIncidencia.ResponseValue response) {
-                        if(response.isaBoolean()){
+                        if (response.isaBoolean()) {
+                            if (view != null) view.mostrarMensaje("DATOS GUARDADOS CORRECTOS!");
                             Log.d(TAG, "DATOS GUARDADOS CORRECTOS!  ");
-                        }else{
+                        } else {
+                            if (view != null) view.mostrarMensaje("DATOS GUARDADOS INCORRECTOS");
                             Log.d(TAG, "DATOS GUARDADOS INCORRECTOS! ");
                         }
                     }

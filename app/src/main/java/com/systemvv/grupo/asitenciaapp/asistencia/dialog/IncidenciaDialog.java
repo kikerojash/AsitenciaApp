@@ -19,6 +19,7 @@ import com.systemvv.grupo.asitenciaapp.R;
 import com.systemvv.grupo.asitenciaapp.asistencia.dialog.dataSource.IncidenciaRepository;
 import com.systemvv.grupo.asitenciaapp.asistencia.dialog.dataSource.remote.IncidenciaRemote;
 import com.systemvv.grupo.asitenciaapp.asistencia.dialog.useCase.GuardarIncidencia;
+import com.systemvv.grupo.asitenciaapp.asistencia.dialog.useCase.ObtenerAlumno;
 import com.systemvv.grupo.asitenciaapp.asistencia.entidad.Alumnos;
 import com.systemvv.grupo.asitenciaapp.base.UseCaseHandler;
 import com.systemvv.grupo.asitenciaapp.base.UseCaseThreadPoolScheduler;
@@ -44,7 +45,6 @@ public class IncidenciaDialog extends DialogFragment implements IncidenciaView, 
     TextView textViewPadecimiento;
     @BindView(R.id.editText4)
     EditText editTextIncidencia;
-   // private AlumnosUi alumnosUi;
     private IncidenciaPresenter presenter;
 
     @Override
@@ -59,7 +59,8 @@ public class IncidenciaDialog extends DialogFragment implements IncidenciaView, 
     private void initPresenter() {
         IncidenciaRepository repository = new IncidenciaRepository(new IncidenciaRemote(new FireStore()));
         presenter = new IncidenciaPresenterImpl(new UseCaseHandler(new UseCaseThreadPoolScheduler()),
-                new GuardarIncidencia(repository));
+                new GuardarIncidencia(repository),
+                new ObtenerAlumno(repository));
         setPresenter(presenter);
     }
 
@@ -67,9 +68,6 @@ public class IncidenciaDialog extends DialogFragment implements IncidenciaView, 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        /*Bundle bundle = getArguments();
-        this.alumnosUi = Parcels.unwrap(bundle.getParcelable("alumnoUi"));
-        Log.d(TAG, "alumnosUi : " + alumnosUi.getNombre());*/
     }
 
     @Override
@@ -81,7 +79,7 @@ public class IncidenciaDialog extends DialogFragment implements IncidenciaView, 
     @Override
     public void onStart() {
         super.onStart();
-       // initVistas();
+
         if (getDialog() == null) {
             return;
         }
@@ -92,15 +90,8 @@ public class IncidenciaDialog extends DialogFragment implements IncidenciaView, 
         presenter.onStart();
     }
 
-    private void initVistas() {
-       /* textViewNombreAlumno.setText(alumnosUi.getNombre());
-        textViewApellidoeAlumno.setText(alumnosUi.getApellido());
-        validarTipoPadencia(alumnosUi.getTipoPadecimiento());
-        Glide.with(getActivity()).load(alumnosUi.getFoto()).into(imgProfile);
-        spinnerIncidencias.setOnItemSelectedListener(this);*/
-    }
 
-    private void validarTipoPadencia(int tipoPadecimiento) {
+  /*  private void validarTipoPadencia(int tipoPadecimiento) {
         switch (tipoPadecimiento) {
             case 1:
                 textViewPadecimiento.setText("Padece: Epilesia");
@@ -112,7 +103,7 @@ public class IncidenciaDialog extends DialogFragment implements IncidenciaView, 
                 textViewPadecimiento.setText("Padece: No Tiene");
                 break;
         }
-    }
+    }*/
 
     @OnClick({R.id.btnAceptar, R.id.btnSalir})
     public void onClick(View view) {
@@ -134,17 +125,19 @@ public class IncidenciaDialog extends DialogFragment implements IncidenciaView, 
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         switch (parent.getId()) {
             case R.id.spnIncidencias:
-                 presenter.onSeleccionSpinnerIncidencia(spinnerIncidencias.getSelectedItem().toString());
+                presenter.onSeleccionSpinnerIncidencia(spinnerIncidencias.getSelectedItem().toString());
                 Log.d(TAG, "spinnerCede: " + spinnerIncidencias.getSelectedItemId() + " nombre : " + spinnerIncidencias.getSelectedItem());
                 break;
             default:
+                Toast.makeText(getActivity(), "NO HACER NADA ", Toast.LENGTH_SHORT).show();
                 break;
         }
     }
 
     @Override
-    public void onNothingSelected(AdapterView<?> parent) {
-
+        public void onNothingSelected(AdapterView<?> parent) {
+        Toast.makeText(getActivity(), "NO onNothingSelected NADA ", Toast.LENGTH_SHORT).show();
+       // return;
     }
 
     @Override
@@ -154,15 +147,24 @@ public class IncidenciaDialog extends DialogFragment implements IncidenciaView, 
 
     @Override
     public void mostrarMensaje(String mensaje) {
-        Toast.makeText(getActivity(),mensaje,Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), mensaje, Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void initVistas(Alumnos alumnosUi) {
         textViewNombreAlumno.setText(alumnosUi.getNombre());
         textViewApellidoeAlumno.setText(alumnosUi.getApellido());
-        validarTipoPadencia(alumnosUi.getTipoPadecimiento());
+        // validarTipoPadencia(alumnosUi.getTipoPadecimiento());
+        validarTipoPadencia(alumnosUi.getPadecimiento());
         Glide.with(getActivity()).load(alumnosUi.getFoto()).into(imgProfile);
         spinnerIncidencias.setOnItemSelectedListener(this);
+    }
+
+    private void validarTipoPadencia(String padecimiento) {
+        if (padecimiento.length() > 0) {
+            textViewPadecimiento.setText("Padece: " + padecimiento);
+        } else {
+            textViewPadecimiento.setText("Padece: No Tiene");
+        }
     }
 }

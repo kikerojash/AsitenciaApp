@@ -16,6 +16,8 @@ public class CursoUi {
     int gradoSelected;
     String conteoAlumnos;
     String foto;
+    String keyGrado;
+    String KeySeccion;
     InstitutoUi institutoUi;
 
 
@@ -89,6 +91,22 @@ public class CursoUi {
 
     public String getConteoAlumnos() {
         return conteoAlumnos;
+    }
+
+    public String getKeyGrado() {
+        return keyGrado;
+    }
+
+    public void setKeyGrado(String keyGrado) {
+        this.keyGrado = keyGrado;
+    }
+
+    public String getKeySeccion() {
+        return KeySeccion;
+    }
+
+    public void setKeySeccion(String keySeccion) {
+        KeySeccion = keySeccion;
     }
 
     public void setConteoAlumnos(String conteoAlumnos) {

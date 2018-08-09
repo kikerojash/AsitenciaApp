@@ -11,7 +11,9 @@ public class Hijos {
      String edad;
      String nombreInstituto;
      String grado;
+     String keyGrado;
      String seccion;
+     String keySeccion;
      String foto;
      List<Cursos> cursosList;
 
@@ -95,6 +97,22 @@ public class Hijos {
 
     public List<Cursos> getCursosList() {
         return cursosList;
+    }
+
+    public String getKeyGrado() {
+        return keyGrado;
+    }
+
+    public void setKeyGrado(String keyGrado) {
+        this.keyGrado = keyGrado;
+    }
+
+    public String getKeySeccion() {
+        return keySeccion;
+    }
+
+    public void setKeySeccion(String keySeccion) {
+        this.keySeccion = keySeccion;
     }
 
     public void setCursosList(List<Cursos> cursosList) {

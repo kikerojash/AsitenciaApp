@@ -1,12 +1,21 @@
 package com.systemvv.grupo.asitenciaapp.padre;
 
 import android.content.res.Resources;
+import android.os.Bundle;
+import android.util.Log;
 
+import com.systemvv.grupo.asitenciaapp.base.UseCase;
 import com.systemvv.grupo.asitenciaapp.base.UseCaseHandler;
 import com.systemvv.grupo.asitenciaapp.base.activity.BaseActivityPresenterImpl;
+import com.systemvv.grupo.asitenciaapp.login.dataSource.entidad.UsuarioUi;
 import com.systemvv.grupo.asitenciaapp.padre.entidad.Cursos;
 import com.systemvv.grupo.asitenciaapp.padre.entidad.Hijos;
 import com.systemvv.grupo.asitenciaapp.padre.entidad.Incidencias;
+import com.systemvv.grupo.asitenciaapp.padre.entidad.Instituto;
+import com.systemvv.grupo.asitenciaapp.padre.useCase.ObtenerInstituto;
+import com.systemvv.grupo.asitenciaapp.padre.useCase.ObtenerMisHijos;
+
+import org.parceler.Parcels;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,8 +23,15 @@ import java.util.List;
 public class HijosPresenterImpl extends BaseActivityPresenterImpl<HijosView> implements HijosPresenter {
     public static final String TAG = HijosPresenterImpl.class.getSimpleName();
 
-    public HijosPresenterImpl(UseCaseHandler handler, Resources res) {
+    ObtenerMisHijos obtenerMisHijos;
+    ObtenerInstituto obtenerInstituto;
+
+
+
+    public HijosPresenterImpl(UseCaseHandler handler, Resources res, ObtenerMisHijos obtenerMisHijos, ObtenerInstituto obtenerInstituto) {
         super(handler, res);
+        this.obtenerMisHijos = obtenerMisHijos;
+        this.obtenerInstituto = obtenerInstituto;
     }
 
     @Override
@@ -27,6 +43,67 @@ public class HijosPresenterImpl extends BaseActivityPresenterImpl<HijosView> imp
     public void onBackPressed() {
 
     }
+
+    UsuarioUi usuarioUi;
+    Instituto instituto;
+    String keyPeriodo;
+
+    @Override
+    public void setExtras(Bundle extras) {
+        super.setExtras(extras);
+        if (extras == null) return;
+        this.usuarioUi = Parcels.unwrap(extras.getParcelable("usuarioUi"));
+        this.keyPeriodo = usuarioUi.getKeyPeriodo();
+        initObtenerInstituto(usuarioUi.getKeyUser());
+        //initObtenerHijos(usuarioUi);
+
+    }
+
+    private void initObtenerInstituto(String keyUser) {
+        handler.execute(obtenerInstituto, new ObtenerInstituto.RequestValues(usuarioUi),
+                new UseCase.UseCaseCallback<ObtenerInstituto.ResponseValue>() {
+                    @Override
+                    public void onSuccess(ObtenerInstituto.ResponseValue response) {
+                        if (response.getInstituto() == null) {
+                            // if(view!=null)view.mostrarmen);
+                            Log.d(TAG, "TMR NADA DE INSTITUTOS");
+                        } else {
+                            instituto = response.getInstituto();
+                            initObtenerHijos(usuarioUi);
+                        }
+                    }
+
+                    @Override
+                    public void onError() {
+
+                    }
+                }
+        );
+    }
+
+    private void initObtenerHijos(UsuarioUi usuarioUi) {
+        handler.execute(obtenerMisHijos, new ObtenerMisHijos.RequestValues(usuarioUi),
+                new UseCase.UseCaseCallback<ObtenerMisHijos.ResponseValue>() {
+                    @Override
+                    public void onSuccess(ObtenerMisHijos.ResponseValue response) {
+                        if (response.getHijosList() == null) return;
+                        for (Hijos hijos : response.getHijosList()) {
+                            hijos.setNombreInstituto(instituto.getNombreInstituto());
+                            Log.d(TAG, "hijos : " + hijos.getGrado()
+                                    + " seccion / " + hijos.getSeccion());
+                        }
+                        if (view != null) view.mostrarListaHijos(response.getHijosList());
+
+                        //  initObtenerSeccionGrado(response.getHijosList());
+                    }
+
+                    @Override
+                    public void onError() {
+
+                    }
+                });
+    }
+
 
     private List<Hijos> getListaHijos() {
         List<Hijos> hijosList = new ArrayList<>();
@@ -128,7 +205,7 @@ public class HijosPresenterImpl extends BaseActivityPresenterImpl<HijosView> imp
         return hijosList;
     }
 
-    private  List<Incidencias> obtenerListaIncidenciasTercerHijoCursoComunicacion() {
+    private List<Incidencias> obtenerListaIncidenciasTercerHijoCursoComunicacion() {
         List<Incidencias> incidenciasList = new ArrayList<>();
         Incidencias incidencias1 = new Incidencias(1, "El alumno presento un mal comportamiento", "09/07/2017", "10:00", 1);
         Incidencias incidencias2 = new Incidencias(2, "El alumno presento sintomas de fiebre", "09/07/2017", "10:00", 1);
@@ -211,6 +288,6 @@ public class HijosPresenterImpl extends BaseActivityPresenterImpl<HijosView> imp
     @Override
     public void onStart() {
         super.onStart();
-        if (view != null) view.mostrarListaHijos(getListaHijos());
+        //if (view != null) view.mostrarListaHijos(getListaHijos());
     }
 }

@@ -113,7 +113,7 @@ public class LoginPresenterImpl extends BaseActivityPresenterImpl<LoginView> imp
                         } else if (response.getKeyPeriodo() != null) {
                             String keyPeriodo = response.getKeyPeriodo();
                             initValidarTipoUsuario(usuario, keyPeriodo);
-                            Log.d(TAG, " keyPeriodo "+keyPeriodo);
+                            Log.d(TAG, " keyPeriodo "+keyPeriodo + "usuario " + usuario);
                             // if (view != null) view.initSeleccionarInstituto(usuario, keyPeriodo);
                         } else {
                             Log.d(TAG, "Otro tipo de Peridoo");
@@ -136,6 +136,7 @@ public class LoginPresenterImpl extends BaseActivityPresenterImpl<LoginView> imp
                             if (view != null) view.initSeleccionarInstituto(response.getUsuarioUi(), keyPeriodo);
                             Log.d(TAG, "PROFESOR");
                         } else if (response.getUsuarioUi().getTip_usuario_nombre().equals("APODERADO")) {
+                            if (view != null) view.initVistaPadre(response.getUsuarioUi(), keyPeriodo);
                             Log.d(TAG, "APODERADO");
                         } else if (response.getUsuarioUi().getTip_usuario_nombre().equals("AMBOS")) {
                             Log.d(TAG, "AMBOS");

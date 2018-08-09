@@ -22,6 +22,9 @@ import com.systemvv.grupo.asitenciaapp.cursos.entidad.CursoUi;
 import com.systemvv.grupo.asitenciaapp.fire.entidad.Asistencia;
 import com.systemvv.grupo.asitenciaapp.fire.entidad.Incidencia;
 import com.systemvv.grupo.asitenciaapp.login.dataSource.entidad.UsuarioUi;
+import com.systemvv.grupo.asitenciaapp.padre.entidad.Cursos;
+import com.systemvv.grupo.asitenciaapp.padre.entidad.Hijos;
+import com.systemvv.grupo.asitenciaapp.padre.entidad.Instituto;
 import com.systemvv.grupo.asitenciaapp.seleccionarInstituto.dialogSeccion.entidad.SeccionUi;
 import com.systemvv.grupo.asitenciaapp.seleccionarInstituto.entidad.InstitutoUi;
 import com.systemvv.grupo.asitenciaapp.utils.Constantes;
@@ -69,16 +72,18 @@ public class FireStore extends Fire {
     public void validarFechaRegistroAsistencia(String fecha, CursoUi cursoUi, final FireCallBackList<Boolean> postFirePostsCallback) {
         String grado = String.valueOf(cursoUi.getGradoSelected());
         String seccion = cursoUi.getSeccionSelected();
+        String keyGrado = cursoUi.getKeyGrado();
+        String keySeccion = cursoUi.getKeySeccion();
         String keyPeriodo = cursoUi.getInstitutoUi().getKeyPeriodo();
         String keyCurso = cursoUi.getKeyCurso();
         String keyInstituto = cursoUi.getInstitutoUi().getKeyInstituto();
         mFirestore.collection(Constantes.NODO_ASISTENCIA)
                 .whereEqualTo("asi_fecha", fecha)
                 .whereEqualTo("cur_id_curso", keyCurso)
-                .whereEqualTo("gra_id_grado", grado)
+                .whereEqualTo("gra_id_grado", keyGrado)
                 .whereEqualTo("ins_id_institucion", keyInstituto)
                 .whereEqualTo("prd_id_periodo", keyPeriodo)
-                .whereEqualTo("sec_id_seccion", seccion)
+                .whereEqualTo("sec_id_seccion", keySeccion)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -96,8 +101,8 @@ public class FireStore extends Fire {
                                 String horaFin = (String) doc.get("asi_hora_fin");
 
                                 asistenciaList.add(doc.getId());
-                                registroHoraFinList.add(horaFin+"");
-                                Log.d(TAG, "task.doc() " );
+                                registroHoraFinList.add(horaFin + "");
+                                Log.d(TAG, "task.doc() ");
                                 count++;
                             }
                             if (count == 0) {
@@ -106,7 +111,7 @@ public class FireStore extends Fire {
                             } else if (registroHoraFinList != null) {
                                 for (String string : registroHoraFinList) {
                                     Log.d(TAG, "stringHOraFIN" + string);
-                                    if (string == null) {
+                                    if (string.equals("null") || string == null) {
                                         postFirePostsCallback.onSuccess(true, asistenciaList, Constantes.FALTA_ASISTENCIA_HORA_CIERRE);
                                         break;
                                     } else {
@@ -163,12 +168,43 @@ public class FireStore extends Fire {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
                         String keyIncidencia = documentReference.getId();
+                        postFirePostsCallback.onSuccess(true);
                         Log.d(TAG, "DocumentSnapshot successfully written! : " + keyIncidencia);
                     }
                 }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
                 Log.d(TAG, "DocumentSnapshot successfully written!");
+            }
+        });
+    }
+
+    public void onObtenerAlumno(String keyAlumno, final FireCallback<Alumnos> alumnosFireCallback) {
+        Log.d(TAG, "onObtenerAlumno: " + keyAlumno);
+        DocumentReference docRef = mFirestore.collection(Constantes.NODO_ALUMNOS).document(keyAlumno);
+        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        Alumnos alumno = new Alumnos();
+                        String nombre = (String) document.get("per_nombre");
+                        String apellido = (String) document.get("per_apellido");
+                        String foto = (String) document.get("per_foto");
+                        String padecimiento = (String) document.get("alu_padecimiento");
+                        alumno.setNombre(nombre);
+                        alumno.setApellido(apellido);
+                        alumno.setFoto(foto);
+                        alumno.setPadecimiento(padecimiento);
+                        alumnosFireCallback.onSuccess(alumno);
+                        Log.d(TAG, "DocumentSnapshot data: " + document.getData());
+                    } else {
+                        Log.d(TAG, "No such document");
+                    }
+                } else {
+                    Log.d(TAG, "get failed with ", task.getException());
+                }
             }
         });
     }
@@ -223,8 +259,12 @@ public class FireStore extends Fire {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 Log.d(TAG, document.getId() + " => " + document.getData());
                                 SeccionUi seccionUi = new SeccionUi();
+                                String keySeccion = (String) document.get("sec_id_seccion");
+                                String keyGrado = (String) document.get("gra_id_grado");
                                 String grado_nombre = (String) document.get("gra_nombre");
                                 String seccion_nombre = (String) document.get("sec_nombre");
+                                seccionUi.setKeyGrado(keyGrado);
+                                seccionUi.setKeySeccion(keySeccion);
                                 seccionUi.setGrado(grado_nombre);
                                 seccionUi.setSeccion(seccion_nombre);
                                 seccionUiList.add(seccionUi);
@@ -247,6 +287,8 @@ public class FireStore extends Fire {
         String keyUser = seccionUi.getInstitutoUi().getKeyUsuario();
         String grado = seccionUi.getGrado();
         String seccion = seccionUi.getSeccion();
+        final String keyGrado = seccionUi.getKeyGrado();
+        final String keySeccion = seccionUi.getKeySeccion();
         String keyPeriodo = seccionUi.getInstitutoUi().getKeyPeriodo();
         mFirestore.collection(Constantes.NODO_PERIODO_GRADO_CURSO)
                 .whereEqualTo("pro_id_profesor", keyUser)
@@ -274,6 +316,8 @@ public class FireStore extends Fire {
                                 cursoUi.setInstitutoUi(seccionUi.getInstitutoUi());
                                 cursoUi.setHoraInicio(horaInicio);
                                 cursoUi.setHoraFin(horaFin);
+                                cursoUi.setKeyGrado(keyGrado);
+                                cursoUi.setKeySeccion(keySeccion);
                                 cursoUi.setConteoAlumnos(conteoAlumnos);
                                 cursoUiList.add(cursoUi);
                             }
@@ -287,8 +331,11 @@ public class FireStore extends Fire {
     }
 
     public void onObtenerListaAlumnos(final CursoUi cursoUi, final FireCallback<List<Alumnos>> listFireCallback) {
-        String keyCurso = cursoUi.getKeyCurso();
-        String keyPeriodo = cursoUi.getInstitutoUi().getKeyPeriodo();
+        final String keyCurso = cursoUi.getKeyCurso();
+        final String keyPeriodo = cursoUi.getInstitutoUi().getKeyPeriodo();
+        final String keyGrado = cursoUi.getKeyGrado();
+        final String keyInstitucion = cursoUi.getInstitutoUi().getKeyInstituto();
+        final String keySeccion = cursoUi.getKeySeccion();
         String grado = String.valueOf(cursoUi.getGradoSelected());
         String seccion = cursoUi.getSeccionSelected();
         Log.d(TAG, "keyCurso/" + keyCurso + "/" + keyPeriodo + "/" + grado + "/" + seccion);
@@ -324,6 +371,7 @@ public class FireStore extends Fire {
                             String per_nombre = (String) documentSnapshot.get("per_nombre");
                             String per_apellido = (String) documentSnapshot.get("per_apellido");
                             String per_foto = (String) documentSnapshot.get("per_foto");
+                            String alu_padecimiento = (String) documentSnapshot.get("alu_padecimiento");
                             Log.d(TAG, "onCompletecontinueWithTask " + documentSnapshot.getData() + "" +
                                     "/ Data " + documentSnapshot.getId() +
                                     "/ Reference PAth" + documentSnapshot.getReference().getPath() +
@@ -333,6 +381,12 @@ public class FireStore extends Fire {
                             alumnos.setNombre(per_nombre);
                             alumnos.setApellido(per_apellido);
                             alumnos.setFoto(per_foto);
+                            alumnos.setKeyGrado(keyGrado);
+                            alumnos.setKeyInstitucion(keyInstitucion);
+                            alumnos.setKeyPeriodo(keyPeriodo);
+                            alumnos.setKeySeccion(keySeccion);
+                            alumnos.setKeyCurso(keyCurso);
+                            alumnos.setPadecimiento(alu_padecimiento);
                             alumnos.setAsistencia(asistenciaPresente(alumnos));
                             alumnosList.add(alumnos);
                         }
@@ -423,5 +477,141 @@ public class FireStore extends Fire {
                     }
                 });
     }
+
+
+    /*Rol - Padre */
+    public void onObtenerListaHijos(final UsuarioUi usuarioUi, final FireCallback<List<Hijos>> listFireCallback) {
+        final String keyUser = usuarioUi.getKeyUser();
+
+        Log.d(TAG, "keyUser /" + keyUser);
+
+        mFirestore.collection(Constantes.NODO_APODERADO_HAS_ALUMNO)
+                .whereEqualTo("apo_id_apoderado", keyUser)
+                .get()
+                .continueWithTask(new Continuation<QuerySnapshot, Task<List<QuerySnapshot>>>() {
+                    @Override
+                    public Task<List<QuerySnapshot>> then(@NonNull Task<QuerySnapshot> task) {
+
+                        List<Task<QuerySnapshot>> tasks = new ArrayList<Task<QuerySnapshot>>();
+                        for (DocumentSnapshot document : task.getResult()) {
+                            String keyAlumno = (String) document.get("alu_id_alumno");
+                            Log.d(TAG, "continueWithTask " + keyAlumno);
+                            Task<QuerySnapshot> querySnapshotTask = mFirestore.
+                                    collection("periodo_grado_alumno")
+                                    .whereEqualTo("alu_id_alumno", keyAlumno)
+                                    .get();
+                            tasks.add(querySnapshotTask);
+                        }
+                        return Tasks.whenAllSuccess(tasks);
+                    }
+                })
+                .addOnCompleteListener(new OnCompleteListener<List<QuerySnapshot>>() {
+                    @Override
+                    public void onComplete(@NonNull Task<List<QuerySnapshot>> task) {
+                        List<Hijos> hijosList = new ArrayList<>();
+
+
+                        for (QuerySnapshot qs : task.getResult()) {
+                            for (DocumentSnapshot documentSnapshot : qs) {
+                                Hijos hijos = new Hijos();
+                                //Log.d(TAG, "Documentos : " + ds.get("alu_nombrecompleto"));
+                                String id_alumno = (String) documentSnapshot.get("alu_id_alumno");
+                                String nombre_completo = (String) documentSnapshot.get("alu_nombrecompleto");
+                                String sec_nombre = (String) documentSnapshot.get("sec_nombre");
+                                String gra_nombre = (String) documentSnapshot.get("gra_nombre");
+                                String keyGrado = (String) documentSnapshot.get("gra_id_grado");
+                                String keySeccion = (String) documentSnapshot.get("sec_id_seccion");
+
+                                hijos.setId(id_alumno);
+                                hijos.setNombre(nombre_completo);
+                                hijos.setApellido("FALTA");
+                                hijos.setFoto("falta");
+                                hijos.setGrado(gra_nombre);
+                                hijos.setSeccion(sec_nombre);
+                                hijos.setKeyGrado(keyGrado);
+                                hijos.setKeySeccion(keySeccion);
+                                hijosList.add(hijos);
+                            }
+                        }
+                        listFireCallback.onSuccess(hijosList);
+
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                listFireCallback.onSuccess(null);
+            }
+        });
+    }
+
+
+    public void onObtenerInstituto(UsuarioUi usuarioUi, final FireCallback<Instituto> institutoFireCallback) {
+
+        DocumentReference docRef = mFirestore.collection(Constantes.NODO_INSTITUCION).document("1801");
+        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        //String keyInstituto = (String)document.get("ins_nombre");
+                        String nombreInstituto = (String) document.get("ins_nombre");
+                        Instituto instituto = new Instituto();
+                        instituto.setKeyInstituto(document.getId());
+                        instituto.setNombreInstituto(nombreInstituto);
+                        institutoFireCallback.onSuccess(instituto);
+                        Log.d(TAG, "DocumentSnapshot data: " + document.getData());
+                    } else {
+                        institutoFireCallback.onSuccess(null);
+                        Log.d(TAG, "No such document");
+                    }
+                } else {
+                    institutoFireCallback.onSuccess(null);
+                    Log.d(TAG, "get failed with ", task.getException());
+                }
+            }
+        });
+    }
+
+    public void onObtenerListaCursosHijos(final Hijos hijos, final FireCallback<List<Cursos>> listFireCallback) {
+        String keyGrado = hijos.getKeyGrado();
+        String keySeccion = hijos.getKeySeccion();
+
+        mFirestore.collection(Constantes.NODO_PERIODO_GRADO_CURSO)
+                .whereEqualTo("gra_id_grado", keyGrado)
+                .whereEqualTo("sec_id_seccion", keySeccion)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            // String tipoUsuario = "";
+                            List<Cursos> cursosList = new ArrayList<>();
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                String cur_id_curso = (String) document.get("cur_id_curso");
+                                String cur_nombre = (String) document.get("cur_nombre");
+                                String pro_id_profesor = (String) document.get("pro_id_profesor");
+                                String pro_nombrecompleto = (String) document.get("pro_nombrecompleto");
+
+                                Cursos cursos = new Cursos();
+                                cursos.setId(cur_id_curso);
+                                cursos.setNombreCurso(cur_nombre);
+                                cursos.setNombreProfesor(pro_nombrecompleto);
+                                cursos.setHijos(hijos);
+                                cursosList.add(cursos);
+
+                                Log.d(TAG, document.getId() + " => " + document.getData());
+
+                            }
+                            listFireCallback.onSuccess(cursosList);
+                        } else {
+                            listFireCallback.onSuccess(null);
+                            Log.d(TAG, "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
+
+    }
+
 
 }

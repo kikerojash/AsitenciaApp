@@ -8,8 +8,8 @@ public class Constantes {
     public static final String NODO_PERIODO_GRADO_CURSO = "periodo_grado_curso";
     public static final String NODO_PERIODO_GRADO_CURSO_ALUMNO = "periodo_grado_curso_alumno";
     public static final String NODO_ALUMNOS = "alumno";
-
     public static final String NODO_PERIODO_GRADO_ALUMNO = "periodo_grado_alumno";
+    public static final String NODO_APODERADO_HAS_ALUMNO = "apoderado_has_alumno";
 
 
     public static final String NODO_PERIODO = "periodo";

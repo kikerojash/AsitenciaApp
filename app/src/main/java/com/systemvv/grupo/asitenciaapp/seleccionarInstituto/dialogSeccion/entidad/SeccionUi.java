@@ -1,15 +1,17 @@
 package com.systemvv.grupo.asitenciaapp.seleccionarInstituto.dialogSeccion.entidad;
 
 import com.systemvv.grupo.asitenciaapp.seleccionarInstituto.entidad.InstitutoUi;
+
 import org.parceler.Parcel;
 
 @Parcel
 public class SeccionUi {
 
-     String keySeccion;
-     String grado;
-     String seccion;
-     InstitutoUi institutoUi;
+    String keySeccion;
+    String keyGrado;
+    String grado;
+    String seccion;
+    InstitutoUi institutoUi;
 
     public SeccionUi() {
     }
@@ -46,6 +48,14 @@ public class SeccionUi {
         this.institutoUi = institutoUi;
     }
 
+    public String getKeyGrado() {
+        return keyGrado;
+    }
+
+    public void setKeyGrado(String keyGrado) {
+        this.keyGrado = keyGrado;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -58,13 +68,12 @@ public class SeccionUi {
     }
 
     @Override
-        public int hashCode() {
-            int result=17;
-            //result=31*result+age;
-            result=31*result+(grado!=null ? grado.hashCode():0);
-            return result;
-        }
-
+    public int hashCode() {
+        int result = 17;
+        //result=31*result+age;
+        result = 31 * result + (grado != null ? grado.hashCode() : 0);
+        return result;
+    }
 
 
 }

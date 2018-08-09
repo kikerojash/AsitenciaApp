@@ -1,6 +1,7 @@
 package com.systemvv.grupo.asitenciaapp.asistencia.adapter.holder.filas;
 
 import android.support.constraint.ConstraintLayout;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -14,6 +15,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class FilasAsistenciaAlumnosHolder extends AbstractViewHolder {
+
+    public static final String TAG = FilasAsistenciaAlumnosHolder.class.getSimpleName();
     @BindView(R.id.txtTitle)
     TextView textViewNombre;
     @BindView(R.id.txtSubtittle)
@@ -32,24 +35,18 @@ public class FilasAsistenciaAlumnosHolder extends AbstractViewHolder {
     public void bind(Alumnos alumnosUi) {
         textViewNombre.setText(alumnosUi.getNombre());
         textViewApellidos.setText(alumnosUi.getApellido());
-        validacionEstadosaludAlumno(alumnosUi.getTipoPadecimiento());
+        validacionEstadosaludAlumno(alumnosUi.getPadecimiento());
         Glide.with(itemView.getContext()).load(alumnosUi.getFoto()).into(imgProfile);
     }
 
-    private void validacionEstadosaludAlumno(int tipoPadecimiento) {
-        switch (tipoPadecimiento) {
-            case 0:
-                fondo.setBackgroundColor(itemView.getResources().getColor(R.color.md_white_1000));
-                break;
-            case 1:
-                fondo.setBackgroundColor(itemView.getResources().getColor(R.color.md_red_200));
-                break;
-            case 2:
-                fondo.setBackgroundColor(itemView.getResources().getColor(R.color.md_red_200));
-                break;
-            default:
-                fondo.setBackgroundColor(itemView.getResources().getColor(R.color.md_white_1000));
-                break;
+    private void validacionEstadosaludAlumno(String tipoPadecimiento) {
+        Log.d(TAG, "validacionEstadosaludAlumno " + tipoPadecimiento);
+        if (tipoPadecimiento == null || tipoPadecimiento.equals("null")) {
+            fondo.setBackgroundColor(itemView.getResources().getColor(R.color.md_white_1000));
+        } else if (tipoPadecimiento.length() > 0) {
+            fondo.setBackgroundColor(itemView.getResources().getColor(R.color.md_red_200));
+        } else {
+            fondo.setBackgroundColor(itemView.getResources().getColor(R.color.md_white_1000));
         }
     }
 }

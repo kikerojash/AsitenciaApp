@@ -16,12 +16,21 @@ public class Alumnos extends FilaCabeceraAsistencia {
 
     private int tipoAsistencia;
     private int tipoPadecimiento;
+    private String padecimiento;
 
     private AlumnoMotivoAsistenciaColumna alumnoMotivoAsistenciaColumna;
 
     private Asistencia asistencia;
     private List<MotivoAsistencia> motivoAsistenciaList;
     private MotivoAsistencia motivoAsistencia;
+
+    /*Key */
+
+    private String keyCurso;
+    private String keyGrado;
+    private String keyInstitucion;
+    private String keyPeriodo;
+    private String keySeccion;
 
 
     public Alumnos() {
@@ -32,7 +41,6 @@ public class Alumnos extends FilaCabeceraAsistencia {
         this.nombre = nombre;
         this.apellido = apellido;
         this.foto = foto;
-        // alumnoMotivoAsistenciaColumna = AlumnoMotivoAsistenciaColumna.COLUMNA_PRESENTE;
 
     }
 
@@ -122,5 +130,53 @@ public class Alumnos extends FilaCabeceraAsistencia {
 
     public void setMotivoAsistencia(MotivoAsistencia motivoAsistencia) {
         this.motivoAsistencia = motivoAsistencia;
+    }
+
+    public String getPadecimiento() {
+        return padecimiento;
+    }
+
+    public void setPadecimiento(String padecimiento) {
+        this.padecimiento = padecimiento;
+    }
+
+    public String getKeyCurso() {
+        return keyCurso;
+    }
+
+    public void setKeyCurso(String keyCurso) {
+        this.keyCurso = keyCurso;
+    }
+
+    public String getKeyGrado() {
+        return keyGrado;
+    }
+
+    public void setKeyGrado(String keyGrado) {
+        this.keyGrado = keyGrado;
+    }
+
+    public String getKeyInstitucion() {
+        return keyInstitucion;
+    }
+
+    public void setKeyInstitucion(String keyInstitucion) {
+        this.keyInstitucion = keyInstitucion;
+    }
+
+    public String getKeyPeriodo() {
+        return keyPeriodo;
+    }
+
+    public void setKeyPeriodo(String keyPeriodo) {
+        this.keyPeriodo = keyPeriodo;
+    }
+
+    public String getKeySeccion() {
+        return keySeccion;
+    }
+
+    public void setKeySeccion(String keySeccion) {
+        this.keySeccion = keySeccion;
     }
 }

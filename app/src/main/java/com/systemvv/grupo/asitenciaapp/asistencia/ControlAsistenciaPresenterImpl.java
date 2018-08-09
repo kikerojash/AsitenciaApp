@@ -101,10 +101,12 @@ public class ControlAsistenciaPresenterImpl extends BaseActivityPresenterImpl<Co
         columnHeaderList = new ArrayList<>();
         cellsList = new ArrayList<>();
         rowHeaderList = new ArrayList<>();
+        alumnosList = new ArrayList<>();
+
         celdasAsistenciasColumnaPresentes = new ArrayList<>();
         celdasAsistencias = new ArrayList<>();
 
-        alumnosList = new ArrayList<>();
+
     }
 
     @Override
@@ -299,8 +301,8 @@ public class ControlAsistenciaPresenterImpl extends BaseActivityPresenterImpl<Co
                     asistenciaUi.setHoraInicioCurso(horaInicioCurso);
                     asistenciaUi.setFecha(date);
                     if (asistenciaUi.isPintar()) {
-                       /* Log.d(TAG, "celdasAsistenciasColumnaPresentes : " + asistenciaUi.getTipoAsistencia() +
-                                " celdasAsistenciasColumnaPresentes : " + asistenciaUi.getAlumnosUi().getNombre());*/
+                        Log.d(TAG, "celdasAsistenciasColumnaPresentes : " + asistenciaUi.getTipoAsistencia() +
+                                " celdasAsistenciasColumnaPresentes : " + asistenciaUi.getAlumnosUi().getNombre());
                         guardandoListasAsistencias.add(asistenciaUi);
                         continue;
                     }
@@ -455,7 +457,7 @@ public class ControlAsistenciaPresenterImpl extends BaseActivityPresenterImpl<Co
     }
 
     private void pintandoCeldas(Asistencia asistenciaUi, List<CeldasAsistencia> celdasList) {
-        /*celdasAsistencias.addAll(celdasList);*/
+        celdasAsistencias.addAll(celdasList);
         for (int i = 0; i < celdasList.size(); i++) {
             Asistencia asistencia = (Asistencia) celdasList.get(i);
             if (asistencia.isPintar()) {

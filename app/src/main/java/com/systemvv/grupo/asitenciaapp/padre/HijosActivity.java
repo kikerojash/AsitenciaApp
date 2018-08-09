@@ -17,11 +17,16 @@ import com.systemvv.grupo.asitenciaapp.R;
 import com.systemvv.grupo.asitenciaapp.base.UseCaseHandler;
 import com.systemvv.grupo.asitenciaapp.base.UseCaseThreadPoolScheduler;
 import com.systemvv.grupo.asitenciaapp.base.activity.BaseActivity;
+import com.systemvv.grupo.asitenciaapp.fire.FireStore;
 import com.systemvv.grupo.asitenciaapp.login.LoginActivity;
 import com.systemvv.grupo.asitenciaapp.padre.adapter.HijosAdapter;
 import com.systemvv.grupo.asitenciaapp.padre.cursoHijos.CursoHijosActivity;
+import com.systemvv.grupo.asitenciaapp.padre.dataSource.HijosRepository;
+import com.systemvv.grupo.asitenciaapp.padre.dataSource.remote.HijosRemote;
 import com.systemvv.grupo.asitenciaapp.padre.entidad.Hijos;
 import com.systemvv.grupo.asitenciaapp.padre.listener.HijosListener;
+import com.systemvv.grupo.asitenciaapp.padre.useCase.ObtenerInstituto;
+import com.systemvv.grupo.asitenciaapp.padre.useCase.ObtenerMisHijos;
 
 import org.parceler.Parcels;
 
@@ -56,7 +61,12 @@ public class HijosActivity extends BaseActivity<HijosView, HijosPresenter> imple
 
     @Override
     protected HijosPresenter getPresenter() {
-        return new HijosPresenterImpl(new UseCaseHandler(new UseCaseThreadPoolScheduler()), getResources());
+
+        HijosRepository hijosRepository = new HijosRepository(new HijosRemote(new FireStore()));
+        return new HijosPresenterImpl(new UseCaseHandler(new UseCaseThreadPoolScheduler()),
+                getResources(),
+                new ObtenerMisHijos(hijosRepository),
+                new ObtenerInstituto(hijosRepository));
     }
 
     @Override

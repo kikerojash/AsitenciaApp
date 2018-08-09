@@ -8,15 +8,22 @@ import com.google.firebase.FirebaseApp;
 
 public class AsistenciaApp extends Application {
 
+    public static AsistenciaApp mInstance;
+
     @Override
     public void onCreate() {
         super.onCreate();
+        mInstance = this;
         FirebaseApp.initializeApp(this);
     }
 
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
-         MultiDex.install(AsistenciaApp.this);
+        MultiDex.install(AsistenciaApp.this);
+    }
+
+    public static AsistenciaApp getmInstance(){
+        return mInstance;
     }
 }

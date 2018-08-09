@@ -185,10 +185,13 @@ public class LoginActivity extends BaseActivity<LoginView, LoginPresenter> imple
     }
 
     @Override
-    public void initVistaPadre(String usuarioPadre, String ClavePadre) {
+    public void initVistaPadre(UsuarioUi usuario, String keyPeriodo) {
+        progressDialog.dismiss();
         Intent intent = new Intent(this, HijosActivity.class);
-      /*  intent.putExtra("datousuario", usuario);
-        intent.putExtra("datoclave", clave);*/
+        Bundle bundle = new Bundle();
+        usuario.setKeyPeriodo(keyPeriodo);
+        bundle.putParcelable("usuarioUi", Parcels.wrap(usuario));
+        intent.putExtras(bundle);
         startActivity(intent);
 
     }
