@@ -2,6 +2,7 @@ package com.systemvv.grupo.asitenciaapp.padre.reporteAsistencia;
 
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.systemvv.grupo.asitenciaapp.base.UseCaseHandler;
 import com.systemvv.grupo.asitenciaapp.base.activity.BaseActivityPresenterImpl;
@@ -33,6 +34,14 @@ public class ReportesPresenterImpl extends BaseActivityPresenterImpl<ReportesVie
     public void setExtras(Bundle extras) {
         super.setExtras(extras);
         this.cursos = Parcels.unwrap(extras.getParcelable("cursosUi"));
+
+        Log.d(TAG, "extras " + cursos.getHijos().getNombre());
+    }
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+
     }
 
     @Override

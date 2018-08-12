@@ -34,19 +34,21 @@ public class ReporteIncidenciasHolder extends RecyclerView.ViewHolder {
     }
 
     private void validarTipoIncidencia(Incidencias incidencias) {
-        switch (incidencias.getGradoIncidencia()) {
-            case 1://ALTA
+        switch (incidencias.getTipoIncidencia()) {
+            case "Prioridad Alta"://ALTA
                 button.setBackgroundColor(itemView.getResources().getColor(R.color.md_red_A400));
                 button.setText("A");
                 break;
-            case 2://MEDIA
+            case "Prioridad Media"://MEDIA
                 button.setBackgroundColor(itemView.getResources().getColor(R.color.md_orange_600));
                 button.setText("M");
                 break;
-            case 3://BAJA
+            case "Prioridad Baja"://BAJA
                 button.setBackgroundColor(itemView.getResources().getColor(R.color.md_green_400));
                 button.setText("B");
                 break;
+                default:
+                    break;
         }
     }
 }

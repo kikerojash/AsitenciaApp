@@ -13,9 +13,13 @@ import com.systemvv.grupo.asitenciaapp.R;
 import com.systemvv.grupo.asitenciaapp.base.UseCaseHandler;
 import com.systemvv.grupo.asitenciaapp.base.UseCaseThreadPoolScheduler;
 import com.systemvv.grupo.asitenciaapp.base.fragment.BaseFragment;
+import com.systemvv.grupo.asitenciaapp.fire.FireStore;
 import com.systemvv.grupo.asitenciaapp.padre.entidad.Asistencia;
 import com.systemvv.grupo.asitenciaapp.padre.entidad.Incidencias;
 import com.systemvv.grupo.asitenciaapp.padre.reporteAsistencia.listaReporteIncidencias.adapter.ReporteIncidenciasAdapter;
+import com.systemvv.grupo.asitenciaapp.padre.reporteAsistencia.listaReporteIncidencias.dataSource.ReporteIncidenciaRepository;
+import com.systemvv.grupo.asitenciaapp.padre.reporteAsistencia.listaReporteIncidencias.dataSource.remote.ReporteIncidenciaRemote;
+import com.systemvv.grupo.asitenciaapp.padre.reporteAsistencia.listaReporteIncidencias.useCase.ObtenerIncidenciaLista;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,7 +54,10 @@ public class ReporteIncidenciasFragment extends BaseFragment<ReporteIncidenciasV
 
     @Override
     protected ReporteIncidenciasPresenter getPresenter() {
-        return new ReporteIncidenciasPresenterImpl(new UseCaseHandler(new UseCaseThreadPoolScheduler()), getResources());
+        ReporteIncidenciaRepository reporteIncidenciaRepository = new ReporteIncidenciaRepository(new ReporteIncidenciaRemote(new FireStore()));
+        return new ReporteIncidenciasPresenterImpl(new UseCaseHandler(new UseCaseThreadPoolScheduler()),
+                getResources(),
+                new ObtenerIncidenciaLista(reporteIncidenciaRepository));
     }
 
     @Override

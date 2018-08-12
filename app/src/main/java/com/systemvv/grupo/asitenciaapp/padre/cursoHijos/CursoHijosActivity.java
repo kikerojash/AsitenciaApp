@@ -8,6 +8,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ProgressBar;
@@ -36,7 +37,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class CursoHijosActivity extends BaseActivity<CursoHijosView, CursoHijosPresenter> implements CursoHijosView,CursoHijosListener{
+public class CursoHijosActivity extends BaseActivity<CursoHijosView, CursoHijosPresenter> implements CursoHijosView, CursoHijosListener {
 
     public static final String TAG = CursoHijosActivity.class.getSimpleName();
 
@@ -97,8 +98,8 @@ public class CursoHijosActivity extends BaseActivity<CursoHijosView, CursoHijosP
 
     private void initVistas() {
 
-        adapter = new CursoHijosAdapter(new ArrayList<Cursos>(),this);
-        reciclador.setLayoutManager(new GridLayoutManager(getApplicationContext(),2));
+        adapter = new CursoHijosAdapter(new ArrayList<Cursos>(), this);
+        reciclador.setLayoutManager(new GridLayoutManager(getApplicationContext(), 2));
         reciclador.addItemDecoration(new ItemDecarador(
                 getResources().getDimensionPixelSize(R.dimen.tamanio_item_decarador),
                 getResources().getInteger(R.integer.tamanio_columnas)));
@@ -123,6 +124,7 @@ public class CursoHijosActivity extends BaseActivity<CursoHijosView, CursoHijosP
         bundle.putParcelable("cursosUi", Parcels.wrap(cursos));
         intent.putExtras(bundle);
         startActivity(intent);
+
     }
 
     @Override

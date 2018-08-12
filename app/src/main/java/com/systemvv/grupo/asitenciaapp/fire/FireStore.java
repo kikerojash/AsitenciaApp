@@ -24,10 +24,12 @@ import com.systemvv.grupo.asitenciaapp.fire.entidad.Incidencia;
 import com.systemvv.grupo.asitenciaapp.login.dataSource.entidad.UsuarioUi;
 import com.systemvv.grupo.asitenciaapp.padre.entidad.Cursos;
 import com.systemvv.grupo.asitenciaapp.padre.entidad.Hijos;
+import com.systemvv.grupo.asitenciaapp.padre.entidad.Incidencias;
 import com.systemvv.grupo.asitenciaapp.padre.entidad.Instituto;
 import com.systemvv.grupo.asitenciaapp.seleccionarInstituto.dialogSeccion.entidad.SeccionUi;
 import com.systemvv.grupo.asitenciaapp.seleccionarInstituto.entidad.InstitutoUi;
 import com.systemvv.grupo.asitenciaapp.utils.Constantes;
+import com.systemvv.grupo.asitenciaapp.utils.Utils;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -592,11 +594,11 @@ public class FireStore extends Fire {
                                 String cur_nombre = (String) document.get("cur_nombre");
                                 String pro_id_profesor = (String) document.get("pro_id_profesor");
                                 String pro_nombrecompleto = (String) document.get("pro_nombrecompleto");
-
                                 Cursos cursos = new Cursos();
                                 cursos.setId(cur_id_curso);
                                 cursos.setNombreCurso(cur_nombre);
                                 cursos.setNombreProfesor(pro_nombrecompleto);
+                                //cursos.setIncidenciasList(incidenciasListCursoHijos(hijos, cur_id_curso));
                                 cursos.setHijos(hijos);
                                 cursosList.add(cursos);
 
@@ -611,6 +613,101 @@ public class FireStore extends Fire {
                     }
                 });
 
+    }
+
+    public void onMostrarListaReporteAsistencia(Cursos cursos, final FireCallback<List<com.systemvv.grupo.asitenciaapp.padre.entidad.Asistencia>> listFireCallback) {
+        String keyAlumno = cursos.getHijos().getId();
+        String keyCurso = cursos.getId();
+        String keyGrado = cursos.getHijos().getKeyGrado();
+        String keySeccion = cursos.getHijos().getKeySeccion();
+        Log.d(TAG, "Institucion ;" + cursos.getHijos().getNombreInstituto()
+                + "keyCurso" + keyCurso
+                + "keyGrado" + keyGrado
+                + "keySeccion" + keySeccion
+                + "keyAlumno" + keyAlumno);
+
+        mFirestore.collection(Constantes.NODO_ASISTENCIA)
+                .whereEqualTo("alu_id_alumno", keyAlumno)
+                .whereEqualTo("cur_id_curso", keyCurso)
+                .whereEqualTo("gra_id_grado", keyGrado)
+                .whereEqualTo("sec_id_seccion", keySeccion)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            int count = 0;
+                            List<com.systemvv.grupo.asitenciaapp.padre.entidad.Asistencia> asistenciaList = new ArrayList<>();
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                count++;
+                                String fecha = (String) document.get("asi_fecha");
+                                String horaInicio = (String) document.get("asi_hora_inicio");
+                                String horaFin = (String) document.get("asi_hora_fin");
+                                String asi_tipo_asistencia = (String) document.get("asi_tipo_asistencia");
+                                com.systemvv.grupo.asitenciaapp.padre.entidad.Asistencia asistencia = new com.systemvv.grupo.asitenciaapp.padre.entidad.Asistencia();
+                                asistencia.setConteo(count);
+                                asistencia.setFecha(fecha);
+                                asistencia.setInicioRegistroHora(horaInicio);
+                                asistencia.setFinRegistroHora(horaFin);
+                                asistencia.setTipASistencia(asi_tipo_asistencia);
+                                asistenciaList.add(asistencia);
+
+                            }
+
+                            listFireCallback.onSuccess(asistenciaList);
+                        } else {
+                            listFireCallback.onSuccess(null);
+                            Log.d(TAG, "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
+    }
+
+
+    public void onMostrarListaIncidencia(Cursos cursos, final FireCallback<List<Incidencias>> listFireCallback) {
+        String keyAlumno = cursos.getHijos().getId();
+        String keyCurso = cursos.getId();
+        String keyGrado = cursos.getHijos().getKeyGrado();
+        String keySeccion = cursos.getHijos().getKeySeccion();
+        Log.d(TAG, "Institucion ;" + cursos.getHijos().getNombreInstituto()
+                + "keyCurso" + keyCurso
+                + "keyGrado" + keyGrado
+                + "keySeccion" + keySeccion
+                + "keyAlumno" + keyAlumno);
+
+        mFirestore.collection(Constantes.NODO_INCIDENCIA)
+                .whereEqualTo("alu_id_alumno", keyAlumno)
+                .whereEqualTo("cur_id_curso", keyCurso)
+                .whereEqualTo("gra_id_grado", keyGrado)
+                .whereEqualTo("sec_id_seccion", keySeccion)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            int count = 0;
+                            List<Incidencias> incidenciasList = new ArrayList<>();
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                count++;
+                                String fecha = (String) document.get("inc_fecha");
+                                long timeStamp = (long) document.get("timeStamp");
+                                String inc_prioridad = (String) document.get("inc_prioridad");
+                                String inc_descripcion = (String) document.get("inc_descripcion");
+                                Incidencias incidencias = new Incidencias();
+                                incidencias.setConteo(count);
+                                incidencias.setFecha(fecha);
+                                incidencias.setNombreIncidencias(inc_descripcion);
+                                incidencias.setHora(Utils.convertTime(timeStamp));
+                                incidencias.setTipoIncidencia(inc_prioridad);
+                                incidenciasList.add(incidencias);
+                            }
+                            listFireCallback.onSuccess(incidenciasList);
+                        } else {
+                            listFireCallback.onSuccess(null);
+                            Log.d(TAG, "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
     }
 
 

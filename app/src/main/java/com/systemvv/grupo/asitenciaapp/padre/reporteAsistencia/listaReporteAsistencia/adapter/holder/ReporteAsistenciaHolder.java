@@ -39,17 +39,12 @@ public class ReporteAsistenciaHolder extends RecyclerView.ViewHolder {
     }
 
     private void validarTipoAsistencia(Asistencia asistencia) {
-        switch (asistencia.getTipoAsistencia()) {
-            case 1://Presente
-                imageView.setBackground(itemView.getResources().getDrawable(R.drawable.presente));
-                break;
-            case 2://Tarde
-                imageView.setBackground(itemView.getResources().getDrawable(R.drawable.falto));
-                break;
-            case 3://Falto
-                imageView.setBackground(itemView.getResources().getDrawable(R.drawable.falto));
-                break;
-
+        if(asistencia.getTipASistencia().equals("FALTO")){
+            imageView.setBackground(itemView.getResources().getDrawable(R.drawable.reporte_falto));
+        }else if (asistencia.getTipASistencia().equals("PUNTUAL")){
+            imageView.setBackground(itemView.getResources().getDrawable(R.drawable.reporte_presente));
+        }else if (asistencia.getTipASistencia().equals("TARDE")){
+            imageView.setBackground(itemView.getResources().getDrawable(R.drawable.reporte_tarde));
         }
     }
 }

@@ -3,10 +3,12 @@ package com.systemvv.grupo.asitenciaapp.padre.reporteAsistencia.listaReporteInci
 import android.content.res.Resources;
 import android.os.Bundle;
 
+import com.systemvv.grupo.asitenciaapp.base.UseCase;
 import com.systemvv.grupo.asitenciaapp.base.UseCaseHandler;
 import com.systemvv.grupo.asitenciaapp.base.fragment.BaseFragmentPresenterImpl;
 import com.systemvv.grupo.asitenciaapp.padre.entidad.Cursos;
 import com.systemvv.grupo.asitenciaapp.padre.entidad.Incidencias;
+import com.systemvv.grupo.asitenciaapp.padre.reporteAsistencia.listaReporteIncidencias.useCase.ObtenerIncidenciaLista;
 
 import org.parceler.Parcels;
 
@@ -17,10 +19,12 @@ public class ReporteIncidenciasPresenterImpl extends BaseFragmentPresenterImpl<R
 
     public static final String TAG = ReporteIncidenciasPresenterImpl.class.getSimpleName();
 
-    private Cursos cursos;
+    Cursos cursos;
+    ObtenerIncidenciaLista obtenerIncidenciaLista;
 
-    public ReporteIncidenciasPresenterImpl(UseCaseHandler handler, Resources res) {
+    public ReporteIncidenciasPresenterImpl(UseCaseHandler handler, Resources res, ObtenerIncidenciaLista obtenerIncidenciaLista) {
         super(handler, res);
+        this.obtenerIncidenciaLista = obtenerIncidenciaLista;
     }
 
     @Override
@@ -38,17 +42,30 @@ public class ReporteIncidenciasPresenterImpl extends BaseFragmentPresenterImpl<R
     public void setExtras(Bundle extras) {
         super.setExtras(extras);
         if (extras == null) return;
-        cursos = Parcels.unwrap(extras.getParcelable("cursos"));
+        this.cursos = Parcels.unwrap(extras.getParcelable("cursosUi"));
+        initListaIncidencias();
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        initListaIncidencias();
+
     }
 
     private void initListaIncidencias() {
-        if (view != null) view.mostrarLista(cursos.getIncidenciasList());
+        handler.execute(obtenerIncidenciaLista, new ObtenerIncidenciaLista.RequestValues(cursos),
+                new UseCase.UseCaseCallback<ObtenerIncidenciaLista.ResponseValue>() {
+                    @Override
+                    public void onSuccess(ObtenerIncidenciaLista.ResponseValue response) {
+                        if (view != null) view.mostrarLista(response.getAsistenciaList());
+                    }
+
+                    @Override
+                    public void onError() {
+
+                    }
+                });
+//        if (view != null) view.mostrarLista(cursos.getIncidenciasList());
     }
 
     private List<Incidencias> getListaIncidencias() {

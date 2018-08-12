@@ -13,8 +13,12 @@ import com.systemvv.grupo.asitenciaapp.R;
 import com.systemvv.grupo.asitenciaapp.base.UseCaseHandler;
 import com.systemvv.grupo.asitenciaapp.base.UseCaseThreadPoolScheduler;
 import com.systemvv.grupo.asitenciaapp.base.fragment.BaseFragment;
+import com.systemvv.grupo.asitenciaapp.fire.FireStore;
 import com.systemvv.grupo.asitenciaapp.padre.entidad.Asistencia;
 import com.systemvv.grupo.asitenciaapp.padre.reporteAsistencia.listaReporteAsistencia.adapter.ReporteAsistenciaAdapter;
+import com.systemvv.grupo.asitenciaapp.padre.reporteAsistencia.listaReporteAsistencia.dataSource.ReporteAsistenciaRepository;
+import com.systemvv.grupo.asitenciaapp.padre.reporteAsistencia.listaReporteAsistencia.dataSource.remote.ReporteAsistenciaRemote;
+import com.systemvv.grupo.asitenciaapp.padre.reporteAsistencia.listaReporteAsistencia.useCase.ObtenerAsistenciaLista;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,7 +50,10 @@ public class ReporteAsistenciaFragment extends BaseFragment<ReporteAsistenciaVie
 
     @Override
     protected ReporteAsistenciaPresenter getPresenter() {
-        return new ReporteAsistenciaPresenterImpl(new UseCaseHandler(new UseCaseThreadPoolScheduler()), getResources());
+        ReporteAsistenciaRepository reporteAsistenciaRepository = new ReporteAsistenciaRepository(new ReporteAsistenciaRemote(new FireStore()));
+        return new ReporteAsistenciaPresenterImpl(new UseCaseHandler(new UseCaseThreadPoolScheduler()),
+                getResources(),
+                new ObtenerAsistenciaLista(reporteAsistenciaRepository));
     }
 
     @Override

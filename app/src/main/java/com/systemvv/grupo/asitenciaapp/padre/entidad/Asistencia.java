@@ -7,6 +7,7 @@ public class Asistencia {
     private int conteo;
     private String inicioRegistroHora;
     private String finRegistroHora;
+    private String tipASistencia;
 
     public Asistencia() {
     }
@@ -66,5 +67,13 @@ public class Asistencia {
 
     public void setFinRegistroHora(String finRegistroHora) {
         this.finRegistroHora = finRegistroHora;
+    }
+
+    public String getTipASistencia() {
+        return tipASistencia;
+    }
+
+    public void setTipASistencia(String tipASistencia) {
+        this.tipASistencia = tipASistencia;
     }
 }

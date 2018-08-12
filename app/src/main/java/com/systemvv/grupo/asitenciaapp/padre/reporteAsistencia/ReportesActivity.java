@@ -120,11 +120,11 @@ public class ReportesActivity extends BaseActivity<ReportesView, ReportesPresent
 
     private void initViewAdapter(Cursos cursos) {
         Bundle args = new Bundle();
-
         /*args.putInt("idCargaCurso", idCargaCurso);
         args.putInt("cursoId", idCurso);*/
-        args.putParcelable("cursos", Parcels.wrap(cursos));
         args.putAll(getIntent().getExtras());
+         args.putParcelable("cursosUi", Parcels.wrap(cursos));
+
         MyFragmentAdapter fragmentAdapter = new MyFragmentAdapter(getSupportFragmentManager());
         fragmentAdapter.addFragment(ReporteAsistenciaFragment.newInstance(args), "ASISTENCIA");
         fragmentAdapter.addFragment(ReporteIncidenciasFragment.newInstance(args), "INCIDENCIAS");

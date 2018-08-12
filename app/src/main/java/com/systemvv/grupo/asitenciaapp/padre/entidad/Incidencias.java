@@ -9,6 +9,7 @@ public class Incidencias {
      String fecha;
      String hora;
      int gradoIncidencia;
+     String tipoIncidencia;
 
     public Incidencias() {
     }
@@ -59,5 +60,13 @@ public class Incidencias {
 
     public void setGradoIncidencia(int gradoIncidencia) {
         this.gradoIncidencia = gradoIncidencia;
+    }
+
+    public String getTipoIncidencia() {
+        return tipoIncidencia;
+    }
+
+    public void setTipoIncidencia(String tipoIncidencia) {
+        this.tipoIncidencia = tipoIncidencia;
     }
 }

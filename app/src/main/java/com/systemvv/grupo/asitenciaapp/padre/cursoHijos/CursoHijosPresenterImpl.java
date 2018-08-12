@@ -53,6 +53,8 @@ public class CursoHijosPresenterImpl extends BaseActivityPresenterImpl<CursoHijo
                     @Override
                     public void onSuccess(ObtenerCursoHijos.ResponseValue response) {
                         if (response.getCursosList() == null) return;
+
+
                         if (view != null) view.mostrarListaCursos(response.getCursosList());
                     }
 
