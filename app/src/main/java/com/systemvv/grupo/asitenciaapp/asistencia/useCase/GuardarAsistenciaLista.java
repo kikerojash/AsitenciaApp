@@ -28,8 +28,8 @@ public class GuardarAsistenciaLista extends UseCase<GuardarAsistenciaLista.Resqu
 
     public static final class ResquestValues implements UseCase.RequestValues{
 
-        private List<Asistencia> asistenciaUiList;
-        private CursoUi cursoUi;
+         List<Asistencia> asistenciaUiList;
+         CursoUi cursoUi;
 
         public ResquestValues(List<Asistencia> asistenciaUiList, CursoUi cursoUi) {
             this.asistenciaUiList = asistenciaUiList;

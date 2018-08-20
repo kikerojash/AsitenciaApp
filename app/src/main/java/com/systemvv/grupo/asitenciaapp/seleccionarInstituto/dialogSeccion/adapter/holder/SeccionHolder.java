@@ -41,7 +41,7 @@ public class SeccionHolder extends RecyclerView.ViewHolder implements View.OnCli
         switch (v.getId()) {
             case R.id.cardview:
                 Log.d(TAG, "cardViewItem");
-                listener.onClickItem(seccionUi);
+                listener.onClickItem(v,seccionUi);
                 break;
             default:
                 break;

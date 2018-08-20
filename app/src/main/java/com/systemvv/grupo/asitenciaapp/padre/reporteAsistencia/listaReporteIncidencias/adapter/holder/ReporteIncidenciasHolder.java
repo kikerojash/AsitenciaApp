@@ -1,5 +1,6 @@
 package com.systemvv.grupo.asitenciaapp.padre.reporteAsistencia.listaReporteIncidencias.adapter.holder;
 
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
@@ -7,11 +8,12 @@ import android.widget.TextView;
 
 import com.systemvv.grupo.asitenciaapp.R;
 import com.systemvv.grupo.asitenciaapp.padre.entidad.Incidencias;
+import com.systemvv.grupo.asitenciaapp.padre.reporteAsistencia.listaReporteIncidencias.listener.IncidenciasListener;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class ReporteIncidenciasHolder extends RecyclerView.ViewHolder {
+public class ReporteIncidenciasHolder extends RecyclerView.ViewHolder implements View.OnLongClickListener {
     @BindView(R.id.textView10)
     TextView textViewConteo;
     @BindView(R.id.textView9)
@@ -20,14 +22,21 @@ public class ReporteIncidenciasHolder extends RecyclerView.ViewHolder {
     TextView textViewFechaHora;
     @BindView(R.id.btnSignin)
     Button button;
+    @BindView(R.id.contentHeader)
+    CardView cardView;
+    IncidenciasListener listener;
+    Incidencias incidencias;
 
     public ReporteIncidenciasHolder(View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);
+        cardView.setOnLongClickListener(this);
     }
 
-    public void bind(Incidencias incidencias) {
-        textViewConteo.setText(incidencias.getConteo()+"");
+    public void bind(Incidencias incidencias, IncidenciasListener listener) {
+        this.incidencias = incidencias;
+        this.listener = listener;
+        textViewConteo.setText(incidencias.getConteo() + "");
         textViewDescripcionIncidencia.setText(incidencias.getNombreIncidencias());
         textViewFechaHora.setText("Fecha: " + incidencias.getFecha() + " Hora: " + incidencias.getHora());
         validarTipoIncidencia(incidencias);
@@ -47,8 +56,20 @@ public class ReporteIncidenciasHolder extends RecyclerView.ViewHolder {
                 button.setBackgroundColor(itemView.getResources().getColor(R.color.md_green_400));
                 button.setText("B");
                 break;
-                default:
-                    break;
+            default:
+                break;
         }
+    }
+
+    @Override
+    public boolean onLongClick(View v) {
+        switch (v.getId()) {
+            case R.id.contentHeader:
+                listener.onLongClickListener(incidencias);
+                break;
+            default:
+                break;
+        }
+        return false;
     }
 }

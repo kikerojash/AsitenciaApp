@@ -17,6 +17,7 @@ public class Incidencia {
     private String prd_id_periodo;
     private String ins_id_institucion;
     private String gra_id_grado;
+    private boolean estadoActivo;
 
     public Incidencia() {
     }
@@ -109,20 +110,29 @@ public class Incidencia {
         this.gra_id_grado = gra_id_grado;
     }
 
+    public boolean isEstadoActivo() {
+        return estadoActivo;
+    }
+
+    public void setEstadoActivo(boolean estadoActivo) {
+        this.estadoActivo = estadoActivo;
+    }
+
     @Exclude
     public Map<String, Object> toMap() {
         HashMap<String, Object> result = new HashMap<>();
         //result.put("inc_id_incidencia", inc_id_incidencia);
         result.put("inc_prioridad", inc_prioridad);
-        result.put("inc_descripcion",inc_descripcion);
+        result.put("inc_descripcion", inc_descripcion);
         result.put("inc_fecha", inc_fecha);
         result.put("timeStamp", timeStamp);
         result.put("alu_id_alumno", alu_id_alumno);
-        result.put("cur_id_curso",cur_id_curso);
-        result.put("sec_id_seccion",sec_id_seccion);
-        result.put("prd_id_periodo",prd_id_periodo);
-        result.put("ins_id_institucion",ins_id_institucion);
-        result.put("gra_id_grado",gra_id_grado);
+        result.put("cur_id_curso", cur_id_curso);
+        result.put("sec_id_seccion", sec_id_seccion);
+        result.put("prd_id_periodo", prd_id_periodo);
+        result.put("ins_id_institucion", ins_id_institucion);
+        result.put("gra_id_grado", gra_id_grado);
+        result.put("estadoActivo", estadoActivo);
         return result;
     }
 }

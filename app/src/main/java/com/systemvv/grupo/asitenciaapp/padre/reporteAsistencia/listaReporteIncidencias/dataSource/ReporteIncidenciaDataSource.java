@@ -13,4 +13,6 @@ public interface ReporteIncidenciaDataSource {
 
     void onMostrarListaReporteIncidencia(Cursos cursos, onCallBackResultado<List<Incidencias>> listonCallBackResultado);
 
+    void onEliminarIncidencia(Incidencias incidencias, onCallBackResultado<Boolean> booleanonCallBackResultado);
+
 }

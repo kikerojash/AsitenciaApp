@@ -52,6 +52,7 @@ public class IncidenciaRemote implements IncidenciaDataSource {
         incidencia.setIns_id_institucion(incidenciaUi.getIns_id_institucion());
         incidencia.setPrd_id_periodo(incidenciaUi.getPrd_id_periodo());
         incidencia.setSec_id_seccion(incidenciaUi.getSec_id_seccion());
+        incidencia.setEstadoActivo(true);
         return incidencia;
     }
 }

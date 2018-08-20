@@ -42,17 +42,16 @@ public class ControlAsistenciaPresenterImpl extends BaseActivityPresenterImpl<Co
 
     public static final String TAG = ControlAsistenciaPresenterImpl.class.getSimpleName();
 
-    private List<ColumnaCabeceraAsistencia> columnHeaderList;
-    private List<List<CeldasAsistencia>> cellsList;
-    private List<FilaCabeceraAsistencia> rowHeaderList;
-
+    List<ColumnaCabeceraAsistencia> columnHeaderList;
+    List<List<CeldasAsistencia>> cellsList;
+    List<FilaCabeceraAsistencia> rowHeaderList;
     CursoUi cursoUi;
 
     /*Caso de Uso*/
-    private GuardarAsistenciaLista guardarAsistenciaLista;
-    private ValidarFechaRegistroAsistencia validarFechaRegistroAsistencia;
-    private GuardarAsistenciaListaHoraFin guardarAsistenciaListaHoraFin;
-    private ObtenerListaAlumnos obtenerListaAlumnos;
+    GuardarAsistenciaLista guardarAsistenciaLista;
+    ValidarFechaRegistroAsistencia validarFechaRegistroAsistencia;
+    GuardarAsistenciaListaHoraFin guardarAsistenciaListaHoraFin;
+    ObtenerListaAlumnos obtenerListaAlumnos;
 
 
     public ControlAsistenciaPresenterImpl(UseCaseHandler handler, Resources res, GuardarAsistenciaLista guardarAsistenciaLista, ValidarFechaRegistroAsistencia validarFechaRegistroAsistencia, GuardarAsistenciaListaHoraFin guardarAsistenciaListaHoraFin, ObtenerListaAlumnos obtenerListaAlumnos) {
@@ -105,7 +104,6 @@ public class ControlAsistenciaPresenterImpl extends BaseActivityPresenterImpl<Co
 
         celdasAsistenciasColumnaPresentes = new ArrayList<>();
         celdasAsistencias = new ArrayList<>();
-
 
     }
 
@@ -261,6 +259,7 @@ public class ControlAsistenciaPresenterImpl extends BaseActivityPresenterImpl<Co
             }
             if (view != null) view.actualizarDatosCambiadosTabla();
         } else {
+            if (view!=null)view.mostrarMensaje("Inicie la Selección de Registro!!");
             // Toast.makeText(getApplicationContext(), "Seleccione todos los items primero ", Toast.LENGTH_SHORT).show();
         }
     }

@@ -9,15 +9,18 @@ import android.view.ViewGroup;
 import com.systemvv.grupo.asitenciaapp.R;
 import com.systemvv.grupo.asitenciaapp.padre.entidad.Incidencias;
 import com.systemvv.grupo.asitenciaapp.padre.reporteAsistencia.listaReporteIncidencias.adapter.holder.ReporteIncidenciasHolder;
+import com.systemvv.grupo.asitenciaapp.padre.reporteAsistencia.listaReporteIncidencias.listener.IncidenciasListener;
 
 import java.util.List;
 
 public class ReporteIncidenciasAdapter extends RecyclerView.Adapter<ReporteIncidenciasHolder> {
 
     private List<Incidencias> incidenciasList;
+    private IncidenciasListener listener;
 
-    public ReporteIncidenciasAdapter(List<Incidencias> incidenciasList) {
+    public ReporteIncidenciasAdapter(List<Incidencias> incidenciasList, IncidenciasListener listener) {
         this.incidenciasList = incidenciasList;
+        this.listener = listener;
     }
 
     @NonNull
@@ -30,7 +33,7 @@ public class ReporteIncidenciasAdapter extends RecyclerView.Adapter<ReporteIncid
     @Override
     public void onBindViewHolder(@NonNull ReporteIncidenciasHolder holder, int position) {
         Incidencias incidencias = incidenciasList.get(position);
-        holder.bind(incidencias);
+        holder.bind(incidencias,listener);
     }
 
     @Override
@@ -42,5 +45,13 @@ public class ReporteIncidenciasAdapter extends RecyclerView.Adapter<ReporteIncid
     public void mostrarLista(List<Incidencias> incidenciasList) {
         this.incidenciasList = incidenciasList;
         notifyDataSetChanged();
+    }
+
+    public void eliminarItem(Incidencias incidencias) {
+        int position = this.incidenciasList.indexOf(incidencias);
+        if (position != -1) {
+            this.incidenciasList.remove(incidencias);
+            notifyItemRemoved(position);
+        }
     }
 }

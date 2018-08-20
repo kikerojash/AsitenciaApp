@@ -6,5 +6,8 @@ import com.systemvv.grupo.asitenciaapp.padre.entidad.Incidencias;
 import java.util.List;
 
 public interface ReporteIncidenciasView extends BaseActivityView<ReporteIncidenciasPresenter> {
+
     void mostrarLista(List<Incidencias> incidenciasList);
+
+    void eliminarItem(Incidencias incidencias);
 }

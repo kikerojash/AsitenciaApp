@@ -8,6 +8,7 @@ import com.systemvv.grupo.asitenciaapp.base.UseCaseHandler;
 import com.systemvv.grupo.asitenciaapp.base.fragment.BaseFragmentPresenterImpl;
 import com.systemvv.grupo.asitenciaapp.padre.entidad.Cursos;
 import com.systemvv.grupo.asitenciaapp.padre.entidad.Incidencias;
+import com.systemvv.grupo.asitenciaapp.padre.reporteAsistencia.listaReporteIncidencias.useCase.EliminarIncidencia;
 import com.systemvv.grupo.asitenciaapp.padre.reporteAsistencia.listaReporteIncidencias.useCase.ObtenerIncidenciaLista;
 
 import org.parceler.Parcels;
@@ -21,10 +22,12 @@ public class ReporteIncidenciasPresenterImpl extends BaseFragmentPresenterImpl<R
 
     Cursos cursos;
     ObtenerIncidenciaLista obtenerIncidenciaLista;
+    EliminarIncidencia eliminarIncidencia;
 
-    public ReporteIncidenciasPresenterImpl(UseCaseHandler handler, Resources res, ObtenerIncidenciaLista obtenerIncidenciaLista) {
+    public ReporteIncidenciasPresenterImpl(UseCaseHandler handler, Resources res, ObtenerIncidenciaLista obtenerIncidenciaLista, EliminarIncidencia eliminarIncidencia) {
         super(handler, res);
         this.obtenerIncidenciaLista = obtenerIncidenciaLista;
+        this.eliminarIncidencia = eliminarIncidencia;
     }
 
     @Override
@@ -81,5 +84,23 @@ public class ReporteIncidenciasPresenterImpl extends BaseFragmentPresenterImpl<R
         incidenciasList.add(incidencias3);
         incidenciasList.add(incidencias4);
         return incidenciasList;
+    }
+
+    @Override
+    public void onEliminarClick(final Incidencias incidencias) {
+        handler.execute(eliminarIncidencia, new EliminarIncidencia.RequestValues(incidencias),
+                new UseCase.UseCaseCallback<EliminarIncidencia.ResponseValue>() {
+                    @Override
+                    public void onSuccess(EliminarIncidencia.ResponseValue response) {
+                        if (response.isaBoolean()) {
+                            if (view != null) view.eliminarItem(incidencias);
+                        }
+                    }
+
+                    @Override
+                    public void onError() {
+
+                    }
+                });
     }
 }

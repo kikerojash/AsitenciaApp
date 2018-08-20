@@ -124,7 +124,7 @@
         <!--android:id="@+id/country_photo"-->
         <!--android:layout_width="wrap_content"-->
         <!--android:layout_height="wrap_content"-->
-        <!--android:contentDescription="@string/action_settings"-->
+        <!--android:contentDescriptio   n="@string/action_settings"-->
         <!--android:src="@drawable/ic_audiotrack_dark"-->
         <!--android:scaleType="centerCrop" />-->
 

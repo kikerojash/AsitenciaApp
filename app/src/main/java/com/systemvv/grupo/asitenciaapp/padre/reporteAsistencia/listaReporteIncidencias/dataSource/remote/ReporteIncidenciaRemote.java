@@ -25,4 +25,16 @@ public class ReporteIncidenciaRemote implements ReporteIncidenciaDataSource {
             }
         });
     }
+
+    @Override
+    public void onEliminarIncidencia(Incidencias incidencias, final onCallBackResultado<Boolean> booleanonCallBackResultado) {
+        fireStore.onEliminarIncidencia(incidencias, new FireCallback<Boolean>() {
+            @Override
+            public void onSuccess(Boolean sucess) {
+                booleanonCallBackResultado.onResultado(sucess);
+            }
+        });
+    }
+
+
 }

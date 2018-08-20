@@ -1,15 +1,22 @@
 package com.systemvv.grupo.asitenciaapp.cursos;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.ViewTreeObserver;
+import android.view.animation.AccelerateInterpolator;
 import android.widget.ProgressBar;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -28,6 +35,7 @@ import com.systemvv.grupo.asitenciaapp.cursos.listener.CursoListener;
 import com.systemvv.grupo.asitenciaapp.cursos.useCase.ObtenerCursoLista;
 import com.systemvv.grupo.asitenciaapp.fire.FireStore;
 import com.systemvv.grupo.asitenciaapp.login.LoginActivity;
+import com.systemvv.grupo.asitenciaapp.utils.Utils;
 
 import org.parceler.Parcels;
 
@@ -47,6 +55,9 @@ public class CursoActivity extends BaseActivity<CursoView, CursoPresenter> imple
     CursoAdapter adapter;
     @BindView(R.id.toolbar)
     android.support.v7.widget.Toolbar toolbar;
+    @BindView(R.id.constraintLayout)
+    ConstraintLayout constraintLayout;
+
     //firebase auth object
     private FirebaseAuth firebaseAuth;
 
@@ -95,10 +106,14 @@ public class CursoActivity extends BaseActivity<CursoView, CursoPresenter> imple
     }
 
     private void initVistas() {
+        RecyclerView.ItemAnimator itemAnimator = new DefaultItemAnimator();
+        itemAnimator.setAddDuration(1000);
+        itemAnimator.setRemoveDuration(1000);
         adapter = new CursoAdapter(new ArrayList<CursoUi>(), this);
         reciclador.setLayoutManager(new LinearLayoutManager(this));
         reciclador.setHasFixedSize(true);
         reciclador.setAdapter(adapter);
+        reciclador.setItemAnimator(itemAnimator);
     }
 
     @Override
@@ -163,9 +178,37 @@ public class CursoActivity extends BaseActivity<CursoView, CursoPresenter> imple
             finish();
             startActivity(new Intent(this, LoginActivity.class));
         }
+        if (savedInstanceState == null) {
+            constraintLayout.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+                @Override
+                public boolean onPreDraw() {
+                    constraintLayout.getViewTreeObserver().removeOnPreDrawListener(this);
+                    startIntroAnimation();
+                    return true;
+                }
+            });
+        }
     }
 
+    private void startIntroAnimation() {
+        ViewCompat.setElevation(toolbar, 0);
+        constraintLayout.setScaleY(0.1f);
+        constraintLayout.setPivotY(2);
+       // llAddComment.setTranslationY(200);
 
+        constraintLayout.animate()
+                .scaleY(1)
+                .setDuration(200)
+                .setInterpolator(new AccelerateInterpolator())
+                .setListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        ViewCompat.setElevation(toolbar, Utils.dpToPx(8));
+                      //  animateContent();
+                    }
+                })
+                .start();
+    }
 
 
 }

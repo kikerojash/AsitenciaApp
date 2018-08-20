@@ -26,8 +26,8 @@ public class ValidarFechaRegistroAsistencia extends UseCase<ValidarFechaRegistro
     }
 
     public static final class RequestValues implements UseCase.RequestValues{
-        private String fecha;
-        private CursoUi cursoUi;
+         String fecha;
+         CursoUi cursoUi;
 
         public RequestValues(String fecha, CursoUi cursoUi) {
             this.fecha = fecha;

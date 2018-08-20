@@ -4,6 +4,7 @@ import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -115,11 +116,15 @@ public class LoginActivity extends BaseActivity<LoginView, LoginPresenter> imple
                 break;
             case R.id.iv_systemweb:
                 mostrarSnackbarMensaje("Web");
+                Intent systemWeb = new Intent(Intent.ACTION_VIEW, Uri.parse("http://gruposystemvv.com/"));
+                startActivity(systemWeb);
                 break;
             case R.id.iv_systemMaps:
                 mostrarSnackbarMensaje("Maps");
                 break;
             case R.id.iv_systemFacebook:
+                Intent systemFacebook = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.facebook.com/gruposystemvv/"));
+                startActivity(systemFacebook);
                 mostrarSnackbarMensaje("Facebook");
                 break;
             case R.id.iv_systemTwitter:
@@ -127,6 +132,8 @@ public class LoginActivity extends BaseActivity<LoginView, LoginPresenter> imple
                 break;
             case R.id.iv_systemGoogle:
                 mostrarSnackbarMensaje("Google");
+                Intent systemGoogle = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.google.com/search?ei=BkN4W7_xIobikgXP4LeoCg&q=http%3A%2F%2Fgruposystemvv.com%2F&oq=http%3A%2F%2Fgruposystemvv.com%2F&gs_l=psy-ab.3...3914.3914.0.4665.1.1.0.0.0.0.276.276.2-1.1.0....0...1c.1.64.psy-ab..0.0.0....0.IrIDwvaT6o4"));
+                startActivity(systemGoogle);
                 break;
             default:
                 break;

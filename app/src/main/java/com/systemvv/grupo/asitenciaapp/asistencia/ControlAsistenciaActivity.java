@@ -192,10 +192,6 @@ public class ControlAsistenciaActivity extends BaseActivity<ControlAsistenciaVie
 
     @Override
     public void onCellClicked(@NonNull RecyclerView.ViewHolder holder, int column, int row) {
-       /* AsistenciaUi asistenciaUi = (AsistenciaUi) table.getAdapter().getCellItem(column, row);
-        List<CeldasAsistencia> celdasList = adapter.getCellRowItems(row);
-        presenter.onClickCeldas(holder, asistenciaUi, celdasList);*/
-
         Asistencia asistenciaUi = (Asistencia) table.getAdapter().getCellItem(column, row);
         List<CeldasAsistencia> celdasList = adapter.getCellRowItems(row);
         presenter.onClickCeldas(holder, asistenciaUi, celdasList);
@@ -245,7 +241,6 @@ public class ControlAsistenciaActivity extends BaseActivity<ControlAsistenciaVie
             bundle.putString("keyPeriodo", alumnosUi.getKeyPeriodo());
             bundle.putString("keySeccion", alumnosUi.getKeySeccion());
             bundle.putString("keyCurso", alumnosUi.getKeyCurso());
-
             dialogFragment.setArguments(bundle);
             dialogFragment.show(ft, "dialog");
         }

@@ -18,4 +18,9 @@ public class ReporteIncidenciaRepository implements ReporteIncidenciaDataSource 
     public void onMostrarListaReporteIncidencia(Cursos cursos, onCallBackResultado<List<Incidencias>> listonCallBackResultado) {
         reporteIncidenciaRemote.onMostrarListaReporteIncidencia(cursos, listonCallBackResultado);
     }
+
+    @Override
+    public void onEliminarIncidencia(Incidencias incidencias, onCallBackResultado<Boolean> booleanonCallBackResultado) {
+        reporteIncidenciaRemote.onEliminarIncidencia(incidencias, booleanonCallBackResultado);
+    }
 }

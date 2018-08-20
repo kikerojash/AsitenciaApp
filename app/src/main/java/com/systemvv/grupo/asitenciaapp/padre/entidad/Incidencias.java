@@ -4,12 +4,13 @@ import org.parceler.Parcel;
 
 @Parcel
 public class Incidencias {
-     int conteo;
-     String nombreIncidencias;
-     String fecha;
-     String hora;
-     int gradoIncidencia;
-     String tipoIncidencia;
+    String keyIncidencia;
+    int conteo;
+    String nombreIncidencias;
+    String fecha;
+    String hora;
+    int gradoIncidencia;
+    String tipoIncidencia;
 
     public Incidencias() {
     }
@@ -68,5 +69,13 @@ public class Incidencias {
 
     public void setTipoIncidencia(String tipoIncidencia) {
         this.tipoIncidencia = tipoIncidencia;
+    }
+
+    public String getKeyIncidencia() {
+        return keyIncidencia;
+    }
+
+    public void setKeyIncidencia(String keyIncidencia) {
+        this.keyIncidencia = keyIncidencia;
     }
 }

@@ -694,6 +694,7 @@ public class FireStore extends Fire {
                                 String inc_prioridad = (String) document.get("inc_prioridad");
                                 String inc_descripcion = (String) document.get("inc_descripcion");
                                 Incidencias incidencias = new Incidencias();
+                                incidencias.setKeyIncidencia(document.getId());
                                 incidencias.setConteo(count);
                                 incidencias.setFecha(fecha);
                                 incidencias.setNombreIncidencias(inc_descripcion);
@@ -706,6 +707,28 @@ public class FireStore extends Fire {
                             listFireCallback.onSuccess(null);
                             Log.d(TAG, "Error getting documents: ", task.getException());
                         }
+                    }
+                });
+    }
+
+    public void onEliminarIncidencia(Incidencias incidencias, final FireCallback<Boolean> booleanFireCallback){
+        String keyIncidencia = incidencias.getKeyIncidencia();
+        DocumentReference washingtonRef = mFirestore.collection(Constantes.NODO_INCIDENCIA).document(keyIncidencia);
+        // Set the "isCapital" field of the city 'DC'
+        washingtonRef
+                .update("estadoActivo", false)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        booleanFireCallback.onSuccess(true);
+                        Log.d(TAG, "DocumentSnapshot successfully updated!");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        booleanFireCallback.onSuccess(false);
+                        Log.w(TAG, "Error updating document", e);
                     }
                 });
     }

@@ -27,7 +27,7 @@ public class ObtenerListaAlumnos extends UseCase<ObtenerListaAlumnos.RequestValu
     }
 
     public static final class RequestValues implements UseCase.RequestValues {
-        private CursoUi cursoUi;
+         CursoUi cursoUi;
 
         public RequestValues(CursoUi cursoUi) {
             this.cursoUi = cursoUi;

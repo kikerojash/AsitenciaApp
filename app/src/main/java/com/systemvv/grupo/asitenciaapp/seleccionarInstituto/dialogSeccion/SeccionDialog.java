@@ -129,14 +129,17 @@ public class SeccionDialog extends DialogFragment implements SeccionView,ItemLis
 
 
     @Override
-    public void onClickItem(SeccionUi seccionUi) {
+    public void onClickItem(View view,SeccionUi seccionUi) {
 
         Log.d(TAG,"onClickItem");
         Intent intent = new Intent(getActivity(), CursoActivity.class);
+        int[] startingLocation = new int[2];
+        view.getLocationOnScreen(startingLocation);
         Bundle bundle = new Bundle();
         bundle.putParcelable("seccionUi", Parcels.wrap(seccionUi));
         intent.putExtras(bundle);
         startActivity(intent);
+        getActivity().overridePendingTransition(0, 0);
         dismiss();
     }
 
