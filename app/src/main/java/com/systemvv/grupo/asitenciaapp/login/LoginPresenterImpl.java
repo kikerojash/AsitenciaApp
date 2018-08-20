@@ -77,7 +77,14 @@ public class LoginPresenterImpl extends BaseActivityPresenterImpl<LoginView> imp
     @Override
     public void onCreate() {
         super.onCreate();
+        if(view!=null)view.checkGooglePlayServicesAvailable();
         //    initValidarPeriodo(usuario);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(view!=null)view.checkGooglePlayServicesAvailable();
     }
 
     /*
@@ -99,6 +106,15 @@ public class LoginPresenterImpl extends BaseActivityPresenterImpl<LoginView> imp
         }
     }
 
+    @Override
+    public void onClickRolPadre(UsuarioUi usuarioUi, String keyperiodo) {
+        if (view != null) view.initVistaPadre(usuarioUi, keyperiodo);
+    }
+
+    @Override
+    public void onClickRolDocente(UsuarioUi usuarioUi, String keyperiodo) {
+        if (view != null) view.initSeleccionarInstituto(usuarioUi, keyperiodo);
+    }
 
 
     private void initValidarPeriodo(final String usuario) {
@@ -114,8 +130,12 @@ public class LoginPresenterImpl extends BaseActivityPresenterImpl<LoginView> imp
                             String keyPeriodo = response.getKeyPeriodo();
                             initValidarTipoUsuario(usuario, keyPeriodo);
                             Log.d(TAG, " keyPeriodo "+keyPeriodo + "usuario " + usuario);
-                            // if (view != null) view.initSeleccionarInstituto(usuario, keyPeriodo);
                         } else {
+                           if(view!=null){
+                               view.cerrarDialog();
+                               view.mostrarMensaje("Contactese con nuestros Administradores");
+                           }
+
                             Log.d(TAG, "Otro tipo de Peridoo");
                         }
                     }
@@ -139,8 +159,14 @@ public class LoginPresenterImpl extends BaseActivityPresenterImpl<LoginView> imp
                             if (view != null) view.initVistaPadre(response.getUsuarioUi(), keyPeriodo);
                             Log.d(TAG, "APODERADO");
                         } else if (response.getUsuarioUi().getTip_usuario_nombre().equals("AMBOS")) {
+                            if(view!=null)view.mostrarSeleccionRol(response.getUsuarioUi(), keyPeriodo);
                             Log.d(TAG, "AMBOS");
                         } else {
+                            if(view!=null){
+                                view.cerrarDialog();
+                                view.mostrarMensaje("Contactese con nuestros Administradores");
+                            }
+
                             Log.d(TAG, "wsP");
                         }
                     }
@@ -154,18 +180,9 @@ public class LoginPresenterImpl extends BaseActivityPresenterImpl<LoginView> imp
     }
 
     private void initAutenticacion(String usuario, String clave) {
-        // if (view!=null)view.initVistaPadre(usuario,clave);
         if (view != null) view.initAutenticacion(usuario, clave);
     }
 
-//    private void initLoginActivity(String usuario, String clave) {
-//        /*Profesor*/
-//        if (usuario.equals("juanperez@gmail.com") && clave.equals("123")) {
-//            if (view != null) view.initSeleccionarInstituto(usuario, clave);
-//        } else if (usuario.equals("jorgefernandez@gmail.com") && clave.equals("123")) {/*Padre*/
-//            if (view != null) view.initVistaPadre(usuario, clave);
-//        }
-//    }
 
 
 }

@@ -5,8 +5,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-
-
 import com.systemvv.grupo.asitenciaapp.R;
 import com.systemvv.grupo.asitenciaapp.asistencia.adapter.estructura.CeldasAsistencia;
 import com.systemvv.grupo.asitenciaapp.asistencia.adapter.estructura.ColumnaCabeceraAsistencia;
@@ -15,7 +13,6 @@ import com.systemvv.grupo.asitenciaapp.asistencia.adapter.holder.celdas.CeldasAs
 import com.systemvv.grupo.asitenciaapp.asistencia.adapter.holder.celdas.CeldasAsistenciaAlumnoPuntualHolder;
 import com.systemvv.grupo.asitenciaapp.asistencia.adapter.holder.celdas.CeldasAsistenciaAlumnoTardeHolder;
 import com.systemvv.grupo.asitenciaapp.asistencia.adapter.holder.columnas.ColumnaTipoPresenteHolder;
-
 import com.systemvv.grupo.asitenciaapp.asistencia.entidad.Alumnos;
 import com.systemvv.grupo.asitenciaapp.asistencia.entidad.Asistencia;
 import com.systemvv.grupo.asitenciaapp.asistencia.entidad.MotivoAsistencia;
@@ -28,10 +25,7 @@ import com.systemvv.grupo.asitenciaapp.base.UseCaseHandler;
 import com.systemvv.grupo.asitenciaapp.base.activity.BaseActivityPresenterImpl;
 import com.systemvv.grupo.asitenciaapp.cursos.entidad.CursoUi;
 import com.systemvv.grupo.asitenciaapp.utils.Constantes;
-
-
 import org.parceler.Parcels;
-
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -243,7 +237,6 @@ public class ControlAsistenciaPresenterImpl extends BaseActivityPresenterImpl<Co
     @Override
     public void onClickCeldas(@NonNull RecyclerView.ViewHolder holder, Asistencia asistenciaUi, List<CeldasAsistencia> clickCeldasList) {
         if (clickColumn == true) {
-
             if (holder instanceof CeldasAsistenciaAlumnoPuntualHolder) {
                 asistenciaUi.setTipoAsistencia("PUNTUAL");
                 pintandoCeldas(asistenciaUi, clickCeldasList);

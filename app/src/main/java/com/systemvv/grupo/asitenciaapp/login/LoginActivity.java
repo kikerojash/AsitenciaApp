@@ -1,8 +1,9 @@
 package com.systemvv.grupo.asitenciaapp.login;
 
-import android.app.Fragment;
-import android.app.FragmentTransaction;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -11,10 +12,13 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -31,7 +35,6 @@ import com.systemvv.grupo.asitenciaapp.login.dataSource.remote.LoginRemote;
 import com.systemvv.grupo.asitenciaapp.login.useCase.ValidarPeriodo;
 import com.systemvv.grupo.asitenciaapp.login.useCase.ValidarRolUsuario;
 import com.systemvv.grupo.asitenciaapp.padre.HijosActivity;
-import com.systemvv.grupo.asitenciaapp.padre.dialogHijos.DialogHijos;
 import com.systemvv.grupo.asitenciaapp.seleccionarInstituto.InstitutoActivity;
 
 import org.parceler.Parcels;
@@ -227,6 +230,80 @@ public class LoginActivity extends BaseActivity<LoginView, LoginPresenter> imple
                     }
                 });
     }
+
+    @Override
+    public void cerrarDialog() {
+        progressDialog.dismiss();
+    }
+
+    @Override
+    public void mostrarMensaje(String mensaje) {
+        Snackbar.make(progressBar, mensaje, Snackbar.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void mostrarSeleccionRol(final UsuarioUi usuarioUi, final String keyPeriodo) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("Elección de Rol");
+        builder.setMessage("Seleccione el rol con que desea ingresar:");
+        // builder.setIcon(R.drawable.ic_i);
+        builder.setPositiveButton("PADRE", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                presenter.onClickRolPadre(usuarioUi, keyPeriodo);
+
+            }
+        });
+        builder.setNegativeButton("DOCENTE", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                presenter.onClickRolDocente(usuarioUi, keyPeriodo);
+            }
+        });
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
+
+    @Override
+    public void checkGooglePlayServicesAvailable() {
+        GoogleApiAvailability googleAPI = GoogleApiAvailability.getInstance();
+        final int status = googleAPI.isGooglePlayServicesAvailable(this);
+        if (status == ConnectionResult.SUCCESS) {
+            Log.d(TAG, "ValidateSUCCES ");
+        }
+        if (googleAPI.isUserResolvableError(status)) {
+            final Dialog errorDialog = googleAPI.getErrorDialog(this, status, 1);
+            if (errorDialog != null) {
+                inflateDialog();
+                Log.d(TAG, "errorDialog ");
+            }
+        }
+    }
+
+    private void inflateDialog() {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(getString(R.string.google_play_services_title));
+        builder.setMessage(getString(R.string.google_play_services_message));
+        builder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                try {
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.marker_google_services))));
+                } catch (android.content.ActivityNotFoundException anfe) {
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.playstore_google_services))));
+                }
+                dialog.dismiss();
+                checkGooglePlayServicesAvailable();
+            }
+        });
+        builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                finish();
+            }
+        });
+
+        AlertDialog alert11 = builder.create();
+        alert11.setCancelable(false);
+        alert11.show();
+    }
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

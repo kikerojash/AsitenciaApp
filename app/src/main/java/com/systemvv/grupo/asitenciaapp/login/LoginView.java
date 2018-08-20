@@ -18,9 +18,17 @@ public interface LoginView extends BaseActivityView<LoginPresenter> {
 
     void initSeleccionarInstituto(UsuarioUi usuario, String keyPeriodo);
 
-    void initVistaPadre(UsuarioUi usuario,String keyPeriodo);
+    void initVistaPadre(UsuarioUi usuario, String keyPeriodo);
 
-    void initAutenticacion(String usuario,String clave);
+    void initAutenticacion(String usuario, String clave);
+
+    void cerrarDialog();
+
+    void mostrarMensaje(String mensaje);
+
+    void mostrarSeleccionRol(UsuarioUi usuarioUi, String keyPeriodo);
+
+    void checkGooglePlayServicesAvailable();
 
 
 }

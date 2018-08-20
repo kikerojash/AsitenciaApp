@@ -14,6 +14,7 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.systemvv.grupo.asitenciaapp.asistencia.entidad.Alumnos;
@@ -579,6 +580,8 @@ public class FireStore extends Fire {
         String keyGrado = hijos.getKeyGrado();
         String keySeccion = hijos.getKeySeccion();
 
+        final String keyAlumno = hijos.getId();
+
         mFirestore.collection(Constantes.NODO_PERIODO_GRADO_CURSO)
                 .whereEqualTo("gra_id_grado", keyGrado)
                 .whereEqualTo("sec_id_seccion", keySeccion)
@@ -594,15 +597,35 @@ public class FireStore extends Fire {
                                 String cur_nombre = (String) document.get("cur_nombre");
                                 String pro_id_profesor = (String) document.get("pro_id_profesor");
                                 String pro_nombrecompleto = (String) document.get("pro_nombrecompleto");
+
+                                String gra_id_grado = (String) document.get("gra_id_grado");
+                                String sec_id_seccion = (String) document.get("sec_id_seccion");
+
                                 Cursos cursos = new Cursos();
                                 cursos.setId(cur_id_curso);
                                 cursos.setNombreCurso(cur_nombre);
                                 cursos.setNombreProfesor(pro_nombrecompleto);
-                                //cursos.setIncidenciasList(incidenciasListCursoHijos(hijos, cur_id_curso));
                                 cursos.setHijos(hijos);
+                                /*cursos.setIncidenciasList(incidenciasListCursoHijos(keyAlumno,
+                                        cur_id_curso,
+                                        gra_id_grado,
+                                        sec_id_seccion));*/
+
+
+
+                                Query capitalCities = mFirestore.collection(Constantes.NODO_INCIDENCIA)
+                                        .whereEqualTo("alu_id_alumno", keyAlumno)
+                                        .whereEqualTo("cur_id_curso", cur_id_curso)
+                                        .whereEqualTo("gra_id_grado", gra_id_grado)
+                                        .whereEqualTo("sec_id_seccion", sec_id_seccion);
+                                if (capitalCities.get().isSuccessful()) {
+                                    Log.d(TAG, "capitalCities: "+capitalCities.get().getResult().size()+" / asd");
+                                }
                                 cursosList.add(cursos);
 
-                                Log.d(TAG, document.getId() + " => " + document.getData());
+
+
+                               // Log.d(TAG, document.getId() + " => " + document.getData());
 
                             }
                             listFireCallback.onSuccess(cursosList);
@@ -614,6 +637,51 @@ public class FireStore extends Fire {
                 });
 
     }
+
+    private List<Incidencias> incidenciasListCursoHijos(String keyAlumno, String keyCurso, String keyGrado, String keySeccion) {
+        List<Incidencias> incidenciasList = new ArrayList<>();
+
+        int countIncidencias = 0;
+
+        Query capitalCities = mFirestore.collection(Constantes.NODO_INCIDENCIA)
+                .whereEqualTo("alu_id_alumno", keyAlumno)
+                .whereEqualTo("cur_id_curso", keyCurso)
+                .whereEqualTo("gra_id_grado", keyGrado)
+                .whereEqualTo("sec_id_seccion", keySeccion);
+
+        /*capitalCities.get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        queryDocumentSnapshots.getDocuments().size();
+                    }
+                });*/
+
+        if (capitalCities.get().isSuccessful()) {
+
+            Log.d(TAG, "capitalCities: "+capitalCities.get().getResult().size()+" / asd");
+
+        }
+        /*mFirestore.collection(Constantes.NODO_PERIODO_GRADO_CURSO)
+                .whereEqualTo("alu_id_alumno", keyAlumno)
+                .whereEqualTo("cur_id_curso", keyCurso)
+                .whereEqualTo("gra_id_grado", keyGrado)
+                .whereEqualTo("sec_id_seccion", keySeccion)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                           // countIncidencias
+                        }
+
+                    }
+                });*/
+
+        return incidenciasList;
+
+    }
+
 
     public void onMostrarListaReporteAsistencia(Cursos cursos, final FireCallback<List<com.systemvv.grupo.asitenciaapp.padre.entidad.Asistencia>> listFireCallback) {
         String keyAlumno = cursos.getHijos().getId();
@@ -711,7 +779,7 @@ public class FireStore extends Fire {
                 });
     }
 
-    public void onEliminarIncidencia(Incidencias incidencias, final FireCallback<Boolean> booleanFireCallback){
+    public void onEliminarIncidencia(Incidencias incidencias, final FireCallback<Boolean> booleanFireCallback) {
         String keyIncidencia = incidencias.getKeyIncidencia();
         DocumentReference washingtonRef = mFirestore.collection(Constantes.NODO_INCIDENCIA).document(keyIncidencia);
         // Set the "isCapital" field of the city 'DC'

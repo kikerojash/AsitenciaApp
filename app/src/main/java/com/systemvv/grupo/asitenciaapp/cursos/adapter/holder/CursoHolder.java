@@ -48,6 +48,7 @@ public class CursoHolder extends RecyclerView.ViewHolder implements View.OnClick
         textViewGradoSeccion.setText("Grado : " + cursoUi.getGradoSelected() + " Sección : " + cursoUi.getSeccionSelected());
         textViewHoraInicioFin.setText(cursoUi.getHoraInicio()+ "-"+cursoUi.getHoraFin());
         textViewAlumnosContar.setText(cursoUi.getConteoAlumnos());
+
         Glide.with(itemView.getContext()).load(cursoUi.getFoto()).into(imageViewFondo);
     }
 
