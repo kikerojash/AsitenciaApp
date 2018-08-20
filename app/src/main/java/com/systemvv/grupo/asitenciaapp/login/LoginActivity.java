@@ -121,6 +121,8 @@ public class LoginActivity extends BaseActivity<LoginView, LoginPresenter> imple
                 break;
             case R.id.iv_systemMaps:
                 mostrarSnackbarMensaje("Maps");
+                Intent systemMaps = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.google.com/maps/search/Calle+los+Flamencos+551++SANTA+ANITA+LIMA+-+PERU/@-12.0505919,-76.9672257,17z/data=!3m1!4b1"));
+                startActivity(systemMaps);
                 break;
             case R.id.iv_systemFacebook:
                 Intent systemFacebook = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.facebook.com/gruposystemvv/"));
