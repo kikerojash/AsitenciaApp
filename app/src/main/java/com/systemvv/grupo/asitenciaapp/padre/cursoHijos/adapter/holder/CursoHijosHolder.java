@@ -2,6 +2,7 @@ package com.systemvv.grupo.asitenciaapp.padre.cursoHijos.adapter.holder;
 
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -16,6 +17,8 @@ import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class CursoHijosHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+
+    public static final String TAG = CursoHijosHolder.class.getSimpleName();
     @BindView(R.id.imageView2)
     ImageView imageViewFotoCurso;
     @BindView(R.id.textViewNombreCurso)
@@ -43,11 +46,13 @@ public class CursoHijosHolder extends RecyclerView.ViewHolder implements View.On
         this.listener = listener;
         textViewNombreCurso.setText(cursos.getNombreCurso());
         textViewGradoSeccion.setText("Grado: " + cursos.getHijos().getGrado() + " Sección: " + cursos.getHijos().getSeccion());
-        if(cursos.getIncidenciasList()==null){
-            textViewContadorIncidencia.setText("0");
-        }else {
-            textViewContadorIncidencia.setText(cursos.getIncidenciasList().size()+"");
+        if (cursos.getCountIncidencias() == 0) {
+            textViewContadorIncidencia.setVisibility(View.GONE);
+        } else {
+            textViewContadorIncidencia.setVisibility(View.VISIBLE);
+            textViewContadorIncidencia.setText(cursos.getCountIncidencias() + "");
         }
+        Log.d(TAG, "querySnapshotTask " + cursos.getCountIncidencias());
 
         Glide.with(itemView.getContext()).load(cursos.getFotoCurso()).into(imageViewFotoCurso);
         Glide.with(itemView.getContext()).load(cursos.getHijos().getFoto()).into(circleImageViewHijo);

@@ -52,7 +52,7 @@ public class HijosHolder extends RecyclerView.ViewHolder implements View.OnClick
         nombreInstituto.setText(hijos.getNombreInstituto());
         textViewNombre.setText(hijos.getNombre());
         textViewApellido.setText(hijos.getApellido());
-        textViewDni.setText("N°: " + hijos.getId());
+        textViewDni.setText("N°: " + hijos.getDni());
         textViewEdad.setText("Edad: " + hijos.getEdad() + " Años");
         textViewGrado.setText("Grado: " + hijos.getGrado() + " Sección: " + hijos.getSeccion());
         Glide.with(itemView.getContext()).load(hijos.getFoto()).into(circleImageViewHijo);

@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface ControlAsistenciaView extends BaseActivityView<ControlAsistenciaPresenter> {
 
-    void mostrarInformacionBasica(CursoUi cursoUi);
+    void mostrarInformacionBasica(CursoUi cursoUi,String fotoDocente,String nombreDocente);
 
     void mostrarListaTablas(List<ColumnaCabeceraAsistencia> columnHeaderList, List<FilaCabeceraAsistencia> rowHeaderList, List<List<CeldasAsistencia>> cellsList);
 

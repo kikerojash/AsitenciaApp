@@ -39,6 +39,7 @@ import com.systemvv.grupo.asitenciaapp.asistencia.entidad.Alumnos;
 import com.systemvv.grupo.asitenciaapp.asistencia.entidad.Asistencia;
 import com.systemvv.grupo.asitenciaapp.asistencia.useCase.GuardarAsistenciaLista;
 import com.systemvv.grupo.asitenciaapp.asistencia.useCase.GuardarAsistenciaListaHoraFin;
+import com.systemvv.grupo.asitenciaapp.asistencia.useCase.ObtenerDatosDocente;
 import com.systemvv.grupo.asitenciaapp.asistencia.useCase.ObtenerListaAlumnos;
 import com.systemvv.grupo.asitenciaapp.asistencia.useCase.ValidarFechaRegistroAsistencia;
 import com.systemvv.grupo.asitenciaapp.base.UseCaseHandler;
@@ -106,7 +107,8 @@ public class ControlAsistenciaActivity extends BaseActivity<ControlAsistenciaVie
                 new GuardarAsistenciaLista(repository),
                 new ValidarFechaRegistroAsistencia(repository),
                 new GuardarAsistenciaListaHoraFin(repository),
-                new ObtenerListaAlumnos(repository));
+                new ObtenerListaAlumnos(repository),
+                new ObtenerDatosDocente(repository));
     }
 
     @Override
@@ -142,12 +144,12 @@ public class ControlAsistenciaActivity extends BaseActivity<ControlAsistenciaVie
     }
 
     @Override
-    public void mostrarInformacionBasica(CursoUi cursoUi) {
-        String imageDocente = "https://get.pxhere.com/photo/blackboard-university-speech-lecturer-lecture-teacher-teaching-physics-professor-orator-birger-kollmeier-public-speaking-698271.jpg";
-        Glide.with(this).load(imageDocente).into(circleImageView);
+    public void mostrarInformacionBasica(CursoUi cursoUi,String fotoDocente,String nombreDocente) {
+        Glide.with(this).load(fotoDocente).into(circleImageView);
         textViewNombreInstituto.setText(cursoUi.getInstitutoUi().getNombre());
         textViewNombreCuro.setText(cursoUi.getNombre());
         textViewGradoSeccion.setText("Grado : " + cursoUi.getGradoSelected() + " Sección : " + cursoUi.getSeccionSelected());
+        textViewNombreProfe.setText("Prof: "+nombreDocente);
         Glide.with(this).load(cursoUi.getFoto()).into(imageViewFondo);
     }
 

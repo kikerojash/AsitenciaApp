@@ -3,6 +3,7 @@ package com.systemvv.grupo.asitenciaapp.seleccionarInstituto;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.systemvv.grupo.asitenciaapp.base.UseCase;
 import com.systemvv.grupo.asitenciaapp.base.UseCaseHandler;
@@ -54,7 +55,9 @@ public class InstitutoPresenterImpl extends BaseActivityPresenterImpl<InstitutoV
         this.usuarioUi = Parcels.unwrap(extras.getParcelable("usuarioUi"));
         this.keyPeriodo = usuarioUi.getKeyPeriodo();
         //this.keyPeriodo = extras.getString("keyPeriodo");
-        //Log.d(TAG, "usuario : " + usuarioUi.getUsu_email() + " / keyPeriodo : " + keyPeriodo);
+        Log.d(TAG, "usuario : " + usuarioUi.getKeyUser()+
+                "usuario : " + usuarioUi.getUsu_email()
+                + " / keyPeriodo : " + keyPeriodo);
     }
 
     @Override

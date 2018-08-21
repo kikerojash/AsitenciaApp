@@ -17,7 +17,7 @@ public class CursoHijosRemote implements CursoHijosDataSource {
     }
 
     @Override
-    public void onObtenerListaCursosHijos(Hijos hijos,final onCallBackResultado<List<Cursos>> listonCallBackResultado) {
+    public void onObtenerListaCursosHijos(final Hijos hijos,final onCallBackResultado<List<Cursos>> listonCallBackResultado) {
         fireStore.onObtenerListaCursosHijos(hijos, new FireCallback<List<Cursos>>() {
             @Override
             public void onSuccess(List<Cursos> sucess) {
@@ -25,4 +25,5 @@ public class CursoHijosRemote implements CursoHijosDataSource {
             }
         });
     }
+
 }

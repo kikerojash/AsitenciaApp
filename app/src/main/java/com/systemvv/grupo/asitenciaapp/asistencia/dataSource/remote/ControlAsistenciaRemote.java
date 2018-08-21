@@ -8,6 +8,7 @@ import com.systemvv.grupo.asitenciaapp.asistencia.entidad.Alumnos;
 import com.systemvv.grupo.asitenciaapp.asistencia.fireListener.FireCallBackList;
 import com.systemvv.grupo.asitenciaapp.cursos.entidad.CursoUi;
 import com.systemvv.grupo.asitenciaapp.fire.FireCallback;
+import com.systemvv.grupo.asitenciaapp.fire.FireCallbackTwo;
 import com.systemvv.grupo.asitenciaapp.fire.FireStore;
 import com.systemvv.grupo.asitenciaapp.fire.entidad.Asistencia;
 
@@ -75,6 +76,16 @@ public class ControlAsistenciaRemote implements ControlAsistenciaDataSource {
             public void onSuccess(List<Alumnos> alumnosList) {
                 Log.d(TAG, "onObtenerAlumnosLista : " + alumnosList.size());
                 listObjectCallbackSuccess.guardarAsistenciaGrupal(alumnosList);
+            }
+        });
+    }
+
+    @Override
+    public void onObtenerDatosDocente(String keyDocente, final ObjectCallbackSuccessString<String,String> stringObjectCallbackSuccess) {
+        fireStore.onObtenerDatosDocente(keyDocente, new FireCallbackTwo<String,String>() {
+            @Override
+            public void resultado(String resultado1, String resultado2) {
+                stringObjectCallbackSuccess.guardarAsistenciaGrupal(resultado1,resultado2);
             }
         });
     }

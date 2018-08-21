@@ -39,7 +39,10 @@ public class ControlAsistenciaRepository implements ControlAsistenciaDataSource 
         asistenciaRemote.onObtenerAlumnosLista(cursoUi, listObjectCallbackSuccess);
     }
 
-
+    @Override
+    public void onObtenerDatosDocente(String keyDocente, ObjectCallbackSuccessString<String,String> stringObjectCallbackSuccess) {
+        asistenciaRemote.onObtenerDatosDocente(keyDocente,stringObjectCallbackSuccess);
+    }
 
 
 }

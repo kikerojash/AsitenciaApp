@@ -1,5 +1,6 @@
 package com.systemvv.grupo.asitenciaapp.cursos.entidad;
 
+import com.systemvv.grupo.asitenciaapp.seleccionarInstituto.dialogSeccion.entidad.SeccionUi;
 import com.systemvv.grupo.asitenciaapp.seleccionarInstituto.entidad.InstitutoUi;
 
 import org.parceler.Parcel;
@@ -19,6 +20,7 @@ public class CursoUi {
     String keyGrado;
     String KeySeccion;
     InstitutoUi institutoUi;
+    SeccionUi seccionUi;
 
 
     public CursoUi() {
@@ -72,6 +74,13 @@ public class CursoUi {
         this.institutoUi = institutoUi;
     }
 
+    public SeccionUi getSeccionUi() {
+        return seccionUi;
+    }
+
+    public void setSeccionUi(SeccionUi seccionUi) {
+        this.seccionUi = seccionUi;
+    }
 
     public String getHoraInicio() {
         return horaInicio;

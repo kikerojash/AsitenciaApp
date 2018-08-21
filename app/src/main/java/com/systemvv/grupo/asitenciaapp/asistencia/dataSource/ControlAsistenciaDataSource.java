@@ -15,6 +15,12 @@ public interface ControlAsistenciaDataSource {
         void guardarAsistenciaGrupal(Boolean resultado, List<String> kList,int tipoValidacionFecha);
     }
 
+
+    interface ObjectCallbackSuccessString<T,K> {
+        void guardarAsistenciaGrupal(T resultado,K resultado2);
+    }
+
+
     void onGuardarAsistenciaLista(List<com.systemvv.grupo.asitenciaapp.asistencia.entidad.Asistencia> asistenciaUiList,CursoUi cursoUi, ObjectCallbackSuccess<Boolean> callbackSuccess);
 
     void onGuardarAsistenciaListaHoraFin(List<String> asistenciaList, ObjectCallbackSuccess<Boolean> callbackSuccess);
@@ -23,4 +29,5 @@ public interface ControlAsistenciaDataSource {
 
     void onObtenerAlumnosLista(CursoUi cursoUi , ObjectCallbackSuccess<List<Alumnos>> listObjectCallbackSuccess);
 
+    void onObtenerDatosDocente(String keyDocente,ObjectCallbackSuccessString<String,String> stringObjectCallbackSuccess);
 }

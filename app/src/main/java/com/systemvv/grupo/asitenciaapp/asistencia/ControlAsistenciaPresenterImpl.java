@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+
 import com.systemvv.grupo.asitenciaapp.R;
 import com.systemvv.grupo.asitenciaapp.asistencia.adapter.estructura.CeldasAsistencia;
 import com.systemvv.grupo.asitenciaapp.asistencia.adapter.estructura.ColumnaCabeceraAsistencia;
@@ -18,6 +19,7 @@ import com.systemvv.grupo.asitenciaapp.asistencia.entidad.Asistencia;
 import com.systemvv.grupo.asitenciaapp.asistencia.entidad.MotivoAsistencia;
 import com.systemvv.grupo.asitenciaapp.asistencia.useCase.GuardarAsistenciaLista;
 import com.systemvv.grupo.asitenciaapp.asistencia.useCase.GuardarAsistenciaListaHoraFin;
+import com.systemvv.grupo.asitenciaapp.asistencia.useCase.ObtenerDatosDocente;
 import com.systemvv.grupo.asitenciaapp.asistencia.useCase.ObtenerListaAlumnos;
 import com.systemvv.grupo.asitenciaapp.asistencia.useCase.ValidarFechaRegistroAsistencia;
 import com.systemvv.grupo.asitenciaapp.base.UseCase;
@@ -25,7 +27,9 @@ import com.systemvv.grupo.asitenciaapp.base.UseCaseHandler;
 import com.systemvv.grupo.asitenciaapp.base.activity.BaseActivityPresenterImpl;
 import com.systemvv.grupo.asitenciaapp.cursos.entidad.CursoUi;
 import com.systemvv.grupo.asitenciaapp.utils.Constantes;
+
 import org.parceler.Parcels;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -46,14 +50,16 @@ public class ControlAsistenciaPresenterImpl extends BaseActivityPresenterImpl<Co
     ValidarFechaRegistroAsistencia validarFechaRegistroAsistencia;
     GuardarAsistenciaListaHoraFin guardarAsistenciaListaHoraFin;
     ObtenerListaAlumnos obtenerListaAlumnos;
+    ObtenerDatosDocente obtenerDatosDocente;
 
 
-    public ControlAsistenciaPresenterImpl(UseCaseHandler handler, Resources res, GuardarAsistenciaLista guardarAsistenciaLista, ValidarFechaRegistroAsistencia validarFechaRegistroAsistencia, GuardarAsistenciaListaHoraFin guardarAsistenciaListaHoraFin, ObtenerListaAlumnos obtenerListaAlumnos) {
+    public ControlAsistenciaPresenterImpl(UseCaseHandler handler, Resources res, GuardarAsistenciaLista guardarAsistenciaLista, ValidarFechaRegistroAsistencia validarFechaRegistroAsistencia, GuardarAsistenciaListaHoraFin guardarAsistenciaListaHoraFin, ObtenerListaAlumnos obtenerListaAlumnos, ObtenerDatosDocente obtenerDatosDocente) {
         super(handler, res);
         this.guardarAsistenciaLista = guardarAsistenciaLista;
         this.validarFechaRegistroAsistencia = validarFechaRegistroAsistencia;
         this.guardarAsistenciaListaHoraFin = guardarAsistenciaListaHoraFin;
         this.obtenerListaAlumnos = obtenerListaAlumnos;
+        this.obtenerDatosDocente = obtenerDatosDocente;
     }
 
     @Override
@@ -77,7 +83,7 @@ public class ControlAsistenciaPresenterImpl extends BaseActivityPresenterImpl<Co
     @Override
     public void onStart() {
         super.onStart();
-        if (view != null) view.mostrarInformacionBasica(cursoUi);
+      // if (view != null) view.mostrarInformacionBasica(cursoUi);
     }
 
 
@@ -103,6 +109,7 @@ public class ControlAsistenciaPresenterImpl extends BaseActivityPresenterImpl<Co
 
     @Override
     public void onCreate() {
+        datosDocente();
         Log.d(TAG, "onCreate :");
         DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
         DateFormat dfHours = new SimpleDateFormat("HH:mm aaa");
@@ -111,6 +118,28 @@ public class ControlAsistenciaPresenterImpl extends BaseActivityPresenterImpl<Co
         initObtenerListaAlumnos(cursoUi);
         validarExisteFecha(date);
         initObtenerListaMotivosAsistencia();
+    }
+
+
+
+    private void datosDocente() {
+        String keyDocente = cursoUi.getSeccionUi().getInstitutoUi().getKeyUsuario();
+        Log.d(TAG, "keyDocente : " + keyDocente);
+        handler.execute(obtenerDatosDocente, new ObtenerDatosDocente.RequestValues(keyDocente),
+                new UseCase.UseCaseCallback<ObtenerDatosDocente.ResponseValue>() {
+                    @Override
+                    public void onSuccess(ObtenerDatosDocente.ResponseValue response) {
+                        String fotoDocente = response.getFotoDocente();
+                        String nombreDocente = response.getNombreDocente();
+                        if(view!=null)view.mostrarInformacionBasica(cursoUi,fotoDocente,nombreDocente);
+
+                    }
+
+                    @Override
+                    public void onError() {
+
+                    }
+                });
     }
 
     private void initObtenerListaMotivosAsistencia() {
@@ -252,7 +281,7 @@ public class ControlAsistenciaPresenterImpl extends BaseActivityPresenterImpl<Co
             }
             if (view != null) view.actualizarDatosCambiadosTabla();
         } else {
-            if (view!=null)view.mostrarMensaje("Inicie la Selección de Registro!!");
+            if (view != null) view.mostrarMensaje("Inicie la Selección de Registro!!");
             // Toast.makeText(getApplicationContext(), "Seleccione todos los items primero ", Toast.LENGTH_SHORT).show();
         }
     }

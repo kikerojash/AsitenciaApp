@@ -12,6 +12,7 @@ public class Cursos {
      String nombreProfesor;
      String fotoCurso;
      Hijos hijos;
+     int countIncidencias;
      List<Incidencias> incidenciasList;
 
     public Cursos() {
@@ -79,5 +80,13 @@ public class Cursos {
 
     public void setIncidenciasList(List<Incidencias> incidenciasList) {
         this.incidenciasList = incidenciasList;
+    }
+
+    public int getCountIncidencias() {
+        return countIncidencias;
+    }
+
+    public void setCountIncidencias(int countIncidencias) {
+        this.countIncidencias = countIncidencias;
     }
 }

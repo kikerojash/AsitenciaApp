@@ -13,6 +13,7 @@ public class SeccionUi {
     String seccion;
     InstitutoUi institutoUi;
 
+
     public SeccionUi() {
     }
 

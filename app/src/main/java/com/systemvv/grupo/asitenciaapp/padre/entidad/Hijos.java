@@ -3,19 +3,21 @@ package com.systemvv.grupo.asitenciaapp.padre.entidad;
 import org.parceler.Parcel;
 
 import java.util.List;
+
 @Parcel
 public class Hijos {
-     String id;
-     String nombre;
-     String apellido;
-     String edad;
-     String nombreInstituto;
-     String grado;
-     String keyGrado;
-     String seccion;
-     String keySeccion;
-     String foto;
-     List<Cursos> cursosList;
+    String id;
+    String nombre;
+    String apellido;
+    String edad;
+    String nombreInstituto;
+    String grado;
+    String keyGrado;
+    String seccion;
+    String keySeccion;
+    String foto;
+    String dni;
+    List<Cursos> cursosList;
 
     public Hijos() {
     }
@@ -117,5 +119,13 @@ public class Hijos {
 
     public void setCursosList(List<Cursos> cursosList) {
         this.cursosList = cursosList;
+    }
+
+    public String getDni() {
+        return dni;
+    }
+
+    public void setDni(String dni) {
+        this.dni = dni;
     }
 }
