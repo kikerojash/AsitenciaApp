@@ -1,7 +1,9 @@
 package com.systemvv.grupo.asitenciaapp.asistencia;
 
+import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -25,12 +27,10 @@ import com.evrencoskun.tableview.TableView;
 import com.evrencoskun.tableview.listener.ITableViewListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.systemvv.grupo.asitenciaapp.R;
-
 import com.systemvv.grupo.asitenciaapp.asistencia.adapter.AsistenciaAdapter;
 import com.systemvv.grupo.asitenciaapp.asistencia.adapter.estructura.CeldasAsistencia;
 import com.systemvv.grupo.asitenciaapp.asistencia.adapter.estructura.ColumnaCabeceraAsistencia;
 import com.systemvv.grupo.asitenciaapp.asistencia.adapter.estructura.FilaCabeceraAsistencia;
-
 import com.systemvv.grupo.asitenciaapp.asistencia.adapter.holder.filas.FilasAsistenciaAlumnosHolder;
 import com.systemvv.grupo.asitenciaapp.asistencia.dataSource.ControlAsistenciaRepository;
 import com.systemvv.grupo.asitenciaapp.asistencia.dataSource.remote.ControlAsistenciaRemote;
@@ -144,12 +144,12 @@ public class ControlAsistenciaActivity extends BaseActivity<ControlAsistenciaVie
     }
 
     @Override
-    public void mostrarInformacionBasica(CursoUi cursoUi,String fotoDocente,String nombreDocente) {
+    public void mostrarInformacionBasica(CursoUi cursoUi, String fotoDocente, String nombreDocente) {
         Glide.with(this).load(fotoDocente).into(circleImageView);
         textViewNombreInstituto.setText(cursoUi.getInstitutoUi().getNombre());
         textViewNombreCuro.setText(cursoUi.getNombre());
         textViewGradoSeccion.setText("Grado : " + cursoUi.getGradoSelected() + " Sección : " + cursoUi.getSeccionSelected());
-        textViewNombreProfe.setText("Prof: "+nombreDocente);
+        textViewNombreProfe.setText("Prof: " + nombreDocente);
         Glide.with(this).load(cursoUi.getFoto()).into(imageViewFondo);
     }
 
@@ -265,14 +265,12 @@ public class ControlAsistenciaActivity extends BaseActivity<ControlAsistenciaVie
 
         switch (id) {
             case R.id.menu_guardar_entrada:
-                //Toast.makeText(getApplicationContext(), "Registro Guardados de Entrada", Toast.LENGTH_SHORT).show();
-                Log.d(TAG, "menu_guardar_entrada:");
-                presenter.onGuardarEntrada();
+//                presenter.onGuardarEntrada();
+                mostrarDialogoConfirmacionHoraInicio();
                 break;
             case R.id.menu_guardar_salida:
-                presenter.onGuardarSalida();
-                //Toast.makeText(getApplicationContext(), "Registro Guardados de Salida", Toast.LENGTH_SHORT).show();
-                Log.d(TAG, "menu_guardar_salida:");
+                mostrarDialogoConfirmacionHoraFin();
+                // presenter.onGuardarSalida();
                 break;
             default:
                 Log.d(TAG, "default:");
@@ -280,6 +278,47 @@ public class ControlAsistenciaActivity extends BaseActivity<ControlAsistenciaVie
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void mostrarDialogoConfirmacionHoraFin() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("Guardar Asistencia: Hora Salida");
+        builder.setMessage("¿Esta seguro que desea guardar?");
+        //  builder.setIcon(R.drawable.ic_launcher);
+        builder.setPositiveButton("Si", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                // presenter.onGuardarEntrada();
+                presenter.onGuardarSalida();
+
+            }
+        });
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.dismiss();
+            }
+        });
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
+
+    private void mostrarDialogoConfirmacionHoraInicio() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("Guardar Asistencia: Hora Inicio");
+        builder.setMessage("¿Esta seguro que desea guardar?");
+        //  builder.setIcon(R.drawable.ic_launcher);
+        builder.setPositiveButton("Si", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                presenter.onGuardarEntrada();
+
+            }
+        });
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.dismiss();
+            }
+        });
+        AlertDialog alert = builder.create();
+        alert.show();
     }
 
     @Override

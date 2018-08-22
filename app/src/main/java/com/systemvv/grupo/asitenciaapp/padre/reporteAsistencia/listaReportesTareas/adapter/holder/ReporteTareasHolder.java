@@ -5,6 +5,8 @@ import android.view.View;
 import android.widget.TextView;
 import com.systemvv.grupo.asitenciaapp.R;
 import com.systemvv.grupo.asitenciaapp.padre.entidad.Tareas;
+import com.systemvv.grupo.asitenciaapp.utils.Utils;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -26,7 +28,7 @@ public class ReporteTareasHolder extends RecyclerView.ViewHolder {
 
     public void bind(Tareas tareas) {
         textViewConteo.setText(tareas.getConteo() + "");
-        textViewDescripcionTarea.setText(tareas.getDescripcionTarea());
+        textViewDescripcionTarea.setText(Utils.capitalize(tareas.getDescripcionTarea()));
         textViewFechaHora.setText("Fecha: " + tareas.getFecha() + " Hora: " + tareas.getHora());
     }
 }

@@ -54,8 +54,6 @@
 
         <activity android:name=".asistencia.ControlAsistenciaActivity" />
 
-        <activity android:name=".asistencia.AsistenciaActivity"></activity>
-
         <activity android:name=".padre.reporteAsistencia.ReportesActivity" />
 
         <service

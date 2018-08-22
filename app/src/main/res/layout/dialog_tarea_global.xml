@@ -15,7 +15,7 @@
 
     <TextView
         android:id="@+id/restaurant_form_rating"
-        android:text="Escriba la tarea que se enviara a todos los Alumnos en este curso"
+        android:text="Escriba la tarea que se enviará a todos los Alumnos en este curso"
         android:maxLines="2"
         android:gravity="center"
         android:layout_width="wrap_content"

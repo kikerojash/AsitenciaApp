@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.systemvv.grupo.asitenciaapp.R;
 import com.systemvv.grupo.asitenciaapp.padre.entidad.Incidencias;
 import com.systemvv.grupo.asitenciaapp.padre.reporteAsistencia.listaReporteIncidencias.listener.IncidenciasListener;
+import com.systemvv.grupo.asitenciaapp.utils.Utils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -37,7 +38,7 @@ public class ReporteIncidenciasHolder extends RecyclerView.ViewHolder implements
         this.incidencias = incidencias;
         this.listener = listener;
         textViewConteo.setText(incidencias.getConteo() + "");
-        textViewDescripcionIncidencia.setText(incidencias.getNombreIncidencias());
+        textViewDescripcionIncidencia.setText(Utils.capitalize(incidencias.getNombreIncidencias()));
         textViewFechaHora.setText("Fecha: " + incidencias.getFecha() + " Hora: " + incidencias.getHora());
         validarTipoIncidencia(incidencias);
     }

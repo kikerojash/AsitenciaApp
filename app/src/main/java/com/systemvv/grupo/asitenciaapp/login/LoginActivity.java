@@ -133,6 +133,8 @@ public class LoginActivity extends BaseActivity<LoginView, LoginPresenter> imple
                 mostrarSnackbarMensaje("Facebook");
                 break;
             case R.id.iv_systemTwitter:
+                Intent systemTwitter = new Intent(Intent.ACTION_VIEW, Uri.parse("https://twitter.com/gruposystemvv?lang=es"));
+                startActivity(systemTwitter);
                 mostrarSnackbarMensaje("Twitter");
                 break;
             case R.id.iv_systemGoogle:
@@ -185,13 +187,9 @@ public class LoginActivity extends BaseActivity<LoginView, LoginPresenter> imple
     public void initSeleccionarInstituto(UsuarioUi usuario, String keyPeriodo) {
         progressDialog.dismiss();
         usuario.setKeyPeriodo(keyPeriodo);
-
         Intent intent = new Intent(this, InstitutoActivity.class);
         Bundle bundle = new Bundle();
-
         bundle.putParcelable("usuarioUi", Parcels.wrap(usuario));
-        //  bundle.putString("keyPeriodo",keyPeriodo);
-        //intent.putExtra("usuarioUi", usuario);
         intent.putExtras(bundle);
         startActivity(intent);
     }
@@ -218,14 +216,13 @@ public class LoginActivity extends BaseActivity<LoginView, LoginPresenter> imple
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        //   progressDialog.dismiss();
                         //if the task is successfull
                         if (task.isSuccessful()) {
                             //start the profile activity
                             presenter.onValidarAutenticacionInicio(usuario);
-                            //initSeleccionarInstituto(usuario, clave);
-
-                            //startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
+                        } else {
+                            progressDialog.dismiss();
+                            Snackbar.make(progressBar, "Datos incorrectos", Snackbar.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -313,20 +310,7 @@ public class LoginActivity extends BaseActivity<LoginView, LoginPresenter> imple
             progressDialog.setCancelable(false);
             progressDialog.setMessage("Cargando Sesión Espere....");
             presenter.onValidarAutenticacion(firebaseAuth, progressDialog);
-            // presenter.onValidarAutenticacion(firebaseAuth.getCurrentUser().getEmail());
             progressDialog.show();
-
-
-            //close this activity
-            //opening profile activity
-            // startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
-
-            /*String email = firebaseAuth.getCurrentUser().getEmail();
-            presenter.onValidarAutenticacion(email);*/
-
-            // finish();
-           /* String clave = "kikerojas12";
-            initSeleccionarInstituto(email, clave);*/
         }
     }
 }
