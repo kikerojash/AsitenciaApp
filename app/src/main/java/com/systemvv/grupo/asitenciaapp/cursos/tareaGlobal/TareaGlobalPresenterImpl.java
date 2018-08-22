@@ -85,6 +85,7 @@ public class TareaGlobalPresenterImpl implements TareaGlobalPresenter {
         this.cursoUi = Parcels.unwrap(bundle.getParcelable("cursoUi"));
         Log.d(TAG, "extras : " + cursoUi.getNombre() +
                 " / key : " + cursoUi.getKeyCurso());
+        if(view!=null)view.informacionDialog(cursoUi);
         initObtenerListaAlumnos(cursoUi);
     }
 

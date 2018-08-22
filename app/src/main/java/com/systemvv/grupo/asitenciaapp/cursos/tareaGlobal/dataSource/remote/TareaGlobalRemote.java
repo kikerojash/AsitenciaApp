@@ -7,6 +7,10 @@ import com.systemvv.grupo.asitenciaapp.cursos.tareaGlobal.entidad.TareasGlobales
 import com.systemvv.grupo.asitenciaapp.fire.FireCallback;
 import com.systemvv.grupo.asitenciaapp.fire.FireStore;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class TareaGlobalRemote implements TareaGlobalDataSource {
@@ -38,8 +42,12 @@ public class TareaGlobalRemote implements TareaGlobalDataSource {
     }
 
     private List<TareasGlobales> tareasGlobalesListGuardar(List<TareasGlobales> tareasGlobalesList, String descripcionTareaGlobal) {
+        DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+        String date = df.format(Calendar.getInstance().getTime());
         for (TareasGlobales tareasGlobales : tareasGlobalesList) {
             tareasGlobales.setDescripcionTarea(descripcionTareaGlobal);
+            tareasGlobales.setFecha(date);
+            tareasGlobales.setTimeStamp(new Date().getTime());
         }
         return tareasGlobalesList;
     }

@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.systemvv.grupo.asitenciaapp.R;
 import com.systemvv.grupo.asitenciaapp.base.UseCaseHandler;
@@ -30,6 +31,10 @@ public class ReporteAsistenciaFragment extends BaseFragment<ReporteAsistenciaVie
     public static final String TAG = ReporteAsistenciaFragment.class.getSimpleName();
     @BindView(R.id.reciclador)
     RecyclerView recyclerView;
+    @BindView(R.id.progressBar)
+    ProgressBar progressBar;
+    @BindView(R.id.mensajeVacio)
+    TextView textViewVacio;
     ReporteAsistenciaAdapter reporteAsistenciaAdapter;
 
 
@@ -77,7 +82,7 @@ public class ReporteAsistenciaFragment extends BaseFragment<ReporteAsistenciaVie
 
     @Override
     protected ProgressBar getProgressBar() {
-        return null;
+        return progressBar;
     }
 
     @Override
@@ -89,6 +94,12 @@ public class ReporteAsistenciaFragment extends BaseFragment<ReporteAsistenciaVie
     @Override
     public void mostrarLista(List<Asistencia> asistenciaList) {
         Log.d(TAG, "mostrarLista : " + asistenciaList.size() + "");
+        textViewVacio.setVisibility(View.GONE);
         reporteAsistenciaAdapter.mostrarLista(asistenciaList);
+    }
+
+    @Override
+    public void fondoVacio() {
+        textViewVacio.setVisibility(View.VISIBLE);
     }
 }

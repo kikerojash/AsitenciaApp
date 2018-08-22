@@ -28,6 +28,7 @@ import com.systemvv.grupo.asitenciaapp.padre.entidad.Cursos;
 import com.systemvv.grupo.asitenciaapp.padre.entidad.Hijos;
 import com.systemvv.grupo.asitenciaapp.padre.entidad.Incidencias;
 import com.systemvv.grupo.asitenciaapp.padre.entidad.Instituto;
+import com.systemvv.grupo.asitenciaapp.padre.entidad.Tareas;
 import com.systemvv.grupo.asitenciaapp.seleccionarInstituto.dialogSeccion.entidad.SeccionUi;
 import com.systemvv.grupo.asitenciaapp.seleccionarInstituto.entidad.InstitutoUi;
 import com.systemvv.grupo.asitenciaapp.utils.Constantes;
@@ -904,4 +905,56 @@ public class FireStore extends Fire {
     }
 
 
+    public void onMostrarListaTareas(Cursos cursos, final FireCallback<List<Tareas>> listFireCallback) {
+        String keyAlumno = cursos.getHijos().getId();
+        String keyCurso = cursos.getId();
+        String keyGrado = cursos.getHijos().getKeyGrado();
+        String keySeccion = cursos.getHijos().getKeySeccion();
+        Log.d(TAG, "Institucion ;" + cursos.getHijos().getNombreInstituto()
+                + "keyCurso" + keyCurso
+                + "keyGrado" + keyGrado
+                + "keySeccion" + keySeccion
+                + "keyAlumno" + keyAlumno);
+
+
+        DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+        String date = df.format(Calendar.getInstance().getTime());
+
+        mFirestore.collection(Constantes.NODO_ACTIVIDADES)
+                .whereEqualTo("keyAlumnos", keyAlumno)
+                .whereEqualTo("keyCurso", keyCurso)
+                .whereEqualTo("keyGrado", keyGrado)
+                .whereEqualTo("keySeccion", keySeccion)
+                .whereEqualTo("fecha",date)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            int count = 0;
+                            List<Tareas> tareasList = new ArrayList<>();
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                count++;
+                                String fecha = (String) document.get("fecha");
+                                long timeStamp = (long) document.get("timeStamp");
+
+                                String descripcionTarea = (String) document.get("descripcionTarea");
+
+                                Tareas tareas = new Tareas();
+                                tareas.setKeyTareas(document.getId());
+                                tareas.setConteo(count);
+                                tareas.setFecha(fecha);
+                                tareas.setDescripcionTarea(descripcionTarea);
+                                tareas.setHora(Utils.convertTime(timeStamp));
+
+                                tareasList.add(tareas);
+                            }
+                            listFireCallback.onSuccess(tareasList);
+                        } else {
+                            listFireCallback.onSuccess(null);
+                            Log.d(TAG, "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
+    }
 }

@@ -9,4 +9,6 @@ public interface IncidenciaView extends BaseView<IncidenciaPresenter> {
     void mostrarMensaje(String mensaje);
 
     void initVistas(Alumnos alumnosUi);
+
+    void ocultarDialog();
 }

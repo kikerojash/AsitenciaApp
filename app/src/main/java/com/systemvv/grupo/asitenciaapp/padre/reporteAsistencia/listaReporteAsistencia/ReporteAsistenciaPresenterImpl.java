@@ -71,13 +71,24 @@ public class ReporteAsistenciaPresenterImpl extends BaseFragmentPresenterImpl<Re
     }
 
     private void initListaAsistencias(Cursos cursos) {
-        // if (view != null) view.mostrarLista(getListaAsistencia());
+        if(view!=null)view.mostrarProgressBar();
         handler.execute(reporteAsistencia, new ObtenerAsistenciaLista.RequestValues(cursos),
                 new UseCase.UseCaseCallback<ObtenerAsistenciaLista.ResponseValue>() {
                     @Override
                     public void onSuccess(ObtenerAsistenciaLista.ResponseValue response) {
-                        if (response.getAsistenciaList() == null) return;
-                        if (view != null) view.mostrarLista(response.getAsistenciaList());
+                      //  if (response.getAsistenciaList() == null) return;
+                        if (response.getAsistenciaList().size() > 0) {
+                            if (view != null) {
+                                view.ocultarProgressBar();
+                                view.mostrarLista(response.getAsistenciaList());
+                            }
+                        } else {
+                            if (view != null) {
+                                view.fondoVacio();
+                                view.ocultarProgressBar();
+                            }
+                        }
+
                     }
 
                     @Override

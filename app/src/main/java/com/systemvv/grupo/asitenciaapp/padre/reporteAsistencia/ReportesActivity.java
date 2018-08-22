@@ -27,6 +27,7 @@ import com.systemvv.grupo.asitenciaapp.padre.cursoHijos.CursoHijosActivity;
 import com.systemvv.grupo.asitenciaapp.padre.entidad.Cursos;
 import com.systemvv.grupo.asitenciaapp.padre.reporteAsistencia.listaReporteAsistencia.ReporteAsistenciaFragment;
 import com.systemvv.grupo.asitenciaapp.padre.reporteAsistencia.listaReporteIncidencias.ReporteIncidenciasFragment;
+import com.systemvv.grupo.asitenciaapp.padre.reporteAsistencia.listaReportesTareas.ReporteTareasFragment;
 import com.systemvv.grupo.asitenciaapp.utils.MyFragmentAdapter;
 
 import org.parceler.Parcels;
@@ -123,13 +124,12 @@ public class ReportesActivity extends BaseActivity<ReportesView, ReportesPresent
         /*args.putInt("idCargaCurso", idCargaCurso);
         args.putInt("cursoId", idCurso);*/
         args.putAll(getIntent().getExtras());
-         args.putParcelable("cursosUi", Parcels.wrap(cursos));
-
+        args.putParcelable("cursosUi", Parcels.wrap(cursos));
         MyFragmentAdapter fragmentAdapter = new MyFragmentAdapter(getSupportFragmentManager());
         fragmentAdapter.addFragment(ReporteAsistenciaFragment.newInstance(args), "ASISTENCIA");
         fragmentAdapter.addFragment(ReporteIncidenciasFragment.newInstance(args), "INCIDENCIAS");
-
-        viewPager.setOffscreenPageLimit(2);
+        fragmentAdapter.addFragment(ReporteTareasFragment.newInstance(args), "ACTIVIDADES");
+        viewPager.setOffscreenPageLimit(3);
         viewPager.setAdapter(fragmentAdapter);
         tabLayout.setupWithViewPager(viewPager);
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -182,7 +182,6 @@ public class ReportesActivity extends BaseActivity<ReportesView, ReportesPresent
         }
         return super.onOptionsItemSelected(item);
     }
-
 
 
 }

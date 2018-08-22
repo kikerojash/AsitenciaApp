@@ -5,6 +5,7 @@ public class Constantes {
     public static final String NODO_ASISTENCIA = "asistencia";
     public static final String NODO_INCIDENCIA = "incidencia";
     public static final String NODO_INSTITUCION = "institucion";
+    public static final String NODO_ACTIVIDADES = "actividades";
     public static final String NODO_PROFESOR = "profesor";
     public static final String NODO_PERIODO_GRADO_CURSO = "periodo_grado_curso";
     public static final String NODO_PERIODO_GRADO_CURSO_ALUMNO = "periodo_grado_curso_alumno";

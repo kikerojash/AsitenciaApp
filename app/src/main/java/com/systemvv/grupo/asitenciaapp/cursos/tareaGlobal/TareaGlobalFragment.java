@@ -7,11 +7,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.systemvv.grupo.asitenciaapp.R;
 import com.systemvv.grupo.asitenciaapp.base.UseCaseHandler;
 import com.systemvv.grupo.asitenciaapp.base.UseCaseThreadPoolScheduler;
+import com.systemvv.grupo.asitenciaapp.cursos.entidad.CursoUi;
 import com.systemvv.grupo.asitenciaapp.cursos.tareaGlobal.dataSource.TareaGlobalRepository;
 import com.systemvv.grupo.asitenciaapp.cursos.tareaGlobal.dataSource.remote.TareaGlobalRemote;
 import com.systemvv.grupo.asitenciaapp.cursos.tareaGlobal.useCase.ObtenerListaAlumnos;
@@ -34,6 +36,8 @@ public class TareaGlobalFragment extends DialogFragment implements TareaGlobalVi
     Unbinder unbinder;
     @BindView(R.id.editTextTarea)
     EditText editTextTarea;
+    @BindView(R.id.textViewTitulo)
+    TextView textViewTitulo;
 
     @Nullable
     @Override
@@ -57,17 +61,11 @@ public class TareaGlobalFragment extends DialogFragment implements TareaGlobalVi
 
 
     private void initPresenter() {
-
         TareaGlobalRepository tareaGlobalRepository = new TareaGlobalRepository(new TareaGlobalRemote(new FireStore()));
         presenter = new TareaGlobalPresenterImpl(new UseCaseHandler(new UseCaseThreadPoolScheduler()),
                 new ObtenerListaAlumnos(tareaGlobalRepository),
                 new RegistrarTareaGlobales(tareaGlobalRepository));
         setPresenter(presenter);
-       /* IncidenciaRepository repository = new IncidenciaRepository(new IncidenciaRemote(new FireStore()));
-        presenter = new IncidenciaPresenterImpl(new UseCaseHandler(new UseCaseThreadPoolScheduler()),
-                new GuardarIncidencia(repository),
-                new ObtenerAlumno(repository));
-        setPresenter(presenter);*/
     }
 
 
@@ -115,5 +113,10 @@ public class TareaGlobalFragment extends DialogFragment implements TareaGlobalVi
     public void mostrarMensaje(String mensaje) {
         dismiss();
         Toast.makeText(getActivity(), mensaje, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void informacionDialog(CursoUi cursoUi) {
+        textViewTitulo.setText("Agregar Tarea: "+cursoUi.getNombre());
     }
 }

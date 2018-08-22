@@ -48,14 +48,16 @@ public class CursoHijosPresenterImpl extends BaseActivityPresenterImpl<CursoHijo
     }
 
     private void initListCursosHijos(Hijos hijos) {
+        if(view!=null)view.mostrarProgressBar();
         handler.execute(obtenerCursoHijos, new ObtenerCursoHijos.RequestValues(hijos),
                 new UseCase.UseCaseCallback<ObtenerCursoHijos.ResponseValue>() {
                     @Override
                     public void onSuccess(ObtenerCursoHijos.ResponseValue response) {
                         if (response.getCursosList() == null) return;
-
-
-                        if (view != null) view.mostrarListaCursos(response.getCursosList());
+                        if (view != null) {
+                            view.ocultarProgressBar();
+                            view.mostrarListaCursos(response.getCursosList());
+                        }
                     }
 
                     @Override

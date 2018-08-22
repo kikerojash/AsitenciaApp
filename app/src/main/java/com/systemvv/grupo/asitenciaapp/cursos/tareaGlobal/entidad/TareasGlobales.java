@@ -8,6 +8,8 @@ import java.util.Map;
 public class TareasGlobales {
     String keyAlumnos;
     String descripcionTarea;
+    String fecha;
+    long timeStamp;
     String keyCurso;
     String keyGrado;
     String keyInstitucion;
@@ -73,17 +75,34 @@ public class TareasGlobales {
         this.keySeccion = keySeccion;
     }
 
+    public String getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(String fecha) {
+        this.fecha = fecha;
+    }
+
+    public long getTimeStamp() {
+        return timeStamp;
+    }
+
+    public void setTimeStamp(long timeStamp) {
+        this.timeStamp = timeStamp;
+    }
 
     @Exclude
     public Map<String, Object> toMap() {
         HashMap<String, Object> result = new HashMap<>();
         result.put("keyAlumnos", keyAlumnos);
-        result.put("descripcionTarea",descripcionTarea);
+        result.put("descripcionTarea", descripcionTarea);
         result.put("keyCurso", keyCurso);
         result.put("keyGrado", keyGrado);
-        result.put("keyInstitucion",keyInstitucion);
-        result.put("keyPeriodo",keyPeriodo);
-        result.put("keySeccion",keySeccion);
+        result.put("keyInstitucion", keyInstitucion);
+        result.put("keyPeriodo", keyPeriodo);
+        result.put("keySeccion", keySeccion);
+        result.put("fecha",fecha);
+        result.put("timeStamp",timeStamp);
         return result;
     }
 }

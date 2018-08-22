@@ -91,16 +91,15 @@ public class IncidenciaPresenterImpl implements IncidenciaPresenter {
 
         this.nivelIncidencia = nivelIncidencia;
 
-        // this.nivelIncidencia = nivelIncidencia;
     }
 
-    //AlumnosUi alumnosUi;
+
     String keyAlumno, keyGrado, keyInstitucion, keyPeriodo, keySeccion, keyCurso;
 
     @Override
     public void onExtras(Bundle bundle) {
         if (bundle == null) return;
-        // this.keyAlumno = Parcels.unwrap(bundle.getParcelable("keyAlumno"));
+
         this.keyAlumno = bundle.getString("keyAlumno");
         this.keyGrado = bundle.getString("keyGrado");
         this.keyInstitucion = bundle.getString("keyInstitucion");
@@ -108,8 +107,7 @@ public class IncidenciaPresenterImpl implements IncidenciaPresenter {
         this.keySeccion = bundle.getString("keySeccion");
         this.keyCurso = bundle.getString("keyCurso");
         mostrarAlumno(keyAlumno);
-        /*Log.d(TAG, "alumnosUi : " + alumnosUi.getNombre());*/
-        // if (view != null) view.initVistas(alumnosUi);
+
 
     }
 
@@ -149,7 +147,10 @@ public class IncidenciaPresenterImpl implements IncidenciaPresenter {
                     @Override
                     public void onSuccess(GuardarIncidencia.ResponseValue response) {
                         if (response.isaBoolean()) {
-                            if (view != null) view.mostrarMensaje("DATOS GUARDADOS CORRECTOS!");
+                            if (view != null){
+                                view.mostrarMensaje("DATOS GUARDADOS CORRECTOS!");
+                                view.ocultarDialog();
+                            }
                             Log.d(TAG, "DATOS GUARDADOS CORRECTOS!  ");
                         } else {
                             if (view != null) view.mostrarMensaje("DATOS GUARDADOS INCORRECTOS");

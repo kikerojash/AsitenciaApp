@@ -102,7 +102,7 @@ public class InstitutoActivity extends BaseActivity<InstitutoView, InstitutoPres
 
     private void initToolbar() {
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     @Override
@@ -156,7 +156,7 @@ public class InstitutoActivity extends BaseActivity<InstitutoView, InstitutoPres
             default:
                 Log.d(TAG, "default:");
                 finish();
-                onBackPressed();
+                // onBackPressed();
                 break;
         }
         return super.onOptionsItemSelected(item);

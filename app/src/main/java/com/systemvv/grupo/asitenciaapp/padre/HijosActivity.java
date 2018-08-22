@@ -118,30 +118,17 @@ public class HijosActivity extends BaseActivity<HijosView, HijosPresenter> imple
 
     private void setupToolbar() {
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+       // getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
-    /*@Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        return super.onCreateOptionsMenu(menu);
-    }*/
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_padre, menu);
-        //return super.onCreateOptionsMenu(menu);
+
         return true;
     }
 
 
-    /*@Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                onBackPressed();
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }*/
 
 
     @Override
@@ -156,7 +143,7 @@ public class HijosActivity extends BaseActivity<HijosView, HijosPresenter> imple
             default:
                 Log.d(TAG, "default:");
                 finish();
-                onBackPressed();
+              //  onBackPressed();
                 break;
         }
         return super.onOptionsItemSelected(item);

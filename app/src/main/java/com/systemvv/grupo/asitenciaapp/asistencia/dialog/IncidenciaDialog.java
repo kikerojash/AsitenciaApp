@@ -100,19 +100,6 @@ public class IncidenciaDialog extends DialogFragment implements IncidenciaView, 
     }
 
 
-  /*  private void validarTipoPadencia(int tipoPadecimiento) {
-        switch (tipoPadecimiento) {
-            case 1:
-                textViewPadecimiento.setText("Padece: Epilesia");
-                break;
-            case 2:
-                textViewPadecimiento.setText("Padece: Alergia");
-                break;
-            default:
-                textViewPadecimiento.setText("Padece: No Tiene");
-                break;
-        }
-    }*/
 
     @OnClick({R.id.btnAceptar, R.id.btnSalir})
     public void onClick(View view) {
@@ -120,14 +107,11 @@ public class IncidenciaDialog extends DialogFragment implements IncidenciaView, 
             case R.id.btnAceptar:
                 String mensajeIncidencia = editTextIncidencia.getText().toString();
                 presenter.onBtnAceptar(mensajeIncidencia);
-
-                //dismiss();
                 break;
             case R.id.btnSalir:
                 dismiss();
                 break;
         }
-        // dismiss();
     }
 
     @Override
@@ -146,7 +130,7 @@ public class IncidenciaDialog extends DialogFragment implements IncidenciaView, 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
         Toast.makeText(getActivity(), "NO onNothingSelected NADA ", Toast.LENGTH_SHORT).show();
-        // return;
+
     }
 
     @Override
@@ -167,6 +151,11 @@ public class IncidenciaDialog extends DialogFragment implements IncidenciaView, 
         validarTipoPadencia(alumnosUi.getPadecimiento());
         Glide.with(getActivity()).load(alumnosUi.getFoto()).into(imgProfile);
         spinnerIncidencias.setOnItemSelectedListener(this);
+    }
+
+    @Override
+    public void ocultarDialog() {
+        dismiss();
     }
 
     private void validarTipoPadencia(String padecimiento) {

@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface ReporteAsistenciaView extends BaseActivityView<ReporteAsistenciaPresenter> {
     void mostrarLista(List<Asistencia> asistenciaList);
+    void fondoVacio();
 }
