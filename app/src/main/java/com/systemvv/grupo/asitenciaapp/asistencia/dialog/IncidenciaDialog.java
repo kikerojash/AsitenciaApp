@@ -28,6 +28,7 @@ import com.systemvv.grupo.asitenciaapp.fire.FireStore;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Unbinder;
 
 public class IncidenciaDialog extends DialogFragment implements IncidenciaView, AdapterView.OnItemSelectedListener {
 
@@ -47,10 +48,12 @@ public class IncidenciaDialog extends DialogFragment implements IncidenciaView, 
     EditText editTextIncidencia;
     private IncidenciaPresenter presenter;
 
+    Unbinder unbinder;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.dialog_fragment_justificacion, container, false);
-        ButterKnife.bind(this, v);
+        unbinder = ButterKnife.bind(this, v);
         this.getDialog().requestWindowFeature(STYLE_NO_TITLE);
         initPresenter();
         return v;
@@ -74,6 +77,12 @@ public class IncidenciaDialog extends DialogFragment implements IncidenciaView, 
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         presenter.onExtras(getArguments());
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
     }
 
     @Override
@@ -135,9 +144,9 @@ public class IncidenciaDialog extends DialogFragment implements IncidenciaView, 
     }
 
     @Override
-        public void onNothingSelected(AdapterView<?> parent) {
+    public void onNothingSelected(AdapterView<?> parent) {
         Toast.makeText(getActivity(), "NO onNothingSelected NADA ", Toast.LENGTH_SHORT).show();
-       // return;
+        // return;
     }
 
     @Override

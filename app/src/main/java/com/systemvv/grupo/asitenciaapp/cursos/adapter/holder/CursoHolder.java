@@ -3,6 +3,7 @@ package com.systemvv.grupo.asitenciaapp.cursos.adapter.holder;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -30,6 +31,8 @@ public class CursoHolder extends RecyclerView.ViewHolder implements View.OnClick
     CardView cardViewCursos;
     @BindView(R.id.textViewHoraInicioFin)
     TextView textViewHoraInicioFin;
+    @BindView(R.id.imgAccionClase)
+    Button imageViewReporteTarea;
     CursoListener listener;
     CursoUi cursoUi;
 
@@ -37,6 +40,7 @@ public class CursoHolder extends RecyclerView.ViewHolder implements View.OnClick
         super(itemView);
         ButterKnife.bind(this, itemView);
         cardViewCursos.setOnClickListener(this);
+        imageViewReporteTarea.setOnClickListener(this);
     }
 
     public void bind(CursoUi cursoUi, CursoListener listener) {
@@ -46,7 +50,7 @@ public class CursoHolder extends RecyclerView.ViewHolder implements View.OnClick
         textViewNombreCurso.setText(cursoUi.getNombre());
         textViewInstituto.setText(cursoUi.getInstitutoUi().getNombre());
         textViewGradoSeccion.setText("Grado : " + cursoUi.getGradoSelected() + " Sección : " + cursoUi.getSeccionSelected());
-        textViewHoraInicioFin.setText(cursoUi.getHoraInicio()+ "-"+cursoUi.getHoraFin());
+        textViewHoraInicioFin.setText(cursoUi.getHoraInicio() + "-" + cursoUi.getHoraFin());
         textViewAlumnosContar.setText(cursoUi.getConteoAlumnos());
 
         Glide.with(itemView.getContext()).load(cursoUi.getFoto()).into(imageViewFondo);
@@ -57,6 +61,9 @@ public class CursoHolder extends RecyclerView.ViewHolder implements View.OnClick
         switch (v.getId()) {
             case R.id.cardviewCurso:
                 listener.onClickCursoItem(cursoUi);
+                break;
+            case R.id.imgAccionClase:
+                listener.onClickImageReporteTarea(cursoUi);
                 break;
         }
     }

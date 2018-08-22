@@ -2,6 +2,8 @@ package com.systemvv.grupo.asitenciaapp.cursos;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -32,6 +34,7 @@ import com.systemvv.grupo.asitenciaapp.cursos.dataSource.CursoRepository;
 import com.systemvv.grupo.asitenciaapp.cursos.dataSource.remote.CursoRemote;
 import com.systemvv.grupo.asitenciaapp.cursos.entidad.CursoUi;
 import com.systemvv.grupo.asitenciaapp.cursos.listener.CursoListener;
+import com.systemvv.grupo.asitenciaapp.cursos.tareaGlobal.TareaGlobalFragment;
 import com.systemvv.grupo.asitenciaapp.cursos.useCase.ObtenerCursoLista;
 import com.systemvv.grupo.asitenciaapp.fire.FireStore;
 import com.systemvv.grupo.asitenciaapp.login.LoginActivity;
@@ -127,7 +130,6 @@ public class CursoActivity extends BaseActivity<CursoView, CursoPresenter> imple
     }
 
 
-
     @Override
     public void onClickCursoItem(CursoUi cursoUi) {
         Intent intent = new Intent(this, ControlAsistenciaActivity.class);
@@ -148,6 +150,21 @@ public class CursoActivity extends BaseActivity<CursoView, CursoPresenter> imple
         bundle.putParcelable("cursoUi", Parcels.wrap(cursoUi));
         intent.putExtras(bundle);
         startActivity(intent);
+    }
+
+    @Override
+    public void onClickImageReporteTarea(CursoUi cursoUi) {
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        Fragment prev = getFragmentManager().findFragmentByTag("dialog");
+        if (prev != null) {
+            ft.remove(prev);
+        }
+        ft.addToBackStack(null);
+        TareaGlobalFragment dialogFragment = new TareaGlobalFragment();
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("cursoUi", Parcels.wrap(cursoUi));
+        dialogFragment.setArguments(bundle);
+        dialogFragment.show(ft, "dialogTareaGlobal");
     }
 
     @Override
@@ -194,7 +211,7 @@ public class CursoActivity extends BaseActivity<CursoView, CursoPresenter> imple
         ViewCompat.setElevation(toolbar, 0);
         constraintLayout.setScaleY(0.1f);
         constraintLayout.setPivotY(2);
-       // llAddComment.setTranslationY(200);
+        // llAddComment.setTranslationY(200);
 
         constraintLayout.animate()
                 .scaleY(1)
@@ -204,7 +221,7 @@ public class CursoActivity extends BaseActivity<CursoView, CursoPresenter> imple
                     @Override
                     public void onAnimationEnd(Animator animation) {
                         ViewCompat.setElevation(toolbar, Utils.dpToPx(8));
-                      //  animateContent();
+                        //  animateContent();
                     }
                 })
                 .start();

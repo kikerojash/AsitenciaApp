@@ -20,10 +20,10 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.systemvv.grupo.asitenciaapp.asistencia.entidad.Alumnos;
 import com.systemvv.grupo.asitenciaapp.asistencia.fireListener.FireCallBackList;
 import com.systemvv.grupo.asitenciaapp.cursos.entidad.CursoUi;
+import com.systemvv.grupo.asitenciaapp.cursos.tareaGlobal.entidad.TareasGlobales;
 import com.systemvv.grupo.asitenciaapp.fire.entidad.Asistencia;
 import com.systemvv.grupo.asitenciaapp.fire.entidad.Incidencia;
 import com.systemvv.grupo.asitenciaapp.login.dataSource.entidad.UsuarioUi;
-import com.systemvv.grupo.asitenciaapp.padre.cursoHijos.entidad.Prueba;
 import com.systemvv.grupo.asitenciaapp.padre.entidad.Cursos;
 import com.systemvv.grupo.asitenciaapp.padre.entidad.Hijos;
 import com.systemvv.grupo.asitenciaapp.padre.entidad.Incidencias;
@@ -432,6 +432,101 @@ public class FireStore extends Fire {
             }
         });
     }
+
+    public void onObtenerListaAlumnosTareasGlobales(final CursoUi cursoUi, final FireCallback<List<TareasGlobales>> listFireCallback) {
+        final String keyCurso = cursoUi.getKeyCurso();
+        final String keyPeriodo = cursoUi.getInstitutoUi().getKeyPeriodo();
+        final String keyGrado = cursoUi.getKeyGrado();
+        final String keyInstitucion = cursoUi.getInstitutoUi().getKeyInstituto();
+        final String keySeccion = cursoUi.getKeySeccion();
+        String grado = String.valueOf(cursoUi.getGradoSelected());
+        String seccion = cursoUi.getSeccionSelected();
+        Log.d(TAG, "keyCurso/" + keyCurso + "/" + keyPeriodo + "/" + grado + "/" + seccion);
+        mFirestore.collection(Constantes.NODO_PERIODO_GRADO_ALUMNO)
+                //.whereEqualTo("cur_id_curso", keyCurso)
+                .whereEqualTo("prd_id_periodo", keyPeriodo)
+                .whereEqualTo("gra_nombre", grado)
+                .whereEqualTo("sec_nombre", seccion)
+                .get()
+                .continueWithTask(new Continuation<QuerySnapshot, Task<List<DocumentSnapshot>>>() {
+                    @Override
+                    public Task<List<DocumentSnapshot>> then(@NonNull Task<QuerySnapshot> task) {
+                        List<Task<DocumentSnapshot>> tasks = new ArrayList<Task<DocumentSnapshot>>();
+                        for (DocumentSnapshot document : task.getResult()) {
+                            String keyAlumno = (String) document.get("alu_id_alumno");
+                            Log.d(TAG, "continueWithTask " + keyAlumno);
+                            Task<DocumentSnapshot> querySnapshotTask = mFirestore.
+                                    collection("alumno")
+                                    .document(keyAlumno)
+                                    .get();
+                            tasks.add(querySnapshotTask);
+                        }
+                        return Tasks.whenAllSuccess(tasks);
+                    }
+                })
+                .addOnCompleteListener(new OnCompleteListener<List<DocumentSnapshot>>() {
+                    @Override
+                    public void onComplete(@NonNull Task<List<DocumentSnapshot>> task) {
+                        List<TareasGlobales> tareasGlobalesList = new ArrayList<>();
+
+                        for (DocumentSnapshot documentSnapshot : task.getResult()) {
+                            TareasGlobales tareasGlobales = new TareasGlobales();
+                            String per_nombre = (String) documentSnapshot.get("per_nombre");
+                            String per_apellido = (String) documentSnapshot.get("per_apellido");
+                            String per_foto = (String) documentSnapshot.get("per_foto");
+                            String alu_padecimiento = (String) documentSnapshot.get("alu_padecimiento");
+                            Log.d(TAG, "onCompletecontinueWithTask " + documentSnapshot.getData() + "" +
+                                    "/ Data " + documentSnapshot.getId() +
+                                    "/ Reference PAth" + documentSnapshot.getReference().getPath() +
+                                    "/ CollectionReference " + documentSnapshot.getReference().getParent() +
+                                    "/ CollectionReference " + documentSnapshot.getReference().get());
+
+                            tareasGlobales.setKeyAlumnos(documentSnapshot.getId());
+                            tareasGlobales.setKeyCurso(keyCurso);
+                            tareasGlobales.setKeyGrado(keyGrado);
+                            tareasGlobales.setKeyInstitucion(keyInstitucion);
+                            tareasGlobales.setKeyPeriodo(keyPeriodo);
+                            tareasGlobales.setKeySeccion(keySeccion);
+                            tareasGlobalesList.add(tareasGlobales);
+                        }
+
+                        listFireCallback.onSuccess(tareasGlobalesList);
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                listFireCallback.onSuccess(null);
+            }
+        });
+    }
+
+
+    public void guardarListaAsistenciaAlumnosTareaGlobales(List<TareasGlobales> tareasGlobalesList, final FireCallback<Boolean> postFirePostsCallback) {
+        Log.d(TAG, "guardarListaAsistenciaAlumnos");
+
+          for (TareasGlobales tareasGlobales : tareasGlobalesList) {
+            Map<String, Object> postValues = tareasGlobales.toMap();
+            mFirestore.collection("actividades")
+                    .add(postValues)
+                    .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                        @Override
+                        public void onSuccess(DocumentReference documentReference) {
+                            String keyActividades = documentReference.getId();
+                            // postFirePostsCallback.onSuccess(true);
+                            Log.d(TAG, "DocumentSnapshot successfully written! : " + keyActividades);
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+
+                    Log.d(TAG, "DocumentSnapshot successfully written!");
+                }
+            });
+            continue;
+        }
+        postFirePostsCallback.onSuccess(true);
+    }
+
 
     private com.systemvv.grupo.asitenciaapp.asistencia.entidad.Asistencia asistenciaPresente(Alumnos alumnos) {
         com.systemvv.grupo.asitenciaapp.asistencia.entidad.Asistencia asistencia = new com.systemvv.grupo.asitenciaapp.asistencia.entidad.Asistencia();

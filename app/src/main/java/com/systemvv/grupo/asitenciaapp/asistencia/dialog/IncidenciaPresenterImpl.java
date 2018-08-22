@@ -94,7 +94,7 @@ public class IncidenciaPresenterImpl implements IncidenciaPresenter {
         // this.nivelIncidencia = nivelIncidencia;
     }
 
-    //Alumnos alumnosUi;
+    //AlumnosUi alumnosUi;
     String keyAlumno, keyGrado, keyInstitucion, keyPeriodo, keySeccion, keyCurso;
 
     @Override
