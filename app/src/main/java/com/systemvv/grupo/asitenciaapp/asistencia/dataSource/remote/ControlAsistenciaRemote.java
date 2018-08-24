@@ -13,6 +13,7 @@ import com.systemvv.grupo.asitenciaapp.fire.FireStore;
 import com.systemvv.grupo.asitenciaapp.fire.entidad.Asistencia;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
@@ -28,8 +29,8 @@ public class ControlAsistenciaRemote implements ControlAsistenciaDataSource {
 
 
     @Override
-    public void onGuardarAsistenciaLista(List<com.systemvv.grupo.asitenciaapp.asistencia.entidad.Asistencia> asistenciaUiList,CursoUi cursoUi, final ObjectCallbackSuccess<Boolean> callbackSuccess) {
-        fireStore.guardarListaAsistenciaAlumnos(convertAsistenciaLista(asistenciaUiList,cursoUi), new FireCallback<Boolean>() {
+    public void onGuardarAsistenciaLista(List<com.systemvv.grupo.asitenciaapp.asistencia.entidad.Asistencia> asistenciaUiList, CursoUi cursoUi, final ObjectCallbackSuccess<Boolean> callbackSuccess) {
+        fireStore.guardarListaAsistenciaAlumnos(convertAsistenciaLista(asistenciaUiList, cursoUi), new FireCallback<Boolean>() {
             @Override
             public void onSuccess(Boolean sucess) {
                 if (sucess) {
@@ -54,19 +55,15 @@ public class ControlAsistenciaRemote implements ControlAsistenciaDataSource {
     }
 
 
-
-
     @Override
-    public void onValidarFechaRegistroAsistencia(String fecha,CursoUi cursoUi,final ObjectCallbackSuccessAsistencia<Boolean, List<String>> callbackSuccess) {
-        fireStore.validarFechaRegistroAsistencia(fecha,cursoUi, new FireCallBackList<Boolean>() {
+    public void onValidarFechaRegistroAsistencia(String fecha, CursoUi cursoUi, final ObjectCallbackSuccessAsistencia<Boolean, List<String>> callbackSuccess) {
+        fireStore.validarFechaRegistroAsistencia(fecha, cursoUi, new FireCallBackList<Boolean>() {
             @Override
             public void onSuccess(Boolean sucess, List<String> kList, int tipoValidacion) {
                 callbackSuccess.guardarAsistenciaGrupal(sucess, kList, tipoValidacion);
             }
         });
     }
-
-
 
 
     @Override
@@ -81,17 +78,17 @@ public class ControlAsistenciaRemote implements ControlAsistenciaDataSource {
     }
 
     @Override
-    public void onObtenerDatosDocente(String keyDocente, final ObjectCallbackSuccessString<String,String> stringObjectCallbackSuccess) {
-        fireStore.onObtenerDatosDocente(keyDocente, new FireCallbackTwo<String,String>() {
+    public void onObtenerDatosDocente(String keyDocente, final ObjectCallbackSuccessString<String, String> stringObjectCallbackSuccess) {
+        fireStore.onObtenerDatosDocente(keyDocente, new FireCallbackTwo<String, String>() {
             @Override
             public void resultado(String resultado1, String resultado2) {
-                stringObjectCallbackSuccess.guardarAsistenciaGrupal(resultado1,resultado2);
+                stringObjectCallbackSuccess.guardarAsistenciaGrupal(resultado1, resultado2);
             }
         });
     }
 
 
-    private List<Asistencia> convertAsistenciaLista(List<com.systemvv.grupo.asitenciaapp.asistencia.entidad.Asistencia> asistenciaUiList,CursoUi cursoUi) {
+    private List<Asistencia> convertAsistenciaLista(List<com.systemvv.grupo.asitenciaapp.asistencia.entidad.Asistencia> asistenciaUiList, CursoUi cursoUi) {
         List<Asistencia> asistenciasList = new ArrayList<>();
         String grado = String.valueOf(cursoUi.getGradoSelected());
         String seccion = cursoUi.getSeccionSelected();
@@ -111,6 +108,7 @@ public class ControlAsistenciaRemote implements ControlAsistenciaDataSource {
             asistencia.setIns_id_institucion(keyInstituto);
             asistencia.setPrd_id_periodo(keyPeriodo);
             asistencia.setSec_id_seccion(keySeccion);
+            asistencia.setTimeStamp(new Date().getTime());
             asistenciasList.add(asistencia);
         }
         return asistenciasList;

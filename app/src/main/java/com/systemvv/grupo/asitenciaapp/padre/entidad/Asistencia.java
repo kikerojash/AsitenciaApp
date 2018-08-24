@@ -8,6 +8,7 @@ public class Asistencia {
     private String inicioRegistroHora;
     private String finRegistroHora;
     private String tipASistencia;
+    private long timeStamp;
 
     public Asistencia() {
     }
@@ -75,5 +76,13 @@ public class Asistencia {
 
     public void setTipASistencia(String tipASistencia) {
         this.tipASistencia = tipASistencia;
+    }
+
+    public long getTimeStamp() {
+        return timeStamp;
+    }
+
+    public void setTimeStamp(long timeStamp) {
+        this.timeStamp = timeStamp;
     }
 }

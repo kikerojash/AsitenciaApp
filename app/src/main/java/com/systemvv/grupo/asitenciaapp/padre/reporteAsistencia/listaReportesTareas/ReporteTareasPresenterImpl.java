@@ -2,6 +2,7 @@ package com.systemvv.grupo.asitenciaapp.padre.reporteAsistencia.listaReportesTar
 
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.systemvv.grupo.asitenciaapp.base.UseCase;
 import com.systemvv.grupo.asitenciaapp.base.UseCaseHandler;
@@ -48,6 +49,10 @@ public class ReporteTareasPresenterImpl extends BaseFragmentPresenterImpl<Report
                 new UseCase.UseCaseCallback<ObtenerTareasLista.ResponseValues>() {
                     @Override
                     public void onSuccess(ObtenerTareasLista.ResponseValues response) {
+                        if (response.getTareasList() == null) {
+                            Log.d(TAG,"response.getTareasList() == null ");
+                            if(view!=null) view.fondoVacio();return;
+                        }
                         if (response.getTareasList().size() > 0) {
                             if (view != null) view.mostrarListaCursos(response.getTareasList());
                         } else {

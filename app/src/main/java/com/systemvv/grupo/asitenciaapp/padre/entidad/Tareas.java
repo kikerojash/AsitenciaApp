@@ -6,6 +6,7 @@ public class Tareas {
     String descripcionTarea;
     String hora;
     String fecha;
+    long timeStamp;
 
     public int getConteo() {
         return conteo;
@@ -45,5 +46,13 @@ public class Tareas {
 
     public void setFecha(String fecha) {
         this.fecha = fecha;
+    }
+
+    public long getTimeStamp() {
+        return timeStamp;
+    }
+
+    public void setTimeStamp(long timeStamp) {
+        this.timeStamp = timeStamp;
     }
 }

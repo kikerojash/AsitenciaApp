@@ -18,6 +18,7 @@ public class Asistencia {
     private String prd_id_periodo;
     private String ins_id_institucion;
     private String gra_id_grado;
+    private long timeStamp;
 
 
     public Asistencia() {
@@ -112,20 +113,29 @@ public class Asistencia {
     }
 
 
+    public long getTimeStamp() {
+        return timeStamp;
+    }
+
+    public void setTimeStamp(long timeStamp) {
+        this.timeStamp = timeStamp;
+    }
+
     @Exclude
     public Map<String, Object> toMap() {
         HashMap<String, Object> result = new HashMap<>();
-       // result.put("asi_id_asistencia", asi_id_asistencia);
+        // result.put("asi_id_asistencia", asi_id_asistencia);
         result.put("asi_hora_inicio", asi_hora_inicio);
-        result.put("asi_hora_fin",asi_hora_fin);
+        result.put("asi_hora_fin", asi_hora_fin);
         result.put("asi_tipo_asistencia", asi_tipo_asistencia);
         result.put("asi_fecha", asi_fecha);
-        result.put("alu_id_alumno",alu_id_alumno);
-        result.put("cur_id_curso",cur_id_curso);
-        result.put("sec_id_seccion",sec_id_seccion);
-        result.put("prd_id_periodo",prd_id_periodo);
-        result.put("ins_id_institucion",ins_id_institucion);
-        result.put("gra_id_grado",gra_id_grado);
+        result.put("alu_id_alumno", alu_id_alumno);
+        result.put("cur_id_curso", cur_id_curso);
+        result.put("sec_id_seccion", sec_id_seccion);
+        result.put("prd_id_periodo", prd_id_periodo);
+        result.put("ins_id_institucion", ins_id_institucion);
+        result.put("gra_id_grado", gra_id_grado);
+        result.put("timeStamp", timeStamp);
         return result;
     }
 }

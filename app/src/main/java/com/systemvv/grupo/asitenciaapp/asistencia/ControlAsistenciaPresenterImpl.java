@@ -106,14 +106,13 @@ public class ControlAsistenciaPresenterImpl extends BaseActivityPresenterImpl<Co
         celdasAsistencias = new ArrayList<>();
 
     }
-
+    DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+    DateFormat dfHours = new SimpleDateFormat("HH:mm aaa");
+    String date = df.format(Calendar.getInstance().getTime());
     @Override
     public void onCreate() {
         datosDocente();
         Log.d(TAG, "onCreate :");
-        DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-        DateFormat dfHours = new SimpleDateFormat("HH:mm aaa");
-        String date = df.format(Calendar.getInstance().getTime());
         initTablaInstancia();
         initObtenerListaAlumnos(cursoUi);
         validarExisteFecha(date);
@@ -340,6 +339,9 @@ public class ControlAsistenciaPresenterImpl extends BaseActivityPresenterImpl<Co
                     return;
                 }
                 break;
+                default:
+                 //   initGuardarListaAsistencia(guardandoListasAsistencias);
+                    break;
         }
         if (guardandoListasAsistencias.size() == 0) {
             if (view != null) view.mostrarMensaje("No se Permiten Campos Vacíos");
@@ -380,6 +382,9 @@ public class ControlAsistenciaPresenterImpl extends BaseActivityPresenterImpl<Co
                                 tipoValidacionExistFecha = Constantes.REGISTROS_COMPLETOS;
                                 Log.d(TAG, "REGISTROS_COMPLETOS");
                                 break;
+                                default:
+                                    //tipoValidacionExistFecha = Constantes.FALTA_ASISTENCIA_REGISTRO_HOY;
+                                    break;
 
                         }
                     }
@@ -420,9 +425,14 @@ public class ControlAsistenciaPresenterImpl extends BaseActivityPresenterImpl<Co
                 new UseCase.UseCaseCallback<GuardarAsistenciaListaHoraFin.ResponseValue>() {
                     @Override
                     public void onSuccess(GuardarAsistenciaListaHoraFin.ResponseValue response) {
+
                         if (response.isaBoolean()) {
-                            if (view != null)
+                            validarExisteFecha(date);
+                            if (view != null){
                                 view.mostrarMensaje(res.getString(R.string.validacion_mensaje_guardar_hora_fin_correctos));
+                                view.ocultarProgressBar();
+                            }
+
                         } else {
                             Log.d(TAG, "ALGO PASO PAPU");
                         }
@@ -455,6 +465,7 @@ public class ControlAsistenciaPresenterImpl extends BaseActivityPresenterImpl<Co
                     @Override
                     public void onSuccess(GuardarAsistenciaLista.ResponseValue response) {
                         if (response.isaBoolean()) {
+                            validarExisteFecha(date);
                             if (view != null) {
                                 view.mostrarMensaje(res.getString(R.string.validacion_mensaje_guardar_correcto));
                                 //view.mostrarMensaje("NO SE OLVIDE SUS REGISTRO DE SALIDA");

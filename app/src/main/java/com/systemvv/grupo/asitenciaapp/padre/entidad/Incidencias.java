@@ -11,6 +11,7 @@ public class Incidencias {
     String hora;
     int gradoIncidencia;
     String tipoIncidencia;
+    long timeStamp;
 
     public Incidencias() {
     }
@@ -77,5 +78,13 @@ public class Incidencias {
 
     public void setKeyIncidencia(String keyIncidencia) {
         this.keyIncidencia = keyIncidencia;
+    }
+
+    public long getTimeStamp() {
+        return timeStamp;
+    }
+
+    public void setTimeStamp(long timeStamp) {
+        this.timeStamp = timeStamp;
     }
 }

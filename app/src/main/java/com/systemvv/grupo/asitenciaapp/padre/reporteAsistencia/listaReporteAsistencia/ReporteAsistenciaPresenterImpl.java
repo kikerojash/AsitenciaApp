@@ -76,7 +76,10 @@ public class ReporteAsistenciaPresenterImpl extends BaseFragmentPresenterImpl<Re
                 new UseCase.UseCaseCallback<ObtenerAsistenciaLista.ResponseValue>() {
                     @Override
                     public void onSuccess(ObtenerAsistenciaLista.ResponseValue response) {
-                      //  if (response.getAsistenciaList() == null) return;
+                      if (response.getAsistenciaList() == null) {
+                          Log.d(TAG,"response.getAsistenciaList() == null ");
+                          if(view!=null) view.fondoVacio();return;
+                      }
                         if (response.getAsistenciaList().size() > 0) {
                             if (view != null) {
                                 view.ocultarProgressBar();

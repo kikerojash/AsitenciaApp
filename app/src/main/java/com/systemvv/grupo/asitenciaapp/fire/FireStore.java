@@ -38,6 +38,8 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -505,7 +507,7 @@ public class FireStore extends Fire {
     public void guardarListaAsistenciaAlumnosTareaGlobales(List<TareasGlobales> tareasGlobalesList, final FireCallback<Boolean> postFirePostsCallback) {
         Log.d(TAG, "guardarListaAsistenciaAlumnos");
 
-          for (TareasGlobales tareasGlobales : tareasGlobalesList) {
+        for (TareasGlobales tareasGlobales : tareasGlobalesList) {
             Map<String, Object> postValues = tareasGlobales.toMap();
             mFirestore.collection("actividades")
                     .add(postValues)
@@ -797,6 +799,7 @@ public class FireStore extends Fire {
                 + "keySeccion" + keySeccion
                 + "keyAlumno" + keyAlumno);
 
+
         mFirestore.collection(Constantes.NODO_ASISTENCIA)
                 .whereEqualTo("alu_id_alumno", keyAlumno)
                 .whereEqualTo("cur_id_curso", keyCurso)
@@ -815,13 +818,37 @@ public class FireStore extends Fire {
                                 String horaInicio = (String) document.get("asi_hora_inicio");
                                 String horaFin = (String) document.get("asi_hora_fin");
                                 String asi_tipo_asistencia = (String) document.get("asi_tipo_asistencia");
+                                long tiempoDate = (long) document.get("timeStamp");
                                 com.systemvv.grupo.asitenciaapp.padre.entidad.Asistencia asistencia = new com.systemvv.grupo.asitenciaapp.padre.entidad.Asistencia();
                                 asistencia.setConteo(count);
                                 asistencia.setFecha(fecha);
                                 asistencia.setInicioRegistroHora(horaInicio);
                                 asistencia.setFinRegistroHora(horaFin);
                                 asistencia.setTipASistencia(asi_tipo_asistencia);
+                                asistencia.setTimeStamp(tiempoDate);
                                 asistenciaList.add(asistencia);
+
+                            }
+
+                            int size = asistenciaList.size();
+
+                            for (int i = 0; i < size; i++) {
+                                for (int j = 1; j < size; j++) {
+                                    Long dateAnterior = asistenciaList.get(j - 1).getTimeStamp();
+                                    Long dateActual = asistenciaList.get(j).getTimeStamp();
+
+
+                                    int retval = dateAnterior.compareTo(dateActual);
+
+                                    if (retval > 0) {
+                                        Log.d(TAG, "retval > 0: ");
+
+                                        com.systemvv.grupo.asitenciaapp.padre.entidad.Asistencia asistencia = asistenciaList.get(j);
+                                        asistenciaList.set(j,asistenciaList.get(j-1));
+                                        asistenciaList.set(j-1,asistencia);
+
+                                    }
+                                }
 
                             }
 
@@ -845,6 +872,7 @@ public class FireStore extends Fire {
                 + "keySeccion" + keySeccion
                 + "keyAlumno" + keyAlumno);
 
+
         mFirestore.collection(Constantes.NODO_INCIDENCIA)
                 .whereEqualTo("alu_id_alumno", keyAlumno)
                 .whereEqualTo("cur_id_curso", keyCurso)
@@ -864,6 +892,7 @@ public class FireStore extends Fire {
                                 long timeStamp = (long) document.get("timeStamp");
                                 String inc_prioridad = (String) document.get("inc_prioridad");
                                 String inc_descripcion = (String) document.get("inc_descripcion");
+                                long timeStamp22 = (long) document.get("timeStamp22");
                                 Incidencias incidencias = new Incidencias();
                                 incidencias.setKeyIncidencia(document.getId());
                                 incidencias.setConteo(count);
@@ -871,7 +900,30 @@ public class FireStore extends Fire {
                                 incidencias.setNombreIncidencias(inc_descripcion);
                                 incidencias.setHora(Utils.convertTime(timeStamp));
                                 incidencias.setTipoIncidencia(inc_prioridad);
+                                incidencias.setTimeStamp(timeStamp22);
                                 incidenciasList.add(incidencias);
+                            }
+
+                            int size = incidenciasList.size();
+
+                            for (int i = 0; i < size; i++) {
+                                for (int j = 1; j < size; j++) {
+                                    Long dateAnterior = incidenciasList.get(j - 1).getTimeStamp();
+                                    Long dateActual = incidenciasList.get(j).getTimeStamp();
+
+
+                                    int retval = dateAnterior.compareTo(dateActual);
+
+                                    if (retval > 0) {
+                                        Log.d(TAG, "retval > 0: ");
+
+                                        Incidencias asistencia = incidenciasList.get(j);
+                                        incidenciasList.set(j,incidenciasList.get(j-1));
+                                        incidenciasList.set(j-1,asistencia);
+
+                                    }
+                                }
+
                             }
                             listFireCallback.onSuccess(incidenciasList);
                         } else {
@@ -925,7 +977,7 @@ public class FireStore extends Fire {
                 .whereEqualTo("keyCurso", keyCurso)
                 .whereEqualTo("keyGrado", keyGrado)
                 .whereEqualTo("keySeccion", keySeccion)
-                .whereEqualTo("fecha",date)
+                .whereEqualTo("fecha", date)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -949,6 +1001,29 @@ public class FireStore extends Fire {
 
                                 tareasList.add(tareas);
                             }
+
+                            int size = tareasList.size();
+
+                            for (int i = 0; i < size; i++) {
+                                for (int j = 1; j < size; j++) {
+                                    Long dateAnterior = tareasList.get(j - 1).getTimeStamp();
+                                    Long dateActual = tareasList.get(j).getTimeStamp();
+
+
+                                    int retval = dateAnterior.compareTo(dateActual);
+
+                                    if (retval > 0) {
+                                        Log.d(TAG, "retval > 0: ");
+
+                                        Tareas tareas = tareasList.get(j);
+                                        tareasList.set(j,tareasList.get(j-1));
+                                        tareasList.set(j-1,tareas);
+
+                                    }
+                                }
+
+                            }
+
                             listFireCallback.onSuccess(tareasList);
                         } else {
                             listFireCallback.onSuccess(null);
