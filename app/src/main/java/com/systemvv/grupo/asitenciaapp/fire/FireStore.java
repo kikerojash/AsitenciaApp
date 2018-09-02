@@ -892,7 +892,7 @@ public class FireStore extends Fire {
                                 long timeStamp = (long) document.get("timeStamp");
                                 String inc_prioridad = (String) document.get("inc_prioridad");
                                 String inc_descripcion = (String) document.get("inc_descripcion");
-                                long timeStamp22 = (long) document.get("timeStamp22");
+                                long timeStamp22 = (long) document.get("timeStamp");
                                 Incidencias incidencias = new Incidencias();
                                 incidencias.setKeyIncidencia(document.getId());
                                 incidencias.setConteo(count);
