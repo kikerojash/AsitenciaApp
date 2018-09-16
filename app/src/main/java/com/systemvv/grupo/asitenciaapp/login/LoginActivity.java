@@ -101,7 +101,7 @@ public class LoginActivity extends BaseActivity<LoginView, LoginPresenter> imple
         progressDialog = new ProgressDialog(this);
         editTextUsuario.setText("sumire@gmail.com");
         editTextClave.setText("sumire");
-
+       // FirebaseCrash.report(new Exception("My first Android non-fatal error"));
     }
 
     @Override

@@ -967,11 +967,8 @@ public class FireStore extends Fire {
                 + "keyGrado" + keyGrado
                 + "keySeccion" + keySeccion
                 + "keyAlumno" + keyAlumno);
-
-
         DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
         String date = df.format(Calendar.getInstance().getTime());
-
         mFirestore.collection(Constantes.NODO_ACTIVIDADES)
                 .whereEqualTo("keyAlumnos", keyAlumno)
                 .whereEqualTo("keyCurso", keyCurso)
@@ -989,19 +986,15 @@ public class FireStore extends Fire {
                                 count++;
                                 String fecha = (String) document.get("fecha");
                                 long timeStamp = (long) document.get("timeStamp");
-
                                 String descripcionTarea = (String) document.get("descripcionTarea");
-
                                 Tareas tareas = new Tareas();
                                 tareas.setKeyTareas(document.getId());
                                 tareas.setConteo(count);
                                 tareas.setFecha(fecha);
                                 tareas.setDescripcionTarea(descripcionTarea);
                                 tareas.setHora(Utils.convertTime(timeStamp));
-
                                 tareasList.add(tareas);
                             }
-
                             int size = tareasList.size();
 
                             for (int i = 0; i < size; i++) {
